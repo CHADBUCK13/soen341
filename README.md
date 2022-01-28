@@ -37,6 +37,7 @@ A buyer is able to:
 - Henry zhixing Li - JoliopoLi 
 - Mathieu Trudeau - mathieutrudeau
 - Hawa Diallo - hawadi
+- Tommy Morrisson - tommymorrisson
 
 ## Technologies:
 ### Front end:
