@@ -30,3 +30,9 @@
 *.exe
 *.out
 *.app
+
+
+*.pyc
+lib/
+Scripts/
+pyvenv.cfg
