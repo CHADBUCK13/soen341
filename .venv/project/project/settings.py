@@ -12,6 +12,10 @@ https://docs.djangoproject.com/en/4.0/ref/settings/
 
 import os
 from pathlib import Path
+import firebase_admin
+from firebase_admin import credentials
+from firebase_admin import firestore
+from firebase_admin import auth
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -39,6 +43,8 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'crispy_forms',
+    'ecommerce.apps.EcommerceConfig'
 ]
 
 MIDDLEWARE = [
@@ -82,6 +88,14 @@ DATABASES = {
     }
 }
 
+# Firebase Firestore Database connection
+
+if not firebase_admin._apps:
+    cred = credentials.Certificate('../credentials.json')
+    firebase_admin.initialize_app(cred)
+
+#db= firestore.client()
+#db.collection('accounts').add({'username':'userdadd','email':'email@gmail.com','password':'password123'})
 
 # Password validation
 # https://docs.djangoproject.com/en/4.0/ref/settings/#auth-password-validators
@@ -119,6 +133,8 @@ USE_TZ = True
 
 STATIC_URL = 'static/'
 STATIC_ROOT = os.path.join(BASE_DIR, 'static')
+
+CRISPY_TEMPLATE_PACK = "bootstrap4"
 
 STATICFILES_DIRS=[
     STATIC_URL

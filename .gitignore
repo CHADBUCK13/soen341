@@ -36,3 +36,6 @@
 lib/
 Scripts/
 pyvenv.cfg
+
+# Credentials
+credentials.json
