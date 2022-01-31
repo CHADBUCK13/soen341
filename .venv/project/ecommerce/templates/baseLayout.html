@@ -1,3 +1,4 @@
+{% load static %}
 <!DOCTYPE html>
 <html>
     <head>
@@ -6,6 +7,8 @@
             {% block title %}Ecommerce{% endblock %}
         </title>
         {% block head %} {% endblock %}
+        <link rel="stylesheet" href="{% static 'css/login.css' %}">
+        <link rel="stylesheet" href="{% static 'css/icon.css' %}">
     </head>
     <body>
         <main>
