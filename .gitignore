@@ -31,11 +31,15 @@
 *.out
 *.app
 
-
+*.txt
+*ttx.1
 *.pyc
+
 lib/
 Scripts/
 pyvenv.cfg
 
+
 # Credentials
 credentials.json
+firebaseConfig.json

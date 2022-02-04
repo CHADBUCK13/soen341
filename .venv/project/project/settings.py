@@ -89,10 +89,7 @@ DATABASES = {
 }
 
 # Firebase Firestore Database connection
-
-if not firebase_admin._apps:
-    cred = credentials.Certificate('../credentials.json')
-    firebase_admin.initialize_app(cred)
+firebase_admin.initialize_app()
 
 #db= firestore.client()
 #db.collection('accounts').add({'username':'userdadd','email':'email@gmail.com','password':'password123'})
