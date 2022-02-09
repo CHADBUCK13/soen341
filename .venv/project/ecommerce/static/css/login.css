@@ -3,6 +3,15 @@
     border: 3px solid #f1f1f1;
   }
   
+  .errorlist
+    {
+        color: red;
+    }
+
+  .error input, .error select {
+    border: 2px red solid;
+    }
+  
   /* Full-width inputs */
   input[type=text], input[type=password] {
     width: 100%;

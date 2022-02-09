@@ -1,20 +1,15 @@
 from datetime import date, datetime
-from email import message
 import json
-from logging import exception
-from msilib.schema import File
-import re
-from unittest import result
-from httplib2 import Http
 from requests.exceptions import HTTPError
 import pyrebase
 from firebase_admin import firestore
-import firebase_admin
+
+FIREBASE_CONFIG = json.load(open('../firebaseConfig.json'))
 
 class DatabaseContext():
 
-    def __init__(self,config):
-        self.firebase = pyrebase.initialize_app(config)
+    def __init__(self):
+        self.firebase = pyrebase.initialize_app(FIREBASE_CONFIG)
         self.auth = self.firebase.auth()
         #firebase_admin.initialize_app()
         self.db = firestore.client()
@@ -47,7 +42,7 @@ class DatabaseContext():
             return user
 
         except HTTPError as e:
-            print(e)
+            return json.loads(e.strerror)
 
     def signup_as_seller(self,email,password,name="",country="",city="",address="",postal_code="",service_number="",logo=""):
         try:
@@ -90,9 +85,9 @@ class DatabaseContext():
         
                 return user
             else: 
-                raise Exception(message="User does not exist!")
+                return False
         except HTTPError as e:
-            return e
+            return json.loads(e.strerror)
 
     def login_as_seller(self,email,password):
         try:
@@ -104,14 +99,49 @@ class DatabaseContext():
         
                 return user
             else: 
-                raise Exception(message="User does not exist!")
+                return False
         except HTTPError as e:
             return json.loads(e.strerror)
 
+    def get_account_info(self,idToken):
+        try:
+            user = self.auth.get_account_info(idToken)
+            return user
+        except HTTPError as e:
+            return json.loads(e.strerror)
 
-    def testDB(self):
-        results = self.db.collection('buyers').document('test@gmail.com').get()
-        print(results.to_dict())
+    def is_buyer(self,email):
+        try:
+            return self.db.collection('buyers').document(email).get().exists
+        except HTTPError as e:
+            return json.loads(e.strerror)
 
+    def is_seller(self,email):
+        try:
+            return self.db.collection('sellers').document(email).get().exists
+        except HTTPError as e:
+            return json.loads(e.strerror)
 
+    def get_buyer(self,email):
+        try:
+            return self.db.collection('buyers').document(email).get().to_dict()
+        except HTTPError as e:
+            return json.loads(e.strerror)
+
+    def get_seller(self,email):
+        try:
+            return self.db.collection('sellers').document(email).get().to_dict()
+        except HTTPError as e:
+            return json.loads(e.strerror)
+
+class Errors():
+    def ShowErrorMessage(error):
+        if error['error']['message'] == "EMAIL_EXISTS":
+            return "This Email Address is already used by another Account."
+        if error['error']['message'] == "INVALID_PASSWORD":
+            return "Login Failed. An incorrect Email Address and/or Password has been given."
+        if error['error']['message']=="TOO_MANY_ATTEMPTS_TRY_LATER : Access to this account has been temporarily disabled due to many failed login attempts. You can immediately restore it by resetting your password or you can try again later.":
+            return "Access to this account has been temporarily disabled due to many failed login attempts. You can try again later."
+        else:
+            return error['error']['message']
         
