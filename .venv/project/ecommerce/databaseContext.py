@@ -2,7 +2,6 @@ from datetime import date, datetime
 from email import message
 import json
 from logging import exception
-from msilib.schema import File
 import re
 from unittest import result
 from httplib2 import Http
