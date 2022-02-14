@@ -22,7 +22,7 @@ jobs:
             . venv/bin/activate
             cd .venv/project
             coverage run manage.py test -v 2
-            coverage report > report
-            coverage html > htmlcov
+            coverage report
+            coverage html
       - store_artifacts:
-          path: test-report
+          path: htmlcov
