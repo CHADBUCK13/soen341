@@ -15,7 +15,7 @@ class test_animals(TestCase):
         lion = Animal("lion","roar")
         self.assertEqual(lion.speak(), 'The lion says "roar"')
     
-    # def test_animals_cant_speak(self):
-    #     """Animals that cant speak are correctly identified"""
-    #     lion = Animal("lion","")
-    #     self.assertEqual(lion.speak(), 'The lion says "roar"')
+    def test_animals_cant_speak(self):
+        """Animals that cant speak are correctly identified"""
+        lion = Animal("lion","")
+        self.assertEqual(lion.speak(), 'The lion says "roar"')
