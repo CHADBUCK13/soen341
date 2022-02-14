@@ -41,7 +41,9 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'crispy_forms',
-    'ecommerce.apps.EcommerceConfig'
+    'ecommerce.apps.EcommerceConfig',
+    'coverage',
+    'service_objects'
 ]
 
 MIDDLEWARE = [

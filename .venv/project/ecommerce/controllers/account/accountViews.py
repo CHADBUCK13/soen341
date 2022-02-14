@@ -80,7 +80,6 @@ def logout(request):
     # Go to home page
     return redirectPage
 
-
 def signup(request):
     """
     Choose between Signing Up as a Buyer or as a Seller.

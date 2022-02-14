@@ -1,9 +1,16 @@
 from ..databaseContext import DatabaseContext
+
 class Buyer():
+    """
+    User who buys items from other users.
+    """
+
     def __init__(self,buyer_signup_data=None,buyer_data=None,email=None):
         """
-        Create a Buyer by giving arguments:
+        Create a new Buyer instance.
         """
+
+        # Create the Buyer with the info from the signup form
         if buyer_signup_data is not None:
             self.email=buyer_signup_data['email']
             self.password=buyer_signup_data['password1']
@@ -15,6 +22,7 @@ class Buyer():
             self.postal_code=buyer_signup_data['postal_code']
             self.date_of_birth=buyer_signup_data['date_of_birth']
         
+        # Create the Buyer with the info from the db
         if buyer_data is not None:
             self.firstname=buyer_data['firstname']
             self.lastname=buyer_data['lastname']
@@ -24,16 +32,18 @@ class Buyer():
             self.postal_code=buyer_data['postal_code']
             self.date_of_birth=buyer_data['date_of_birth']
         
+        # Set the Buyer's email if its given
         if email is not None:
             self.email=email
     
     def signup(self):
         """
-        Signup the user by authenticating them and creating a document in the buyers table. 
+        Signup the Buyer by authenticating him and creating a document in the buyers table. 
+        Returns: the auth info about the Buyer
         """
 
-        # Creates the user
-        buyerInfo = DatabaseContext().signup_as_buyer(
+        # Signup the buyer
+        return DatabaseContext().signup_as_buyer(
             email=self.email,
             password=self.password,
             firstname=self.firstname,
@@ -45,9 +55,10 @@ class Buyer():
             date_of_birth=self.date_of_birth
         )
 
-        return buyerInfo
-
     def accountType(self):
+        """
+        Returns: 'buyer'
+        """
         return "buyer"
 
 
