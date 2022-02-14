@@ -31,7 +31,6 @@
 *.out
 *.app
 
-*.txt
 *ttx.1
 *.pyc
 
@@ -58,7 +57,6 @@ media
 # Python # 
 *.py[cod] 
 *$py.class
-__pycache__/
 
 # Distribution / packaging 
 .Python build/ 
@@ -97,15 +95,6 @@ coverage.xml
 
 # pyenv 
 .python-version 
-
-# Environments 
-.env 
-.venv 
-env/ 
-venv/ 
-ENV/ 
-env.bak/ 
-venv.bak/ 
 
 # mkdocs documentation 
 /site 
