@@ -23,5 +23,3 @@ jobs:
             cd .venv/project
             coverage run manage.py test -v 2
             coverage report
-      - store_test_results:
-          path: test-results
