@@ -1,4 +1,4 @@
-from datetime import date, datetime
+from datetime import datetime
 import json
 from requests.exceptions import HTTPError
 import pyrebase
