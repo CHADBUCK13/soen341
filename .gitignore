@@ -34,7 +34,7 @@
 *ttx.1
 *.pyc
 
-lib/
+Lib/
 Scripts/
 pyvenv.cfg
 
