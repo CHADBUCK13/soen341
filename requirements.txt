@@ -3,3 +3,4 @@ Pyrebase4>=4.5.0
 firebase-admin>=5.2.0
 django>=4.0.2
 django-crispy-forms>=1.14.0
+service objects>=0.6.0
