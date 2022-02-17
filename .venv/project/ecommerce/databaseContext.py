@@ -14,6 +14,7 @@ class DatabaseContext():
         self.auth = self.firebase.auth()
         #firebase_admin.initialize_app()
         self.db = firestore.client()
+        
 
     def signup_as_buyer(self,email,password,firstname="",lastname="",country="",city="",address="",postal_code="",date_of_birth=""):
         try:
@@ -24,7 +25,7 @@ class DatabaseContext():
             user=self.auth.create_user_with_email_and_password(email,password)
 
             # Verify Email Address
-            #auth.send_email_verification(user['idToken']
+            self.auth.send_email_verification(user['idToken'])
 
             buyer_data = {
                 'firstname':firstname,
@@ -54,7 +55,7 @@ class DatabaseContext():
             user=self.auth.create_user_with_email_and_password(email,password)
 
             # Verify Email Address
-            #auth.send_email_verification(user['idToken']
+            self.auth.send_email_verification(user['idToken'])
 
             seller_data = {
                 'name':name,
@@ -117,6 +118,7 @@ class DatabaseContext():
         except HTTPError as e:
             return json.loads(e.strerror)
 
+
     def is_seller(self,email):
         try:
             return self.db.collection('sellers').document(email).get().exists
@@ -134,6 +136,24 @@ class DatabaseContext():
             return self.db.collection('sellers').document(email).get().to_dict()
         except HTTPError as e:
             return json.loads(e.strerror)
+
+    #Reset password option
+    def reset_password(self, email):
+
+        pasw = self.auth.send_password_reset_email(self, email)
+        print("Reset link sent by email")
+        return pasw 
+   
+    #Delete account func 
+  #  def delete_account():
+  #      details={
+   #     'idToken':idToken
+   # }
+   #     r=requests.post('https://identitytoolkit.googleapis.com/v1/accounts:delete?key={}'.format(apikey),data=details)
+    #    if 'error' in r.json().keys():
+   #        return {'status':'error','message':r.json()['error']['message']}   
+    #   return {'status':'success','data':r.json()}
+
 
 class Errors():
     def ShowErrorMessage(error):
