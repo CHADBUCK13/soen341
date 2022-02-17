@@ -43,6 +43,15 @@ pyvenv.cfg
 credentials.json
 firebaseConfig.json
 
+.venv/project/ecommerce/__pycache__/views.cpython-39.pyc
+*.pyc
+.venv/project/ecommerce/__pycache__/urls.cpython-39.pyc
+.venv/project/ecommerce/__pycache__/__init__.cpython-39.pyc
+.venv/project/ecommerce/__pycache__/urls.cpython-39.pyc
+.venv/project/ecommerce/__pycache__/__init__.cpython-39.pyc
+.venv/project/project/__pycache__/__init__.cpython-39.pyc
+.venv/project/project/__pycache__/settings.cpython-39.pyc
+
 # Django #
 *.log
 *.pot
