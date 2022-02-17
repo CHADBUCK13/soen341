@@ -4,7 +4,8 @@ from requests.exceptions import HTTPError
 import pyrebase
 from firebase_admin import firestore
 
-FIREBASE_CONFIG = json.load(open('../firebaseConfig.json'))
+
+FIREBASE_CONFIG = json.load(open('../pyrebaseConfig.json'))
 
 class DatabaseContext():
 
