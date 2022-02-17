@@ -5,7 +5,7 @@ import pyrebase
 from firebase_admin import firestore
 
 
-FIREBASE_CONFIG = json.load(open('../pyrebaseConfig.json'))
+FIREBASE_CONFIG = json.load(open('pyrebaseConfig.json'))
 
 class DatabaseContext():
 
