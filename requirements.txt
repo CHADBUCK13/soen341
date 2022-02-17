@@ -6,3 +6,4 @@ django-crispy-forms>=1.14.0
 django-service-objects>=0.7.0
 webdriver-manager>=3.5.2
 selenium>=4.1.0
+chromedriver-binary>=99.0.4844.17.0
