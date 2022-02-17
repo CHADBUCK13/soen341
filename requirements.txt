@@ -7,3 +7,5 @@ django-service-objects>=0.7.0
 webdriver-manager>=3.5.2
 selenium>=4.1.0
 chromedriver-binary>=99.0.4844.17.0
+chromedriver>=2.24.1
+chromedriver-py>=98.0.4758.80
