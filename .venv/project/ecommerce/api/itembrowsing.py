@@ -1,9 +1,9 @@
 from google.cloud import firestore 
 
-db = firestore.client()
+db = firestore.Client()
 
 #reference to items collections
-items_ref=db.reference(u'Items')
+items_ref=db.collection(u'items')
 
 def addItems(self,name="",sellerID=0,photo="",price=0,description="",weight=0,rating=0, score=0,sales=False,category=None):
 
@@ -47,26 +47,29 @@ def categories(category=""):
 #get all categories
 def get_categories():
 
-    categoryNamesRef=db.collection(u'Categories').document(u'names').stream()
-    categoryNamesDict = categoryNamesRef[0].to_dict()
+    categoryNamesRef=db.collection(u'Categories').document(u'names')
+    categoryNamesDict = categoryNamesRef.get().to_dict()
     return categoryNamesDict['names']
 
 #search all categories
 def get_all_items(numberOfItems = 0):
-    allItemsRef = items_ref.order_by('name').limit(numberOfItems).stream()
-    allItems = {}
+    allItemsRef = items_ref.stream()
+    allItems = []
 
     for itemDoc in allItemsRef:
-        allItems.update(itemDoc.to_dict())
+        #print(f'{itemDoc.id} => {itemDoc.to_dict()}')
+        allItems.append(itemDoc.to_dict())
+
+    
 
     return allItems
 
 def get_items_by_category(category = "", numberOfItems=0):
-    itemsRef = items_ref.where(u'category', u'==', category).order_by('name').limit(numberOfItems).stream()
-    allItems = {}
+    itemsRef = items_ref.where(u'category', u'==', category).limit(numberOfItems).stream()
+    allItems = []
 
     for itemDoc in itemsRef:
-        allItems.update(itemDoc.to_dict())
+        allItems.append(itemDoc.to_dict())
 
     return allItems
 
