@@ -1,10 +1,11 @@
 from django.shortcuts import render
+from .api import itembrowsing
 
 def home(request):
     
     # Get Categories
     categoriesOptions = ['Phones','Food','Games']
-    request.session['categoriesOptions'] = categoriesOptions
+    request.session['categoriesOptions'] = itembrowsing.get_categories()
 
 
     categorySearch=""
@@ -21,31 +22,11 @@ def home(request):
         is_logged_in = False
     request.session['is_logged_in'] = is_logged_in
 
-    # Get Items
-    items = [
-        {
-            'category': "Phones",
-            'description': "Best Phone out There!",
-            'name': "iPhone 12",
-            'price':1000,
-            'sellerID':1234,
-            'weight(g)':"200"
-        },
-        {
-            'category': "Phones",
-            'description': "Second Best Phone out There!",
-            'name': "iPhone X",
-            'price':1001,
-            'sellerID':1234,
-            'weight(g)':"204"
-        }
-    ]
 
     if categorySearch is not "":
-        request.session['items'] = [item for item in items if categorySearch in item['category']]
+        request.session['items'] = itembrowsing.get_items_by_category(categorySearch,100)
     else:
-        request.session['items'] = items
-
+        request.session['items'] = itembrowsing.get_all_items(100)
 
     request.session.modified = True
 
