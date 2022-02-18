@@ -3,6 +3,10 @@ from django.contrib.auth.forms import UserCreationForm
 from django.contrib.auth.models import User
 
 class BuyerSignupForm(UserCreationForm):
+    """
+    Form that takes in the required fields to Signup a Buyer.
+    """
+    
     email = forms.EmailField(label='Email', widget=forms.EmailInput())
     firstname = forms.CharField(label='First Name')
     lastname = forms.CharField(label='Last Name')
@@ -17,6 +21,10 @@ class BuyerSignupForm(UserCreationForm):
         fields=["email","password1","password2","firstname","lastname","country","city","address","postal_code","date_of_birth"]
 
 class SellerSignupForm(UserCreationForm):
+    """
+    Form that takes in the required fields to Signup a Seller.
+    """
+
     email = forms.EmailField(label='Email', widget=forms.EmailInput())
     name = forms.CharField(label='Name')
     country = forms.CharField(label='Country')
