@@ -10,8 +10,10 @@ def home(request):
     categorySearch=""
 
     if request.method=="POST":
-        if request.POST.get("category") is not None:
-            categorySearch = request.POST.get("category")            
+        categorySearch = request.POST.get("category")   
+
+
+    request.session['search'] = categorySearch
 
     if 'is_logged_in' in request.session:
         is_logged_in = request.session['is_logged_in']
@@ -39,7 +41,10 @@ def home(request):
         }
     ]
 
-    request.session['items'] = items
+    if categorySearch is not "":
+        request.session['items'] = [item for item in items if categorySearch in item['category']]
+    else:
+        request.session['items'] = items
 
 
     request.session.modified = True
