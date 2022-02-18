@@ -3,6 +3,8 @@
 <html>
     <head>
         <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <title>
             {% block title %}Ecommerce{% endblock %}
         </title>
@@ -10,21 +12,53 @@
         <link rel="stylesheet" href="{% static 'css/login.css' %}">
         <link rel="stylesheet" href="{% static 'css/signup.css' %}">
         <link rel="stylesheet" href="{% static 'css/icon.css' %}">
-        <link rel="stylesheet" href="{% static 'css/navbar.css' %}">
+        <link rel="stylesheet" href="{% static 'css/mainStyle.css' %}">
     </head>
     <body>
-        <main>
+            <header>
+                <!-- NAVIGATION BAR -->
+                <nav class = "navbar">
+                    <div class = "Topnavigationbar">
 
-            <div class="topnav">
-                <a class="active" href="../" id="id_home">Home</a>
-                {% if request.session.is_logged_in %}
-                <a href="/logout" id="id_logout">Logout</a>
-                {% else %}
-                <a href="/login" id="id_login">Login</a>
-                {% endif %}
-                <div></div>
-            </div>
-              
+                        <!-- Home Page Nav -->
+                        <a class="active" href="../" id="id_home"> Home </a>
+
+                        {% if request.session.is_logged_in %}
+                        <a href="/logout" id="id_logout">Logout</a>
+                        {% else %}
+                        <a href="/login" id="id_login">Login</a>
+                        {% endif %}
+
+                        <a href="#address"> Address  </a>
+        
+                        <a href="#returns-order"> Returns & Orders </a>
+                        <a href="#shopping-cart"> Shopping Cart </a>
+
+                        <input type= "text" placeholder="Search any item...">
+                    </div>
+        
+                    <div class = "secondnavbar">
+                        <a href="#bestseller"> Best Sellers </a>
+                        <a href="#deals"> Deals </a>
+                        <a href="#Members deal"> Members Deals </a>
+        
+                        <div class="dropdown"> 
+                            <button class = "dropbutn">Categories
+                                <i class = "fa fa-caret-down"> </i> 
+                            </button>
+                            <div class = "dropdown-content">
+                                {% for category in request.session.categoriesOptions %}
+                                <form method="post">
+                                    <input type="hidden" name="category" value="{{category}}">                                    
+                                    <a href="../" type="submit"> {{category}} </a>
+                                </form>
+                                {% endfor %}
+                            </div>
+                        </div>
+                    </div>
+                </nav>
+            </header>
+              <main>
             {% block content %}
             {% endblock %}
         </main>
