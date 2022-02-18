@@ -1,0 +1,273 @@
+/* Styling */
+body {
+    background-color: rgba(0, 255, 255, 0.295);
+    font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
+}
+
+h1 {
+    font-size: 50px;
+    word-break: break-all;
+}
+
+h4 {
+    color: white;
+}
+
+/*Top navigation bar*/
+
+.Topnavigationbar {
+    background-color:rgb(5, 5, 73);
+    overflow: hidden;
+}
+
+.Topnavigationbar a {
+    float: left;
+    color: white;
+    text-align: center;
+    padding: 14px 16px ;
+    text-decoration: none;
+    font-size: 17px;
+}
+
+.Topnavigationbar a:hover {
+    background-color: azure;
+    color : black;
+}
+
+.Topnavigationbar a.active {
+    background-color: cornflowerblue;
+    color: white;
+}
+
+.Topnavigationbar input[type=text] {
+    float: center;
+    padding: 6px;
+    border: none;
+    margin-top: 8px;
+    margin-right: 6px;
+    font-size: 17px;
+}
+
+/*Second nav bar style*/
+.secondnavbar {
+    background-color:lightblue;
+    overflow: hidden;
+}
+
+.secondnavbar a {
+    float: left;
+    font-size: 16px;
+    color: white;
+    text-align: center;
+    padding: 14px 16px;
+    text-decoration: none;
+}
+.dropdown {
+    float: left;
+    overflow: hidden;
+}
+
+.dropdown .dropbutn {
+    font-size: 16px;
+    border: none;
+    outline: none;
+    color: white;
+    padding: 14px 16px;
+    background-color: inherit;
+    font-family: inherit;
+    margin: 0;
+}
+
+.dropdown-content{
+    display: none;
+    position: absolute;
+    background-color: grey;
+    min-width: 160px;
+    box-shadow: 0px 9px 16px 0px rgba(0,0,0,0.2);
+    z-index: 1;
+}
+
+.dropdown-content a {
+    float: none;
+    color: black;
+    padding: 12px 16px;
+    text-decoration: none;
+    display: block;
+    text-align: left;
+}
+
+.dropdown-content a:hover {
+    background-color: grey;
+}
+
+.dropdown:hover .dropdown-content {
+    display: block;
+}
+
+/* Slideshow styling */
+*{box-sizing:border-box}
+
+.slideshow {
+    max-width: 1000px;
+    position: relative;
+    margin: auto;
+}
+
+.mySlides {
+    display: none;
+}
+
+/* Next & previous buttons */
+.previous, .next {
+    cursor: pointer;
+    position: absolute;
+    top: 50%;
+    width: auto;
+    margin-top: -22px;
+    padding: 16px;
+    color: white;
+    font-weight: bold;
+    font-size: 18px;
+    transition: 0.6s ease;
+    border-radius : 0 3px 3px 0;
+    user-select: none;
+}
+/* To the right */
+.next {
+    right: 0;
+    border-radius: 3px 0 0 3px;
+}
+
+.previous:hover, .next:hover {
+    background-color: rgba(0,0,0,0.8);
+}
+
+/* Caption text */
+.text {
+    color:skyblue;
+    font-size: 15px;
+    padding: 8px 12px;
+    position: absolute;
+    bottom: 8px;
+    width: 100%;
+    text-align:center;
+}
+
+/* Number */
+.number {
+    color: skyblue;
+    font-size: 12px;
+    padding: 8px 12px;
+    position: absolute;
+    top: 0;
+}
+
+/* Dots */
+.dot {
+    cursor:pointer;
+    height: 15px;
+    width: 15px;
+    margin: 0 2px;
+    background-color:grey;
+    border-radius: 50%;
+    display: inline-block;
+    transition: background-color 0.6s ease;
+}
+/* Dot hover  */
+.active, .dot:hover {
+    background-color:royalblue;
+}
+
+/* Animation */
+.mySlides {
+    -webkit-animation-name: fade;
+    -webkit-animation-duration: 1.5s;
+    animation-name: fade;
+    animation-duration: 1.5s;
+}
+
+@-webkit-keyframes fade {
+    from {opacity: 0.4}
+    to {opacity: 1}
+}
+@keyframes fade {
+    from {opacity: .4}
+    to {opacity: 1}
+}
+
+/* Items */
+/* Buttons */
+.btn {
+    border: none;
+    outline: none;
+    padding: 12px 16px;
+    background-color: white;
+    cursor: pointer;
+}
+.btn:hover {background-color: grey;}
+.btn.active {
+    background-color: deepskyblue;
+    color: white;
+}
+.btn.active:hover { background-color: grey;}
+
+/* Grid */
+* {
+    box-sizing: border-box;
+}
+.row {
+    margin: 8px -16px;
+}
+.column {
+    float: left;
+    width: 33.33%;
+    display: none;
+}
+.row:after{
+    content: "";
+    display: table;
+    clear: both;
+} 
+.row, 
+.row > .column {
+    padding: 8px;
+}
+.show {
+    display: block;
+}
+/* Items box styling */
+.itemBox {
+    position: relative;
+    width: 100%;
+    background-color:rgb(5, 92, 92);
+    padding: 10px;
+}
+.image {
+    opacity: 1;
+    display: block;
+    width: 100%;
+    height: 50%;
+    transition: .5s ease;
+    backface-visibility: hidden;
+}
+.bCaption {
+    transition: .5s ease;
+    opacity: 0;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    -ms-transform: translate(-50%, -50%);
+    text-align: center;
+}
+.itemBox:hover .image {
+    opacity: 0.3;
+}
+.itemBox:hover .bCaption {
+    opacity: 1;
+}
+.bText {
+    background-color: white;
+    color: skyblue;
+    font-size: 16px 32px;
+}

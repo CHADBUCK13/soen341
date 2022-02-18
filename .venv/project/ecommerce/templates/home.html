@@ -1,5 +1,262 @@
 {% extends 'baseLayout.html' %}
 
 {% block content %}
-HOMEPAGE
+
+<main>
+    <script >
+        //SLideshow 
+
+var slideIndex = 0;
+showSlides(slideIndex);
+
+//Next/previous controls
+function plusSlides(n) {
+    showSlides(slideIndex += n);
+}
+//Image control
+function currentSlide(n) {
+    showSlides(slideIndex = n );
+}
+
+function showSlides(n) {
+    var slides = document.getElementsByClassName("mySlides");
+    var dots = document.getElementsByClassName("dot");
+    if( n > slides.length - 1 ) { slideIndex = 0}
+    if ( n < 0 ) { slideIndex = slides.length }
+    for (var i = 0; i < slides.length; i++) {
+        slides[i].style.display = "none";
+    }
+     for (var i = 0; i < dots.length; i++) {
+         dots[i].className = dots[i].className.replace("active", "");
+     }
+     slides[slideIndex].style.display = "block";
+     //dots[slideIndex].className += "active";
+ }
+
+ //Filtering items
+
+ filterCategories("All")
+ function filterCategories(c) {
+     var x;
+     x = document.getElementsByClassName("column");
+     if(c == "All") c = "";
+
+     for(var i =0; i < x.length; i++) {
+         removeClass(x[i], "show");
+         if(x[i].className.indexOf(c) > -1) addclass(x[i], "show");
+     }
+ }
+
+ function addclass(element, name) {
+     var el, nam;
+     el = element.className.split(" ");
+     nam = name.split(" ");
+     for(var i = 0; i < nam.length; i++) {
+         if(el.indexOf(nam[i]) == -1) {
+             element.className += " " + nam[i];
+         }
+     }
+ }
+
+ function removeClass(element, name) {
+     var el, nam;
+     el = element.className.split(" ");
+     nam = name.split(" ");
+     for(var i = 0; i < nam.length; i++) {
+         while (el.indexOf(nam[i]) > -1) {
+             el.splice(el.indexOf(nam[i]), 1)
+         }
+     }
+     element.className = el.join(" ");
+ }
+
+
+    </script>
+
+<div id ="hero">
+
+    <!-- Slideshow container -->
+    <div class = "slideshow">
+        <div class ="mySlides">
+            <div class ="number"> 1 / 4 </div>
+            <img src="https://cdn.theculturetrip.com/wp-content/uploads/2017/12/33554467340_65375926e8_k.jpg" alt="..." style="width: 100%">
+            <div class ="text"> Caption </div>
+        </div>
+
+        <div class="mySlides">
+            <div class = "number"> 2 / 4 </div>
+            <img src="https://www.tate.org.uk/art/images/work/N/N05/N05976_9.jpg" alt=".." style="width: 100%;">
+            <div class = "text"> Caption </div>
+        </div>
+
+        <div class="mySlides">
+            <div class = "number"> 3 / 4 </div>
+            <img src="https://www.streetartbio.com/wp-content/uploads/2020/07/Capture4.jpg" alt=".." style="width: 100%;">
+            <div class = "text"> Caption </div>
+        </div>
+
+        <div class="mySlides">
+            <div class = "number"> 4 / 4 </div>
+            <img src="https://images.unsplash.com/photo-1617503752587-97d2103a96ea?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxzZWFyY2h8Mnx8YXJ0d29ya3xlbnwwfHwwfHw%3D&w=1000&q=80" alt=".." style="width: 100%;">
+            <div class = "text"> Caption 4 </div>
+        </div>
+
+        <!-- Previous and next buttons -->
+        <a class = "previous" onclick="plusSlides(-1)">&#10094; </a>
+        <a class = "next" onclick="plusSlides(1)">&#10095; </a>
+    </div>
+
+    <!-- Dots -->
+    <div style ="text-align:center">
+         <span class ="dot" onclick="currentSlide(0)"></span>
+         <span class ="dot" onclick="currentSlide(1)"></span>
+         <span class ="dot" onclick="currentSlide(2)"></span>
+         <span class ="dot" onclick="currentSlide(3)"></span>
+    </div>
+
+    <!-- Item box -->
+
+
+    <!-- Items -->
+
+    <div class ="row">
+
+        {% for item in request.session.items %}
+        <div>
+            <div class="itemBox">
+                <h2> {{item.name}} </h2>
+                <h3> ONLY ${{item.price}}!!! </h3>
+                <p>
+                    {{item.description}}
+                </p>
+                <button>Add to Cart</button>
+            </div>
+        </div>
+        <br>
+        {% endfor %}
+        
+        <!--
+        <div class ="column Clothing">
+            <div class="itemBox">
+                <img src="https://99designs-blog.imgix.net/blog/wp-content/uploads/2016/08/bp.png?auto=format&q=60&fit=max&w=930" alt=".." class ="image" style="width: 100%">
+                <h4> Women </h4>
+                <div class = "bCaption">  
+                    <div class= "bText"> Shop Women </div>
+                </div> 
+            </div>
+        </div>
+        <div class ="column Clothing">
+            <div class="itemBox">
+                <img src="https://99designs-blog.imgix.net/blog/wp-content/uploads/2016/08/bp.png?auto=format&q=60&fit=max&w=930" alt=".." class ="image" style="width: 100%">
+                <h4> Men </h4>   
+                <div class = "bCaption">  
+                    <div class= "bText"> Shop Men </div>
+                </div> 
+            </div>
+        </div>
+        <div class ="column Clothing">
+            <div class="itemBox">
+                <img src="https://99designs-blog.imgix.net/blog/wp-content/uploads/2016/08/bp.png?auto=format&q=60&fit=max&w=930" alt=".." class ="image" style="width: 100%">
+                <h4> Children </h4>
+                <div class = "bCaption">  
+                    <div class= "bText"> Shop Children </div>
+                </div> 
+            </div>
+        </div>
+        <div class ="column Household">
+            <div class="itemBox">
+                <img src="https://99designs-blog.imgix.net/blog/wp-content/uploads/2016/08/bp.png?auto=format&q=60&fit=max&w=930" alt=".." class ="image" style="width: 100%">
+                <h4> Room </h4>
+                <div class = "bCaption">  
+                    <div class= "bText"> Shop Room </div>
+                </div> 
+            </div>
+        </div>
+        <div class ="column Household">
+            <div class="itemBox">
+                <img src="https://99designs-blog.imgix.net/blog/wp-content/uploads/2016/08/bp.png?auto=format&q=60&fit=max&w=930" alt=".." class ="image" style="width: 100%">
+                <h4> Kitchen </h4>
+                <div class = "bCaption">  
+                    <div class= "bText"> Shop Kitchen </div>
+                </div> 
+            </div>
+        </div>
+        <div class ="column Household">
+            <div class="itemBox">
+                <img src="https://99designs-blog.imgix.net/blog/wp-content/uploads/2016/08/bp.png?auto=format&q=60&fit=max&w=930" alt=".." class ="image" style="width: 100%">
+                <h4> Washroom </h4>
+                <div class = "bCaption">  
+                    <div class= "bText"> Shop Washroom </div>
+                </div> 
+            </div>
+        </div>
+        <div class ="column Backyard">
+            <div class="itemBox">
+                <img src="https://99designs-blog.imgix.net/blog/wp-content/uploads/2016/08/bp.png?auto=format&q=60&fit=max&w=930" alt=".." class ="image" style="width: 100%">
+                <h4> Plants </h4>
+                <div class = "bCaption">  
+                    <div class= "bText"> Shop Plants </div>
+                </div> 
+            </div>
+        </div>
+        <div class ="column Backyard">
+            <div class="itemBox">
+                <img src="https://99designs-blog.imgix.net/blog/wp-content/uploads/2016/08/bp.png?auto=format&q=60&fit=max&w=930" alt=".." class ="image" style="width: 100%">
+                <h4> Sports </h4>
+                <div class = "bCaption">  
+                    <div class= "bText"> Shop Sports </div>
+                </div> 
+            </div>
+        </div>
+        <div class ="column Travelling">
+            <div class="itemBox">
+                <img src="https://99designs-blog.imgix.net/blog/wp-content/uploads/2016/08/bp.png?auto=format&q=60&fit=max&w=930" alt=".." class ="image" style="width: 100%">
+                <h4> Luggage </h4>
+                <div class = "bCaption">  
+                    <div class= "bText"> Shop Luggage </div>
+                </div> 
+            </div>
+        </div>
+        <div class ="column Automobile">
+            <div class="itemBox">
+                <img src="https://99designs-blog.imgix.net/blog/wp-content/uploads/2016/08/bp.png?auto=format&q=60&fit=max&w=930" alt=".." class ="image" style="width: 100%">
+                <h4> Accessory </h4>
+                <div class = "bCaption">  
+                    <div class= "bText"> Shop Car Accessory </div>
+                </div> 
+            </div>
+        </div>
+        <div class ="column Automobile">
+            <div class="itemBox">
+                <img src="https://99designs-blog.imgix.net/blog/wp-content/uploads/2016/08/bp.png?auto=format&q=60&fit=max&w=930" alt=".." class ="image" style="width: 100%">
+                <h4> Parts </h4>
+                <div class = "bCaption">  
+                    <div class= "bText"> TEXT </div>
+                </div> 
+            </div>
+        </div>
+        <div class ="column Automobile">
+            <div class="itemBox">
+                <img src="https://99designs-blog.imgix.net/blog/wp-content/uploads/2016/08/bp.png?auto=format&q=60&fit=max&w=930" alt=".." class ="image" style="width: 100%">
+                <h4> Oil </h4>
+                <div class = "bCaption">  
+                    <div class= "bText"> Shop Oil </div>
+                </div> 
+            </div>
+        </div>
+
+
+    -->
+    </div>
+
+
+
+    
+
+
+
+
+
+</div>
+</main>
 {% endblock %}
