@@ -1,5 +1,5 @@
 from google.cloud import firestore 
-#updated linked frontend to backend 
+
 db = firestore.Client()
 
 #reference to items collections
