@@ -1,0 +1,43 @@
+{% extends 'baseLayout.html' %}
+
+{% block head %}
+<style>
+    label{
+        display: block;
+        margin-top: 30px;
+        font-size: 16px;
+        font-weight: 500;
+        color: black;
+        font-family: 'Poppins',sans-serif;
+    }
+    
+</style>
+{% endblock %}
+
+{% block content %}
+{% load static %}
+<div class="reg">
+    <form class="reg" method="post" id="login_form">
+        <h3 class="reg">Log In</h3>
+
+        {% csrf_token %}
+        {{ loginForm }}
+
+        <p class="reg"><a>Reset Password</a></p>
+        <button class="reg" type="submit" id="id_login">Log In</button>
+
+        <div class="opt">
+            <h3 class="reg">Don't Have an Account?<br/> 
+                <a href="/signupB">
+                    <button type="button" class="reg">Signup as a Buyer</button>
+                </a>
+                <br/> OR <br/>
+                <a href="/signupS">
+                    <button type="button" class="reg">Signup as a Seller</button>
+                </a>
+            </h3>
+        </div>
+    </form>
+
+</div>
+{% endblock %}

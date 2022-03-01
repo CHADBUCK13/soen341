@@ -51,7 +51,8 @@ def login(request):
         login_form = LoginForm()
     
     # Show the login page with the login form
-    return render(request, 'login.html',{"form":login_form})
+    return render(request,'register.html',{"loginForm":login_form})
+    # return render(request, 'login.html',{"form":login_form})
 
 def logout(request):
     """
@@ -80,11 +81,6 @@ def logout(request):
     # Go to home page
     return redirectPage
 
-def signup(request):
-    """
-    Choose between Signing Up as a Buyer or as a Seller.
-    """
-    return render(request,'accountOption.html')
 
 def signupBuyer(request):
     """
@@ -127,7 +123,7 @@ def signupBuyer(request):
         signup_form = BuyerSignupForm()
 
     # Show the Signup Page with the Buyer Signup Form
-    return render(request, 'signup.html',{"form":signup_form})
+    return render(request, 'signup.html',{"signupForm":signup_form})
 
 def signupSeller(request):
     """
@@ -170,4 +166,4 @@ def signupSeller(request):
         signup_form = SellerSignupForm()
 
     # Show the Signup Page with the Seller Signup Form
-    return render(request, 'signup.html',{"form":signup_form})
+    return render(request, 'signup.html',{"signupForm":signup_form})

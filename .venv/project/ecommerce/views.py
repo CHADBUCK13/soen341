@@ -23,7 +23,7 @@ def home(request):
     request.session['is_logged_in'] = is_logged_in
 
 
-    if categorySearch is not "":
+    if categorySearch != "":
         request.session['items'] = itembrowsing.get_items_by_category(categorySearch,100)
     else:
         request.session['items'] = itembrowsing.get_all_items(100)
