@@ -1,17 +1,20 @@
 from django.shortcuts import render
+from .api import itembrowsing
 
 def home(request):
     
     # Get Categories
     categoriesOptions = ['Phones','Food','Games']
-    request.session['categoriesOptions'] = categoriesOptions
+    request.session['categoriesOptions'] = itembrowsing.get_categories()
 
 
     categorySearch=""
 
     if request.method=="POST":
-        if request.POST.get("category") is not None:
-            categorySearch = request.POST.get("category")            
+        categorySearch = request.POST.get("category")   
+
+
+    request.session['search'] = categorySearch
 
     if 'is_logged_in' in request.session:
         is_logged_in = request.session['is_logged_in']
@@ -19,28 +22,11 @@ def home(request):
         is_logged_in = False
     request.session['is_logged_in'] = is_logged_in
 
-    # Get Items
-    items = [
-        {
-            'category': "Phones",
-            'description': "Best Phone out There!",
-            'name': "iPhone 12",
-            'price':1000,
-            'sellerID':1234,
-            'weight(g)':"200"
-        },
-        {
-            'category': "Phones",
-            'description': "Second Best Phone out There!",
-            'name': "iPhone X",
-            'price':1001,
-            'sellerID':1234,
-            'weight(g)':"204"
-        }
-    ]
 
-    request.session['items'] = items
-
+    if categorySearch is not "":
+        request.session['items'] = itembrowsing.get_items_by_category(categorySearch,100)
+    else:
+        request.session['items'] = itembrowsing.get_all_items(100)
 
     request.session.modified = True
 
