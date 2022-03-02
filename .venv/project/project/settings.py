@@ -10,9 +10,11 @@ For the full list of settings and their values, see
 https://docs.djangoproject.com/en/4.0/ref/settings/
 """
 
+import json
 import os
 from pathlib import Path
 import firebase_admin
+from firebase_admin import credentials
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -87,8 +89,13 @@ DATABASES = {
     }
 }
 
+credJSON = os.getenv('GOOGLE_APPLICATION_CREDENTIALS')
+credDict = json.loads(credJSON)
+
+cred = credentials.Certificate(credDict)
+
 # Firebase Firestore Database connection
-firebase_admin.initialize_app()
+firebase_admin.initialize_app(credential=cred)
 
 #db= firestore.client()
 #db.collection('accounts').add({'username':'userdadd','email':'email@gmail.com','password':'password123'})
