@@ -32,6 +32,12 @@ def login(request):
                 login_form.add_error(None,Errors.ShowErrorMessage(user))
             
             else:
+                
+                if User.is_seller(user['email']):
+                    request.session['is_seller']=True
+                else:
+                    request.session['is_seller']=False
+
                 # Add the login status to the session
                 request.session['is_logged_in']=True
                 request.session.modified = True
@@ -52,7 +58,7 @@ def login(request):
     
     # Show the login page with the login form
     return render(request,'register.html',{"loginForm":login_form})
-    # return render(request, 'login.html',{"form":login_form})
+
 
 def logout(request):
     """
@@ -81,7 +87,6 @@ def logout(request):
     # Go to home page
     return redirectPage
 
-
 def signupBuyer(request):
     """
     Signup a new Buyer Account.
@@ -105,6 +110,7 @@ def signupBuyer(request):
             # Otherwise, login the user.
             else:
                 # Add the login status to the session
+                request.session['is_seller']=False
                 request.session['is_logged_in']=True
                 request.session.modified = True
 
@@ -148,6 +154,7 @@ def signupSeller(request):
             # Otherwise, login the user.
             else:
                 # Add the login status to the session
+                request.session['is_seller']=True
                 request.session['is_logged_in']=True
                 request.session.modified = True
 

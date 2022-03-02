@@ -1,8 +1,8 @@
-div.reg{
+div.itemForm{
     padding: 2%;
 }
 
-form.reg{
+form.itemForm{
     background-color: rgba(123, 132, 184, 0.39);
     border-radius: 10px;
     backdrop-filter: blur(10px);
@@ -16,14 +16,14 @@ form.reg{
 
 
 
-form *.reg{
+form *.itemForm{
     font-family: 'Poppins',sans-serif;
     color: #000000;
     letter-spacing: 0.5px;
     outline: none;
     border: none;
 }
-form h3.reg{
+form h3.itemForm{
     font-size: 32px;
     font-weight: 500;
     line-height: 42px;
@@ -32,14 +32,14 @@ form h3.reg{
     font-family: 'Poppins',sans-serif;
 }
 
-label.reg{
+label.itemForm{
     display: block;
     margin-top: 30px;
     font-size: 16px;
     font-weight: 500;
     color: black;
 }
-input.reg{
+input.itemForm{
     display: block;
     height: 50px;
     width: 100%;
@@ -55,7 +55,7 @@ input.reg{
 ::placeholder{
     color: #000000;
 }
-button.reg{
+button.itemForm{
     margin-top: 20px;
     width: 100%;
     background-color: #ffffff;
@@ -76,7 +76,7 @@ button.reg{
     padding-top: 20px;
 }
 
-p.reg{
+p.itemForm{
     color: #000000;
     padding-top: 20px;
     font-family: 'Poppins',sans-serif;

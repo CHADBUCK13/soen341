@@ -1,5 +1,6 @@
 from datetime import datetime
 import json
+from pickle import NONE
 from requests.exceptions import HTTPError
 import pyrebase
 from firebase_admin import firestore
@@ -108,6 +109,30 @@ class DatabaseContext():
         try:
             user = self.auth.get_account_info(idToken)
             return user
+        except HTTPError as e:
+            return json.loads(e.strerror)
+
+    def get_account_from_refreshToken(self,refreshToken):
+        try:
+            user = self.auth.get_account_info(self.auth.refresh(refreshToken)['idToken'])
+            return user
+        except HTTPError as e:
+            return json.loads(e.strerror)
+
+    def refresh_idToken(self,request, redirect):
+        try:
+            idToken = request.COOKIES.get('idToken',None)
+            refreshToken = request.COOKIES.get('refreshToken',None)
+
+            if idToken is None and refreshToken is not None:
+                user = self.auth.refresh(refreshToken)
+                redirect.set_cookie('idToken', user['idToken'], max_age = 1800)
+                redirect.set_cookie('refreshToken',user['refreshToken'],max_age=3600)
+                return redirect
+            elif idToken is None and refreshToken is None:
+                return False
+            else:
+                return request
         except HTTPError as e:
             return json.loads(e.strerror)
 

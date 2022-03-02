@@ -5,7 +5,7 @@ db = firestore.Client()
 #reference to items collections
 items_ref=db.collection(u'items')
 
-def addItems(self,name="",sellerID=0,photo="",price=0,description="",weight=0,rating=0, score=0,sales=False,category=None):
+def addItems(name="",sellerID=0,photo="",price=0,description="",weight=0, score=0,sales=False,category=None,amountInStock=0):
 
     itemlocation = "items"
 
@@ -17,6 +17,7 @@ def addItems(self,name="",sellerID=0,photo="",price=0,description="",weight=0,ra
         'description':description,
         'weight':weight,
         'sales':sales,
+        'amountInSotck':amountInStock,
         'rating': {
             'score':score,   
             'numberofreviews':0        
@@ -27,7 +28,7 @@ def addItems(self,name="",sellerID=0,photo="",price=0,description="",weight=0,ra
         }
     }
 
-    self.db.collection(itemlocation).document(name).set(items_data)
+    db.collection(itemlocation).document(name).set(items_data)
     
 
 #search for items based on price range

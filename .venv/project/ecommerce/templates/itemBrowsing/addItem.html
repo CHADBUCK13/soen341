@@ -1,0 +1,33 @@
+{% extends 'baseLayout.html' %}
+
+{% block head %}
+<style>
+    label{
+        display: block;
+        margin-top: 30px;
+        font-size: 16px;
+        font-weight: 500;
+        color: black;
+        font-family: 'Poppins',sans-serif;
+    }
+    
+</style>
+{% endblock %}
+
+{% block content %}
+{% load static %}
+
+<div class="itemForm">
+    <form class="itemForm" method="post" id="addItem_form" enctype="multipart/form-data">
+        <h3 class="reg">Place Item on Sale</h3>
+        
+        {% csrf_token %}
+        {{ itemForm }}
+
+        <button class="itemForm" type="submit" id="id_addItem">
+            Publish
+        </button>
+    </form>
+</div>
+
+{% endblock %}
