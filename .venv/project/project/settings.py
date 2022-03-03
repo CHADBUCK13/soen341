@@ -89,7 +89,8 @@ DATABASES = {
     }
 }
 
-credJSON = os.environ['GOOGLE_APPLICATION_CREDENTIALS']
+
+credJSON = os.getenv('GOOGLE_APPLICATION_CREDENTIALS')
 
 credDict = json.loads(credJSON)
 

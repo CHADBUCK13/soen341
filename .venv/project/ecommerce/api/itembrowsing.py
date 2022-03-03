@@ -1,5 +1,6 @@
 from firebase_admin import firestore 
 
+
 db = firestore.client()
 
 #reference to items collections
