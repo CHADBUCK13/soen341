@@ -1,10 +1,9 @@
-from email import message
-from lib2to3.pgen2 import token
 from django.shortcuts import redirect, render
+
+from ...api.storage import store_image
 from ...databaseContext import DatabaseContext
 from ..forms.itemForm import ItemForm
 from ...models.items import Item
-from ..account import accountViews
 
 def addItem(request):
     """
@@ -29,9 +28,12 @@ def addItem(request):
                 token = request.COOKIES.get('idToken',None)
                 current_user = DatabaseContext().get_account_info(token)
             
-            Item(add_item_form_data=item_form.data,sellerID=current_user['users'][0]['email']).save()
+            # Save the Image File into the DB Storage
+            image_url=store_image(request.FILES.get('image',None),item_form.data['name'])
 
-            return status
+            Item(add_item_form_data=item_form.data,sellerID=current_user['users'][0]['email'],photo=image_url).save()
+
+            return redirect('home')
     else:
         item_form = ItemForm()
 

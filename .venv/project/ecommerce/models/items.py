@@ -5,7 +5,7 @@ class Item():
     Item that can be put on sale.
     """
 
-    def __init__(self, add_item_form_data=None, item_data=None, sellerID=None):
+    def __init__(self, add_item_form_data=None, item_data=None, sellerID=None,photo=None):
         """
         Creates a new Item instance.
         """    
@@ -22,7 +22,7 @@ class Item():
             self.numberofreviews = 0
             self.score = 0
             self.sales = False 
-            self.photo= ""
+            self.photo= photo
 
         if item_data is not None:
             pass

@@ -1,11 +1,11 @@
-from google.cloud import firestore 
+from firebase_admin import firestore 
 
-db = firestore.Client()
+db = firestore.client()
 
 #reference to items collections
 items_ref=db.collection(u'items')
 
-def addItems(name="",sellerID=0,photo="",price=0,description="",weight=0, score=0,sales=False,category=None,amountInStock=0):
+def addItems(name="",sellerID=0,photo="",price=0,description="",weight=0, score=0,sales=False,category=None,amountInStock=0,):
 
     itemlocation = "items"
 

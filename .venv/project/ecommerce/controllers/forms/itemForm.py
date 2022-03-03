@@ -83,6 +83,14 @@ class ItemForm(forms.Form):
             'placeholder':0
         })
     )
+
+    image = forms.ImageField(
+        label="Item Image",
+        required=True,
+        widget=forms.FileInput(attrs={
+            'type':'file',
+            'name':'image'
+        }))
     
 class Meta:
-    fields=['name','price','description','weight','category','relatedCategories','amount']
+    fields=['name','price','description','weight','category','relatedCategories','amount','image']
