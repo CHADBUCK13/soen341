@@ -1,6 +1,6 @@
-from google.cloud import firestore 
+from firebase_admin import firestore
 
-db = firestore.Client()
+db = firestore.client()
 
 #reference to items collections
 items_ref=db.collection(u'items')
