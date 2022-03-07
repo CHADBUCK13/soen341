@@ -5,12 +5,15 @@ from ...models.buyer import Buyer
 from ...models.user import User
 from ...controllers.forms.signupForm import BuyerSignupForm, SellerSignupForm
 from ...controllers.forms.loginForm import LoginForm
+from ...controllers.forms.resetPasswordForm import ResetPasswordForm
+from ...databaseContext import DatabaseContext
 
 
-def login(request):
+def login(request, resetMsg=""):
     """
     Logins a user.
     """
+
     # Login form has been submitted
     if request.method == "POST":
         
@@ -57,7 +60,28 @@ def login(request):
         login_form = LoginForm()
     
     # Show the login page with the login form
-    return render(request,'register.html',{"loginForm":login_form})
+    return render(request,'register.html',{"loginForm":login_form,"resetMsg":resetMsg})
+
+
+def resetPassword(request):
+
+    if request.method == "POST":
+        
+        reset_form = ResetPasswordForm(request.POST)
+
+        if reset_form.is_valid():
+            
+            email = reset_form.cleaned_data['email']
+
+            if User.is_buyer(email) or User.is_seller(email):
+                User.reset_password(email)
+                return login(request, resetMsg="Password Reset Link has been Sent!")
+            else:
+                reset_form.add_error(None,"No Account Exists with the given Email.")
+    else:
+        reset_form = ResetPasswordForm()
+
+    return render(request,'resetPassword.html',{'reset_form':reset_form})
 
 
 def logout(request):

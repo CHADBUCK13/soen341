@@ -49,7 +49,7 @@ def searchItems(request):
         searchText = request.POST['searchText']
 
         # If no keyword was given, return to home
-        if searchText is "":
+        if searchText == "":
             return render(request,'home.html')
 
         # Get items that match that keyword

@@ -162,13 +162,13 @@ class DatabaseContext():
         except HTTPError as e:
             return json.loads(e.strerror)
 
-    #Reset password option
     def reset_password(self, email):
-
-        pasw = self.auth.send_password_reset_email(self, email)
-        print("Reset link sent by email")
-        return pasw 
+        """
+        Sends a Password Reset link to the given Email.
+        """
+        self.auth.send_password_reset_email(email) 
    
+
     #Delete account func 
   #  def delete_account():
   #      details={

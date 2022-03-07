@@ -3,12 +3,13 @@ from django.contrib.staticfiles.urls import staticfiles_urlpatterns
 
 from .controllers.itemBrowsing.itemBrowsingViews import addItem, searchItems
 from .views import home
-from .controllers.account.accountViews import signupBuyer,signupSeller,login,logout
+from .controllers.account.accountViews import signupBuyer,signupSeller,login,logout,resetPassword
 
 urlpatterns = [
     path("", home, name="home"),
     path("home/", home, name="home"),
     path("login/", login, name="login"),
+    path("resetP/",resetPassword,name="resetPassword"),
     path("logout/",logout, name="logout"),
     path("signupB/",signupBuyer,name="signupBuyer"),
     path("signupS/",signupSeller,name="signupSeller"),
