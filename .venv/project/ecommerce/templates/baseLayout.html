@@ -15,45 +15,78 @@
         <link rel="preconnect" href="https://fonts.gstatic.com">
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
         <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;500;600&display=swap" rel="stylesheet">
-        
+        <style>
+            .categoryList{
+                display: block;
+                height: 50px;
+                width: 100%;
+                background-color: rgba(110, 134, 199, 0.479);
+                border-radius: 3px;
+                padding: 0 10px;
+                margin-top: 1px;
+                font-size: 14px;
+                font-weight: 300;
+                border: 2px solid rgba(255,255,255,0.1);
+                box-shadow: 0 0 20px rgba(8,7,16,0.6);
+                font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
+            }
+        </style>
     </head>
     <body>
-            <header>
-                <!-- NAVIGATION BAR -->
-                <nav class = "navbar">
-                    <div class = "Topnavigationbar">
+        <header>
+            <!-- NAVIGATION BAR -->
+            <nav class = "navbar">
+                <div class = "Topnavigationbar">
 
-                        <!-- Home Page Nav -->
-                        <a class="active" href="../" id="id_home"> Home </a>
+                    <!-- Home Page Nav -->
+                    <a class="active" href="../" id="id_home"> Home </a>
 
-                        {% if request.session.is_logged_in %}
+                    {% if request.session.is_logged_in %}
                         <a href="/logout" id="id_logout">Logout</a>
-                        {% else %}
+                    {% else %}
                         <a href="/login" id="id_login">Login</a>
-                        {% endif %}
+                    {% endif %}
 
-                        {% if request.session.is_logged_in and request.session.is_seller %}
+                    {% if request.session.is_logged_in and request.session.is_seller %}
                         <a href="/addItem" id="id_addItem">Add Item</a>
-                        {% endif %}
+                    {% endif %}
 
-                        <a href="#address"> Address  </a>
+                    <a href="#address"> Address  </a>
         
-                        <a href="#returns-order"> Returns & Orders </a>
-                        <a href="#shopping-cart"> Shopping Cart </a>
-                            <input type= "text" name="searchText" placeholder="Search any item...">
-                    </div>
+                    <a href="#returns-order"> Returns & Orders </a>
+                    <a href="#shopping-cart"> Shopping Cart </a>
+
+
+                    <!-- SEARCH BAR -->
+                    <form method="post" action="{% url 'searchItems' %}">
+
+                        {% csrf_token %}
+
+                        <input type= "search" name="searchText" placeholder="Search Items...">
+                        <button>
+                            Search
+                        </button>
+                    </form>
+                </div>
         
-                    <div class = "secondnavbar">
-                        <a href="#bestseller"> Best Sellers </a>
-                        <a href="#deals"> Deals </a>
-                        <a href="#Members deal"> Members Deals </a>
+                <div class = "secondnavbar">
+                    <a href="#bestseller"> Best Sellers </a>
+                    <a href="#deals"> Deals </a>
+                    <a href="#Members deal"> Members Deals </a>
         
-                        <div class="dropdown"> 
-                            <button class = "dropbutn">Categories
-                                <i class = "fa fa-caret-down"> </i> 
-                            </button>
-                            <div class = "dropdown-content">
-                                {% for category in request.session.categoriesOptions %}
+                    <div class="dropdown"> 
+                        <button class = "dropbutn">Categories
+                            <i class = "fa fa-caret-down"> </i> 
+                        </button>
+                        <div class = "dropdown-content">
+                            {% for category in request.session.categoriesOptions %}
+                                    <a class="categoryList">
+                                        {{category}}
+                                    </a>
+                            {% endfor %}
+                            
+                            <!--
+                            {% for category in request.session.categoriesOptions %}
                                 <form method="post">
                                     {% csrf_token %}
                                     <input type="hidden" name="category" value="{{category}}">       
@@ -64,6 +97,7 @@
                                     </a>
                                 </form>
                                 {% endfor %}
+                            -->
                             </div>
                         </div>
                     </div>

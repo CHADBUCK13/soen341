@@ -1,6 +1,7 @@
 from django.shortcuts import redirect, render
 
 from ...api.storage import store_image
+from ...api import itembrowsing
 from ...databaseContext import DatabaseContext
 from ..forms.itemForm import ItemForm
 from ...models.items import Item
@@ -38,3 +39,29 @@ def addItem(request):
         item_form = ItemForm()
 
     return render(request,'addItem.html',{"itemForm":item_form})
+
+
+def searchItems(request):
+
+    if request.method == "POST":
+
+        # Get the search Keyword
+        searchText = request.POST['searchText']
+
+        # If no keyword was given, return to home
+        if searchText is "":
+            return render(request,'home.html')
+
+        # Get items that match that keyword
+        items = itembrowsing.get_items_by_search(searchText=searchText)
+
+        # Inform user that no items were found
+        if len(items) == 0:
+            return render(request,'searchItems.html',{'searchText':searchText,'noItems':True})
+
+        # Display found items
+        return render(request,'searchItems.html',{'searchText':searchText,'items':items})
+
+    else:
+        return render(request,'home.html')
+

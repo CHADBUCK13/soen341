@@ -1,4 +1,5 @@
-from ..api.itembrowsing import *
+from ..api import itembrowsing
+from difflib import SequenceMatcher
 
 class Item():
     """
@@ -25,7 +26,16 @@ class Item():
             self.photo= photo
 
         if item_data is not None:
-            pass
+            self.amountInStock = item_data['amountInStock']
+            self.category = Category(category_name=item_data['category']['category_name'],related_categories=item_data['category']['relatedcategory'])
+            self.description = item_data['description']
+            self.name=item_data['name']
+            self.photo=item_data['photo']
+            self.price=item_data['price']
+            self.numberofreviews = item_data['rating']['numberofreviews']
+            self.score=item_data['rating']['score']
+            self.sellerID=item_data['sellerID']
+            self.weight=item_data['weight']
 
         if sellerID is not None:
             self.sellerID = sellerID
@@ -34,7 +44,7 @@ class Item():
         """
         Saves the current Item in the DB.
         """
-        addItems(
+        itembrowsing.addItems(
             name=self.name,
             sellerID=self.sellerID,
             photo=self.photo,
@@ -45,6 +55,21 @@ class Item():
             sales=self.sales,
             amountInStock=self.amountInStock,
             category=Category(self.category,self.relatedCategories))
+
+    def match(self,searchText=""):
+        ACCEPTANCE_RATIO = 0.5
+
+        if SequenceMatcher(None,self.category.category_name,searchText).ratio() >= ACCEPTANCE_RATIO: 
+            return  True
+        if SequenceMatcher(None,self.category.related_categories,searchText).ratio() >= ACCEPTANCE_RATIO:
+            return True
+        if SequenceMatcher(None,self.name,searchText).ratio() >= ACCEPTANCE_RATIO:
+            return True
+        if SequenceMatcher(None,self.description,searchText).ratio() >= ACCEPTANCE_RATIO:
+            return True
+
+        return False
+
 
 
 class Category:
@@ -58,3 +83,4 @@ class Rating:
         self.date = date
         self.score = score
         self.review =review
+
