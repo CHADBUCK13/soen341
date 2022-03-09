@@ -47,6 +47,10 @@
                         <a href="/login" id="id_login">Login</a>
                     {% endif %}
 
+                    {% if request.session.is_logged_in %}
+                        <a href="/banking" id="id_banking">Payment Info</a>
+                    {% endif %}
+
                     {% if request.session.is_logged_in and request.session.is_seller %}
                         <a href="/addItem" id="id_addItem">Add Item</a>
                     {% endif %}

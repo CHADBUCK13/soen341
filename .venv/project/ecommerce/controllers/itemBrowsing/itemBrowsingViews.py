@@ -1,5 +1,5 @@
 from django.shortcuts import redirect, render
-
+from ...api.bankingInfo import *
 from ...api.storage import store_image
 from ...api import itembrowsing
 from ...databaseContext import DatabaseContext
@@ -29,12 +29,16 @@ def addItem(request):
                 token = request.COOKIES.get('idToken',None)
                 current_user = DatabaseContext().get_account_info(token)
             
-            # Save the Image File into the DB Storage
-            image_url=store_image(request.FILES.get('image',None),item_form.data['name'])
+            if hasPaymentInfo(current_user['users'][0]['email']):
 
-            Item(add_item_form_data=item_form.data,sellerID=current_user['users'][0]['email'],photo=image_url).save()
+                # Save the Image File into the DB Storage
+                image_url=store_image(request.FILES.get('image',None),item_form.data['name'])
 
-            return redirect('home')
+                Item(add_item_form_data=item_form.data,sellerID=current_user['users'][0]['email'],photo=image_url).save()
+
+                return redirect('home')
+            else:
+                item_form.add_error(None,"Please Update your Payment Information before Adding Items for Sale.")
     else:
         item_form = ItemForm()
 
