@@ -3,6 +3,8 @@ import os
 from time import sleep
 from django.test import TestCase
 from django.urls import reverse
+from ..api import itembrowsing
+from ..views import home
 
 class TestLogin(TestCase):    
 
@@ -38,3 +40,12 @@ class TestLogout(TestCase):
         response = self.client.get(url)
         
         self.assertEqual(response.status_code, 302)
+        
+        
+class Testhome(TestCase):
+    def test_home_response_code(self):
+        url = reverse("home")
+        response = self.client.get(url)
+        self.assertTemplateUsed(response,'home.html')
+        self.assertEqual(response.status_code, 200)
+    
