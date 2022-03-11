@@ -1,4 +1,4 @@
-from ..databaseContext import DatabaseContext
+from ..api.accountContext import AccountContext
 from .buyer import Buyer
 from .seller import Seller
 
@@ -11,13 +11,13 @@ class User():
         """
         Returns TRUE if User is a Buyer.
         """
-        return DatabaseContext().is_buyer(email)
+        return AccountContext().is_buyer(email)
     
     def is_seller(email):
         """
         Returns TRUE if User is a Seller.
         """
-        return DatabaseContext().is_seller(email)
+        return AccountContext().is_seller(email)
 
     def getUser(idToken):
         """
@@ -25,14 +25,14 @@ class User():
         """
 
         # Get the email for the account represented by the token
-        email=DatabaseContext().get_account_info(idToken)['users'][0]['email']
+        email=AccountContext().get_account_info(idToken)['users'][0]['email']
         
         # If the email belongs to a buyer, then return the buyer
-        if DatabaseContext().is_buyer(email):
-            return Buyer(email=email,buyer_data=DatabaseContext().get_buyer(email))
+        if AccountContext().is_buyer(email):
+            return Buyer(email=email,buyer_data=AccountContext().get_buyer(email))
         # Otherwise, return the seller
         else:
-            return Seller(email=email,seller_data=DatabaseContext().get_seller(email))
+            return Seller(email=email,seller_data=AccountContext().get_seller(email))
 
 
     def login(login_data):
@@ -41,7 +41,7 @@ class User():
         """
 
         # Try to login as a buyer
-        user = DatabaseContext().login_as_buyer(
+        user = AccountContext().login_as_buyer(
             email=login_data['email'],
             password=login_data['password']
         )
@@ -51,7 +51,7 @@ class User():
             return user
 
         # If the user logging in is not a buyer, then try to login as a seller
-        return DatabaseContext().login_as_seller(
+        return AccountContext().login_as_seller(
             email=login_data['email'],
             password=login_data['password']
         )       
