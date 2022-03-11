@@ -41,16 +41,51 @@ def check_out(email:str, order:Order):
         "nOfItems": order.nOfItems,
         "cancelled": order.cancelled,
         "paymentInfo": order.paymentInfo,
-        "items": order.items
+        "items": order.items,
+        "date": order.date,
+        "time": order.time,
+        "id": order.id
     }
 
-    paymentInfoPath = 'buyers/'+email+"/orders"
-    orderRef = db.collection(paymentInfoPath).document()
+    ordersPath = 'buyers/'+email+"/orders"
+    orderRef = db.collection(ordersPath).document()
     orderRef.set(orderData)
+    order.id = orderRef.id
 
     clear_shopping_cart(email)
     send_confirmation_email(orderRef.id, order, email)
 
+def cancel_order(email:str, orderID:str):
+    """
+    Takes user email and orderID to be cancelled and sets the order to cancelled
+    """
+    
+    ordersPath = 'buyers/'+email+"/orders"
+    orderRef = db.collection(ordersPath).document(orderID)
+    
+    orderRef.update({'cancelled': True})
+
+    return True
+
+def get_orders(email:str, numberOfOrders:int):
+    """
+    Takes user email and number of orders desired and returns a list of Order
+    """
+    ordersPath = 'buyers/'+email+"/orders"
+    ordersRef = db.collection(ordersPath).order_by('date', direction=firestore.Query.DESCENDING).limit(numberOfOrders).stream()
+    allOrders = []
+
+    for orderDoc in ordersRef:
+        orderDict = orderDoc.to_dict()
+        date = datetime.datetime.strptime(orderDict['date'], "%y/%m/%d").date()
+        time = datetime.datetime.strptime(orderDict['time'], "%H:%M:%S").time()
+        order = Order(orderDict['subtotal'], orderDict['total'], orderDict['nOfItems'], orderDict['cancelled'], orderDict['paymentInfo'], orderDict['items'], date, time, orderDoc.id)
+        allOrders.append(order)
+
+    return allOrders
+    
+
+#Helper functions
 def send_confirmation_email(id, order, email):
     mail_subject = 'Order#' + id + ' Confirmation'
     message = render_to_string('order_confirmation_email.html', {
