@@ -34,8 +34,3 @@ def home(request):
     request.session.modified = True
 
     return render(request,'home.html')
-
-def test_email(request):
-    if(request.Get.get('test_btn')):
-        order = Order(3.00,4.00,1,False,"**********4561",{"item1":{"item_id": "1", "quantity":"1"}})
-        checkingOut.send_confirmation_email("123456", order, "chadbuck31@gmail.com")
