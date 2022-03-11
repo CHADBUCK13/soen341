@@ -6,8 +6,6 @@ from ...models.user import User
 from ...controllers.forms.signupForm import BuyerSignupForm, SellerSignupForm
 from ...controllers.forms.loginForm import LoginForm
 from ...controllers.forms.resetPasswordForm import ResetPasswordForm
-from ...databaseContext import DatabaseContext
-
 
 def login(request, resetMsg=""):
     """

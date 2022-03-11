@@ -23,7 +23,7 @@ class User():
         """
         Sends a Password Reset Link to the given Email.
         """
-        DatabaseContext().reset_password(email)
+        AccountContext().reset_password(email)
 
 
     def getUser(idToken):
