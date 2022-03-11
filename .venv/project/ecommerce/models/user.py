@@ -19,6 +19,13 @@ class User():
         """
         return AccountContext().is_seller(email)
 
+    def reset_password(email):
+        """
+        Sends a Password Reset Link to the given Email.
+        """
+        DatabaseContext().reset_password(email)
+
+
     def getUser(idToken):
         """
         Get the User linked to the idToken from the DB.
