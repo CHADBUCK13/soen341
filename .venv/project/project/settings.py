@@ -63,7 +63,7 @@ ROOT_URLCONF = 'project.urls'
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [os.path.join(PROJECT_DIR,"templates"),os.path.join(PROJECT_DIR,"templates/accounts")],
+        'DIRS': [os.path.join(PROJECT_DIR,"templates"),os.path.join(PROJECT_DIR,"templates/accounts"),os.path.join(PROJECT_DIR,"templates/itemBrowsing")],
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
@@ -89,7 +89,9 @@ DATABASES = {
     }
 }
 
+
 credJSON = os.getenv('GOOGLE_APPLICATION_CREDENTIALS')
+
 credDict = json.loads(credJSON)
 
 cred = credentials.Certificate(credDict)

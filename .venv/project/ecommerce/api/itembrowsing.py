@@ -1,11 +1,15 @@
 from firebase_admin import firestore
+from difflib import SequenceMatcher
+from ..models.items import Item
+
+
 
 db = firestore.client()
 
 #reference to items collections
 items_ref=db.collection(u'items')
 
-def addItems(self,name="",sellerID=0,photo="",price=0,description="",weight=0,rating=0, score=0,sales=False,category=None):
+def addItems(name="",sellerID=0,photo="",price=0,description="",weight=0, score=0,sales=False,category=None):
 
     itemlocation = "items"
 
@@ -27,9 +31,8 @@ def addItems(self,name="",sellerID=0,photo="",price=0,description="",weight=0,ra
         }
     }
 
-    self.db.collection(itemlocation).document(name).set(items_data)
+    db.collection(itemlocation).document(name).set(items_data)
     
-
 #search for items based on price range
 def order_by_price(min=0, max=0):
 
@@ -82,6 +85,21 @@ def get_items_on_sale(numberOfItems):
         allItems.update(itemDoc.to_dict())
 
     return allItems
+
+def get_items_by_search(searchText=""):
+    """
+    Gets all Items that match (or are similar) to the given Search Text.
+    """
+
+    searchedItemsRef = items_ref.stream()
+    searchedItems = []
+
+    for itemDoc in searchedItemsRef:
+        item = Item(item_data=itemDoc.to_dict())
+        if item.match(searchText=searchText):
+            searchedItems.append(item)
+    
+    return searchedItems
 
 #add reviews to items
 

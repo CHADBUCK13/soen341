@@ -23,9 +23,10 @@
         {% csrf_token %}
         {{ loginForm }}
 
-        <p class="reg"><a>Reset Password</a></p>
+        <p class="reg"><a href="/resetP" id="id_resetP">Reset Password</a> {{ resetMsg }}</p>
         <button class="reg" type="submit" id="id_login">Log In</button>
 
+        <hr/>
         <div class="opt">
             <h3 class="reg">Don't Have an Account?<br/> 
                 <a href="/signupB">
