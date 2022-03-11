@@ -7,7 +7,7 @@ from firebase_admin import firestore
 
 FIREBASE_CONFIG = json.load(open('pyrebaseConfig.json'))
 
-class DatabaseContext():
+class AccountContext():
 
     def __init__(self):
         self.firebase = pyrebase.initialize_app(FIREBASE_CONFIG)
