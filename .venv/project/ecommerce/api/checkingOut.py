@@ -1,4 +1,3 @@
-from datetime import date
 import datetime
 from firebase_admin import firestore
 from ecommerce.models.order import Order
@@ -35,17 +34,7 @@ def check_out(email:str, order:Order):
     """
     Takes the Order, selected PaymentInformation and email of the user checking out. Returns True if the checkout was successful, False otherwise
     """
-    orderData = {
-        "subtotal": order.subtotal,
-        "total": order.total,
-        "nOfItems": order.nOfItems,
-        "cancelled": order.cancelled,
-        "paymentInfo": order.paymentInfo,
-        "items": order.items,
-        "date": order.date,
-        "time": order.time,
-        "id": order.id
-    }
+    orderData = order.to_json()
 
     ordersPath = 'buyers/'+email+"/orders"
     orderRef = db.collection(ordersPath).document()
@@ -76,10 +65,7 @@ def get_orders(email:str, numberOfOrders:int):
     allOrders = []
 
     for orderDoc in ordersRef:
-        orderDict = orderDoc.to_dict()
-        date = datetime.datetime.strptime(orderDict['date'], "%y/%m/%d").date()
-        time = datetime.datetime.strptime(orderDict['time'], "%H:%M:%S").time()
-        order = Order(orderDict['subtotal'], orderDict['total'], orderDict['nOfItems'], orderDict['cancelled'], orderDict['paymentInfo'], orderDict['items'], date, time, orderDoc.id)
+        order = Order.from_documentReference(orderDoc)
         allOrders.append(order)
 
     return allOrders
