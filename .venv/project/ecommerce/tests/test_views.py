@@ -43,9 +43,19 @@ class TestLogout(TestCase):
         
         
 class Testhome(TestCase):
+    def setUp(self):
+        self.session = self.client.session
+        self.session['is_logged_in']=False
+        self.categorySearch="Games"
+       
     def test_home_response_code(self):
         url = reverse("home")
         response = self.client.get(url)
         self.assertTemplateUsed(response,'home.html')
         self.assertEqual(response.status_code, 200)
+    
+    
+    def test_logged_in_response(self):
+        self.assertFalse( self.session['is_logged_in'])
+    
     

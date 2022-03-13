@@ -9,9 +9,7 @@ from ..controllers.forms.signupForm import BuyerSignupForm, SellerSignupForm
 
 
 class TestBuyerModel(TestCase):
-    def setUp(self):
-         self.buyer1= mommy.make('models.buyer')
-        
+
     def test_signUp(self):
         
         self.assertTrue(isinstance(self.buyer1, Buyer))

@@ -2,6 +2,7 @@
 from django.test import TestCase
 from django.urls import reverse, resolve
 from ..views import home
+from ..controllers.itemBrowsing.itemBrowsingViews import addItem,searchItems
 from ..controllers.account.accountViews import login,logout,signupBuyer,signupSeller
 
 
@@ -29,3 +30,11 @@ class TestUrls(TestCase):
     def test_signupSeller_url_is_resolved(self):
         url = reverse("signupSeller")
         self.assertEqual(resolve(url).func, signupSeller)
+        
+    def test_addItem_url_is_resolved(self):
+        url = reverse("addItem")
+        self.assertEqual(resolve(url).func, addItem)
+        
+    def test_searchItems_url_is_resolved(self):
+        url = reverse("searchItems")
+        self.assertEqual(resolve(url).func, searchItems)
