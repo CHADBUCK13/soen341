@@ -1,9 +1,9 @@
 
 import os
 from time import sleep
-from django.test import TestCase
+from django.test import TestCase,client
 from django.urls import reverse
-from ..api import itembrowsing
+from ..controllers.itemBrowsing.itemBrowsingViews import addItem,searchItems
 from ..views import home
 
 class TestLogin(TestCase):    
@@ -57,5 +57,28 @@ class Testhome(TestCase):
     
     def test_logged_in_response(self):
         self.assertFalse( self.session['is_logged_in'])
+        
+        
+class TestItemBrowsingViews(TestCase):
+    def setUp(self):
+        self.session = self.client.session
+        self.session['is_logged_in']=False
+        self.categorySearch="Games"
+    
+    def test_addItem_response_code(self):
+        url = reverse("addItem")
+        response = self.client.get(url)
+        
+        self.assertTemplateUsed(response,'addItem.html')
+        self.assertEqual(response.status_code, 200)
+        
+        
+        self.assertTemplateUsed(response,'addItem.html')
+        self.assertEqual(response.status_code, 200)
+    
+    def test_searchItem_response_code(self):
+        url = reverse("searchItems")
+        response = self.client.get(url)
+        self.assertEqual(response.status_code, 200)
     
     

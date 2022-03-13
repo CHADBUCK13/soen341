@@ -1,7 +1,7 @@
 from django.test import TestCase
 from ..controllers.forms.signupForm import BuyerSignupForm, SellerSignupForm
 from ..controllers.forms.loginForm import LoginForm
-from ..controllers.forms.itemForm import ItemForm
+from ..controllers.forms.resetPasswordForm import ResetPasswordForm
 
 
 class TestFrorms(TestCase):
@@ -59,13 +59,9 @@ class TestFrorms(TestCase):
         login_form = LoginForm(data={})
         self.assertFalse(login_form.is_valid())
         
-    def test_Item_form_valid_data(self):
-        Item_Form =ItemForm(data={
-            "name" : 'Itemname',
-            "price" : 'aPrice',
-            "city" :'aCity',
-            "address": 'anAddress',
-            "postal_code" : 'aCode',
-            "service_number": 'aNumber'
+    def test_resetPassword_form_valid_data(self):
+        reset_Form =ResetPasswordForm(data={
+            'email' : 'user@email.com',
         })
+        self.assertTrue(reset_Form.is_valid())
         

@@ -10,13 +10,6 @@ from ..controllers.forms.signupForm import BuyerSignupForm, SellerSignupForm
 
 class TestBuyerModel(TestCase):
 
-    def test_signUp(self):
-        
-        self.assertTrue(isinstance(self.buyer1, Buyer))
-  
-        
-        
-    
     def test_accountType(self):
         self.assertEquals(Buyer.accountType(self),"buyer")
 
