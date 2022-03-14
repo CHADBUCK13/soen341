@@ -11,7 +11,7 @@ cred = credentials.Certificate(credDict)
 
 # Firebase Firestore Database connection
 firebase_admin.initialize_app(credential=cred)
-from ecommerce.api.itemBrowsingV2 import get_items_on_sale
+from ecommerce.api.itemBrowsing import get_items_on_sale
 
 x = get_items_on_sale(1)
 print(x)

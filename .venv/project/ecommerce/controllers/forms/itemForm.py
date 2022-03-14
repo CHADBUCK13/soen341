@@ -1,5 +1,5 @@
 from django import forms
-from ...api.itembrowsing import *
+from ecommerce.api.itemBrowsing import get_categories
 
 def categoryList():
     cat = get_categories()

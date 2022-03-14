@@ -1,12 +1,8 @@
-from audioop import ratecv
-import re
-from unicodedata import category
 from urllib.error import HTTPError
 from firebase_admin import firestore
 import json
 from requests.exceptions import HTTPError
-from ..models.items import Item
-from ..api.itemBrowsingV2 import get_item_by_ID
+from api.itemBrowsing import get_item_by_ID
 
 
 db = firestore.client()
