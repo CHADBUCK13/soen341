@@ -1,0 +1,89 @@
+from audioop import ratecv
+import re
+from unicodedata import category
+from urllib.error import HTTPError
+from firebase_admin import firestore
+import json
+from requests.exceptions import HTTPError
+from ..models.items import Item
+from ..api.itemBrowsingV2 import get_item_by_ID
+
+
+db = firestore.client()
+
+items_ref=db.collection(u'items')
+
+
+def add_item_to_cart(email, itemId, quantity):
+    """
+    adding items to cart
+    """
+    #collection shopping_cart contains subcollections of emails that each contain a a document itemId
+    #
+    try:
+        cart_data = {
+
+            'items.'+ itemId: quantity
+         
+           }
+
+        db.collection(u'shopping_cart').document(email).append(cart_data)
+
+        return True
+ 
+
+    except HTTPError as e:
+            return json.loads(e.strerror)
+
+
+def get_items_from_cart(email):
+    """
+    from email find items in item database with same itemID, return collection of items with all information
+    """
+
+    shopping_cart_ref = db.collection(u'shopping_cart').document(email)
+
+    try:
+        return shopping_cart_to_dict(shopping_cart_ref)
+
+    except HTTPError as e:
+            return json.loads(e.strerror)
+
+
+def shopping_cart_to_dict(cart_document):
+    allItems = []
+    cart = cart_document.to_dict()['items']
+
+    for itemID in cart:
+        item = get_item_by_ID(itemID)
+        quantity = cart[itemID]
+        allItems.append([item,quantity])
+
+    return allItems
+
+
+    
+def delete_items_from_cart(email, itemId):
+    """
+    delete item 
+    """
+    shopping_cart_ref = db.collection(u'shopping_cart').document(email)
+    try:     
+        shopping_cart_ref.update({'items.'+itemId: firestore.DELETE_FIELD})
+
+    except HTTPError as e:
+            return json.loads(e.strerror)
+
+
+
+def update_item_quantity(email, itemId, quantity):
+
+    if (quantity<0):
+        return False
+
+    try:
+        item_ref = db.collection(u'shopping_cart').document(email)
+        item_ref.update({'items.'+itemId: quantity})
+
+    except HTTPError as e:
+            return json.loads(e.strerror)
