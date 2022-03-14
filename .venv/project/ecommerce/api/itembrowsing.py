@@ -1,8 +1,9 @@
 from urllib.error import HTTPError
 from firebase_admin import firestore
 import json
+from django.forms.models import model_to_dict
 from requests.exceptions import HTTPError
-from ecommerce.models.items import Item
+from ..models.items import Item
 
 db = firestore.client()
 
@@ -93,6 +94,23 @@ def get_all_items(numberOfItems = 0):
         allItemsRef = items_ref.stream()
     
         return item_collection_to_dict(allItemsRef)
+    
+    except HTTPError as e:
+        return json.loads(e.strerror)
+
+
+def get_all_items_dict(numberOfItems = 0):
+    try:
+        allItemsRef = items_ref.stream()
+        allItems = []
+
+        for itemDoc in allItemsRef:
+            item_dict = itemDoc.to_dict()
+            item = Item(item_data=item_dict)
+        
+            allItems.append(item_dict)
+
+        return allItems
     
     except HTTPError as e:
         return json.loads(e.strerror)

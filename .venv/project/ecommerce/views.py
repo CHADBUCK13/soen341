@@ -1,5 +1,5 @@
 from django.shortcuts import render
-from ecommerce.api.itemBrowsing import get_categories, get_items_by_category, get_all_items
+from .api.itembrowsing import get_categories, get_items_by_category, get_all_items_dict
 
 def home(request):
     
@@ -26,7 +26,7 @@ def home(request):
     if categorySearch != "":
         request.session['items'] = get_items_by_category(categorySearch,100)
     else:
-        request.session['items'] = get_all_items(100)
+        request.session['items'] = get_all_items_dict(100)
 
     request.session.modified = True
 

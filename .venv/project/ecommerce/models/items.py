@@ -1,4 +1,5 @@
 from difflib import SequenceMatcher
+from unicodedata import category
 
 class Item():
     """
@@ -16,8 +17,7 @@ class Item():
             self.price = add_item_form_data['price']
             self.description = add_item_form_data['description']
             self.weight = add_item_form_data['weight']
-            self.category = add_item_form_data['category']
-            self.relatedCategories = add_item_form_data['relatedCategories']
+            self.category = Category(category_name=add_item_form_data['category'], related_categories=add_item_form_data['relatedCategories']) 
             self.numberofreviews = 0
             self.score = 0
             self.sales = False 
