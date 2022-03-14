@@ -1,4 +1,4 @@
-from ..databaseContext import DatabaseContext
+from ..api.accountContext import AccountContext
 
 class Seller():
     """
@@ -41,7 +41,7 @@ class Seller():
         """   
 
         # Signup the user
-        return DatabaseContext().signup_as_seller(
+        return AccountContext().signup_as_seller(
             email=self.email,
             password=self.password,
             name=self.name,
