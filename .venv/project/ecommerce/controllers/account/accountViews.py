@@ -1,13 +1,11 @@
 from django.shortcuts import redirect, render
 from ...models.seller import Seller
-from ...databaseContext import Errors
+from ...api.accountContext import Errors
 from ...models.buyer import Buyer
 from ...models.user import User
 from ...controllers.forms.signupForm import BuyerSignupForm, SellerSignupForm
 from ...controllers.forms.loginForm import LoginForm
 from ...controllers.forms.resetPasswordForm import ResetPasswordForm
-from ...databaseContext import DatabaseContext
-
 
 def login(request, resetMsg=""):
     """
