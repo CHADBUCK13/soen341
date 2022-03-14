@@ -1,9 +1,10 @@
 from django.urls import path
 from django.contrib.staticfiles.urls import staticfiles_urlpatterns
-
 from .controllers.itemBrowsing.itemBrowsingViews import addItem, searchItems
-from .views import home
+from .views import home, shopCart
 from .controllers.account.accountViews import signupBuyer,signupSeller,login,logout,resetPassword
+
+
 
 urlpatterns = [
     path("", home, name="home"),
@@ -14,7 +15,9 @@ urlpatterns = [
     path("signupB/",signupBuyer,name="signupBuyer"),
     path("signupS/",signupSeller,name="signupSeller"),
     path("addItem/",addItem, name="addItem"),
-    path('searchItems/',searchItems, name="searchItems")
+    path('searchItems/',searchItems, name="searchItems"),
+    path("shoppingCart/", shopCart, name="shoppingCart")
+    #add/remove
 ]
 
 urlpatterns += staticfiles_urlpatterns()
