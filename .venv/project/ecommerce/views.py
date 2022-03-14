@@ -38,7 +38,7 @@ def home(request):
 
 def shopCart(request):
 
-    #request.session['shoppingCartItems'] = get_items_from_cart(request.session['email']) 
+    request.session['shoppingCartItems'] = get_items_from_cart(request.session['email']) 
     #request.session['shoppingCartItems'] = [Item(example,example,example),Item(...)] # tests
     return render(request, 'shoppingCart.html')
    
