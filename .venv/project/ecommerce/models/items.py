@@ -1,5 +1,4 @@
 from difflib import SequenceMatcher
-from unicodedata import category
 
 class Item():
     """

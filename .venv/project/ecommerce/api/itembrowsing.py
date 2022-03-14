@@ -92,8 +92,8 @@ def get_categories():
 def get_all_items(numberOfItems = 0):
     try:
         allItemsRef = items_ref.stream()
-    
-        return item_collection_to_dict(allItemsRef)
+        allItems:list = item_collection_to_dict(allItemsRef)
+        return allItems
     
     except HTTPError as e:
         return json.loads(e.strerror)
@@ -106,7 +106,6 @@ def get_all_items_dict(numberOfItems = 0):
 
         for itemDoc in allItemsRef:
             item_dict = itemDoc.to_dict()
-            item = Item(item_data=item_dict)
         
             allItems.append(item_dict)
 

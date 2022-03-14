@@ -1,7 +1,7 @@
 from django.shortcuts import redirect, render
 
 from ecommerce.api.storage import store_image
-from ecommerce.api.itemBrowsing import get_items_by_search, addItems
+from ecommerce.api.itembrowsing import get_items_by_search, addItems
 from ecommerce.api.accountContext import AccountContext
 from ..forms.itemForm import ItemForm
 from ecommerce.models.items import Item

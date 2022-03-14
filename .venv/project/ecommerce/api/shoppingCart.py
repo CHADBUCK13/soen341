@@ -2,7 +2,7 @@ from urllib.error import HTTPError
 from firebase_admin import firestore
 import json
 from requests.exceptions import HTTPError
-from api.itemBrowsing import get_item_by_ID
+from api.itembrowsing import get_item_by_ID
 
 
 db = firestore.client()
