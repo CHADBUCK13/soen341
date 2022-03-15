@@ -139,8 +139,9 @@ def get_items_on_sale(numberOfItems):
 
 def get_item_by_ID(itemID):
     
-    item_dict = items_ref.document(itemID).to_dict()
-    return Item(item_dict)
+    item_ID_ref = items_ref.document(itemID).get()
+    item_dict = item_ID_ref.to_dict()
+    return Item(item_data= item_dict)
 
 def get_items_by_search(searchText=""):
     """
@@ -171,4 +172,4 @@ def item_collection_to_dict(collection):
         allItems.append(item)
 
     return allItems
-    
+
