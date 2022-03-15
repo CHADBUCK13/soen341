@@ -60,7 +60,20 @@
                 <p>
                     {{item.description}}
                 </p>
-                <button>Add to Cart</button>
+                
+                <form method="get" href="/addCartItem">
+                    {% csrf_token %}
+                    <input type="hidden" value="{{ item.name }}" id="item">
+                    <button type="submit" value="saf">
+                        {{ item.name }}
+                    </button>
+                </form>
+
+                <button>
+                    <a href="">
+                        Add to Cart
+                    </a>
+                </button>
             </div>
         </div>
         <br>

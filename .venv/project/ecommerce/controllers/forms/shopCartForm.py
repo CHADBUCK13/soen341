@@ -8,7 +8,11 @@ from django import forms
 #         'aria-describedby': 'basic-addon2'
 #     }))
     
-    
+class AddItemForm(forms.Form):
+    item = forms.HiddenInput()
+
+    class Meta:
+        fields=['item']
     
 #Checkout form
 ##Payment/Refund form?

@@ -1,9 +1,10 @@
+import imp
 from django.urls import path
 from django.contrib.staticfiles.urls import staticfiles_urlpatterns
 from .controllers.itemBrowsing.itemBrowsingViews import addItem, searchItems
-from .views import home, shopCart
+from .views import home
 from .controllers.account.accountViews import signupBuyer,signupSeller,login,logout,resetPassword
-
+from .controllers.shoppingCart.shoppingCartViews import shopCart, addToCart
 
 
 urlpatterns = [
@@ -16,7 +17,8 @@ urlpatterns = [
     path("signupS/",signupSeller,name="signupSeller"),
     path("addItem/",addItem, name="addItem"),
     path('searchItems/',searchItems, name="searchItems"),
-    path("shoppingCart/", shopCart, name="shoppingCart")
+    path("shoppingCart/", shopCart, name="shoppingCart"),
+    path("addCartItem/", addToCart, name="addToCart"),
     #add/remove
 ]
 

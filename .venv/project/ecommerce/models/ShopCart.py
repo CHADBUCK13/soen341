@@ -3,6 +3,36 @@ from django.conf import settings
 from .items import Item
 
 
+
+class CartItem():
+
+    def __init__(self,itemID, quantity=1):
+        self.id = itemID
+        self.quantity = quantity
+    
+    def quantityDown(self):
+        if self.quantity > 0:
+            self.quantity = self.quantity-1
+
+    def quantityUp(self):
+        self.quantity = self.quantity+1
+
+    def setQuantity(self,quantity):
+        if quantity>0:
+            self.quantity = quantity
+    
+
+class ShoppingCart():
+
+    def __init__(self,email,cartItems=[]):
+        self.email=email
+        self.cartItems=cartItems
+
+    
+
+
+
+
 class orderItem(models.Model):
     user = models.ForeignKey(settings.AUTH_USER_MODEL,
                              on_delete=models.CASCADE)

@@ -60,28 +60,37 @@
         </tr>
         </thead>
         <tbody>
-        {% for item in request.session.shoppingCartItems %}
-        <tr>
-            <th scope="row">{{ forloop.counter }}</th>
-            <td>{{ item.name }}</td>
-            <td>{{ item.price }}</td>
-            <td>
-                <a href="Remove from cart func"><i class="fas fa-minus mr-2"></i></a>
-                {{ order_item.quantity }}
-                <a href="Add to cart function"><i class="fas fa-plus ml-2"></i></a>
-            </td>
-            <td>
-            {% if order_item.item.discount_price %}
-                ${{ order_item.get_total_discount_item_price }}
-                <span class="badge badge-primary">Saving ${{ order_item.get_amount_saved }}</span>
-            {% else %}
-                ${{ order_item.get_total_item_price }}
-            {% endif %}
-            <a style='color: red;' href="controller/ remove item">
-                <i class="fas fa-trash float-right"></i>
-            </a>
-            </td>
-        </tr>
+        
+            {% for item in shoppingCartItems %}
+        
+                <tr>
+                    <th scope="row">
+                        {{ forloop.counter }}
+                    </th>
+                    <td>
+                        {{ item.name }}
+                    </td>
+                    <td>
+                        {{ item.price }}$
+                    </td>
+                    <td>
+                        <a href="Remove from cart func"><i class="fas fa-minus mr-2"></i></a>
+                            {{ order_item.quantity }}
+                        <a href="Add to cart function"><i class="fas fa-plus ml-2"></i></a>
+                    </td>
+                    <td>
+                        {% if order_item.item.discount_price %}
+                            ${{ order_item.get_total_discount_item_price }}
+                        <span class="badge badge-primary">Saving ${{ order_item.get_amount_saved }}</span>
+                        {% else %}
+                            ${{ order_item.get_total_item_price }}
+                        {% endif %}
+                        <a style='color: red;' href="controller/ remove item">
+                            <i class="fas fa-trash float-right"></i>
+                        </a>
+                    </td>
+                </tr>
+                
         {% empty %}
         <tr>
             <td colspan='5'>Your cart is empty</td>
