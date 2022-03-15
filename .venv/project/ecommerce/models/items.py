@@ -19,14 +19,12 @@ class Item():
             self.weight = add_item_form_data['weight']
             self.category = add_item_form_data['category']
             self.relatedCategories = add_item_form_data['relatedCategories']
-            self.amountInStock = add_item_form_data['amount']
             self.numberofreviews = 0
             self.score = 0
             self.sales = False 
             self.photo= photo
 
         if item_data is not None:
-            self.amountInStock = item_data['amountInStock']
             self.category = Category(category_name=item_data['category']['category_name'],related_categories=item_data['category']['relatedcategory'])
             self.description = item_data['description']
             self.name=item_data['name']
@@ -53,7 +51,6 @@ class Item():
             weight=self.weight,
             score=self.score,
             sales=self.sales,
-            amountInStock=self.amountInStock,
             category=Category(self.category,self.relatedCategories))
 
     def match(self,searchText=""):

@@ -2,7 +2,7 @@ from django.shortcuts import redirect, render
 from ...api.bankingInfo import *
 from ...api.storage import store_image
 from ...api import itembrowsing
-from ...databaseContext import DatabaseContext
+from ecommerce.api.accountContext import AccountContext
 from ..forms.itemForm import ItemForm
 from ...models.items import Item
 
@@ -18,16 +18,16 @@ def addItem(request):
         if item_form.is_valid():
 
             redir=redirect('home')
-            status = DatabaseContext().refresh_idToken(request,redir)
+            status = AccountContext().refresh_idToken(request,redir)
 
             if status is False:
                 return redirect('logout')
             elif status is redir:
                 token = request.COOKIES.get('refreshToken',None)
-                current_user = DatabaseContext().get_account_from_refreshToken(token)
+                current_user = AccountContext().get_account_from_refreshToken(token)
             else:
                 token = request.COOKIES.get('idToken',None)
-                current_user = DatabaseContext().get_account_info(token)
+                current_user = AccountContext().get_account_info(token)
             
             if hasPaymentInfo(current_user['users'][0]['email']):
 

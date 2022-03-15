@@ -73,17 +73,6 @@ class ItemForm(forms.Form):
         choices=categoryList()
         ))
 
-    amount = forms.IntegerField(
-        label="Amount In Stock",
-        required=True,
-        min_value=0,
-        widget=forms.NumberInput(attrs={
-            'class':'itemForm',
-            'type':'number',
-            'placeholder':0
-        })
-    )
-
     image = forms.ImageField(
         label="Item Image",
         required=True,
@@ -93,4 +82,4 @@ class ItemForm(forms.Form):
         }))
     
 class Meta:
-    fields=['name','price','description','weight','category','relatedCategories','amount','image']
+    fields=['name','price','description','weight','category','relatedCategories','image']
