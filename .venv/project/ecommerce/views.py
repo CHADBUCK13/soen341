@@ -1,11 +1,11 @@
 from django.shortcuts import render
-from .api import itembrowsing
+from .api.itembrowsing import get_categories, get_items_by_category, get_all_items_dict
 
 def home(request):
     
     # Get Categories
     categoriesOptions = ['Phones','Food','Games']
-    request.session['categoriesOptions'] = itembrowsing.get_categories()
+    request.session['categoriesOptions'] = get_categories()
 
 
     categorySearch=""
@@ -24,9 +24,9 @@ def home(request):
 
 
     if categorySearch != "":
-        request.session['items'] = itembrowsing.get_items_by_category(categorySearch,100)
+        request.session['items'] = get_items_by_category(categorySearch,100)
     else:
-        request.session['items'] = itembrowsing.get_all_items(100)
+        request.session['items'] = get_all_items_dict(100)
 
     request.session.modified = True
 
