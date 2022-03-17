@@ -63,7 +63,7 @@ ROOT_URLCONF = 'project.urls'
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [os.path.join(PROJECT_DIR,"templates"),os.path.join(PROJECT_DIR,"templates/accounts")],
+        'DIRS': [os.path.join(PROJECT_DIR,"templates"),os.path.join(PROJECT_DIR,"templates/accounts"),os.path.join(PROJECT_DIR,"templates/itemBrowsing")],
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
@@ -89,7 +89,9 @@ DATABASES = {
     }
 }
 
+
 credJSON = os.getenv('GOOGLE_APPLICATION_CREDENTIALS')
+
 credDict = json.loads(credJSON)
 
 cred = credentials.Certificate(credDict)
@@ -148,3 +150,11 @@ STATICFILES_DIRS=[
 # https://docs.djangoproject.com/en/4.0/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
+
+#Email settings
+EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
+EMAIL_HOST = 'smtp.gmail.com'
+EMAIL_PORT = 587
+EMAIL_USE_TLS = True
+EMAIL_HOST_USER = 'ecommerce.soen341@gmail.com'
+EMAIL_HOST_PASSWORD = os.getenv('SOEN_341_PASSWORD')

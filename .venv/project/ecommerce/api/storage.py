@@ -1,8 +1,8 @@
 from firebase_admin import credentials, initialize_app, storage
 
-def store_image(file) -> str:
+def store_image(file,fileName) -> str:
 
-    tempFileName = 'temp.jpg'
+    tempFileName = fileName+'.jpg'
     bucketURL = 'ecommerce-68ba8.appspot.com'
 
     with open(tempFileName, 'wb+') as destination:
@@ -15,3 +15,9 @@ def store_image(file) -> str:
     blob.make_public()
 
     return blob.public_url
+
+def get_image_url(fileName):
+    tempFileName = fileName+'.jpg'
+    bucketURL = 'ecommerce-68ba8.appspot.com'
+
+    storage.bucket(bucketURL).get_blob(tempFileName)
