@@ -4,9 +4,8 @@ from .api.itembrowsing import get_categories, get_items_by_category, get_all_ite
 def home(request):
     
     # Get Categories
-    if request.session['categoriesOptions'] is None:
-        request.session['categoriesOptions'] = get_categories()
-
+   
+    request.session['categoriesOptions'] = get_categories()
 
     category=""
     if request.method=="POST":
