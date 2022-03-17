@@ -65,7 +65,7 @@ def get_all_items(numberOfItems = 0):
     return allItems
 
 def get_items_by_category(category = "", numberOfItems=0):
-    itemsRef = items_ref.where(u'category', u'==', category).limit(numberOfItems).stream()
+    itemsRef = items_ref.where(u'category.category_name', u'==', category).limit(numberOfItems).stream()
     allItems = []
 
     for itemDoc in itemsRef:

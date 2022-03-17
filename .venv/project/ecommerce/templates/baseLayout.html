@@ -14,6 +14,7 @@
         <link rel="preconnect" href="https://fonts.gstatic.com">
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
         <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;500;600&display=swap" rel="stylesheet">
+        <script src="https://kit.fontawesome.com/e530a0ab96.js" crossorigin="anonymous"></script>
         
     </head>
     <body>
@@ -23,26 +24,34 @@
                     <div class = "Topnavigationbar">
 
                         <!-- Home Page Nav -->
-                        <a class="active" href="../" id="id_home"> Home </a>
+                        <a class="active" href="../" id="id_home"> <i class="fa-solid fa-store" style="color: rgb(242, 242, 250);"> Paradise</i></a>
 
                         {% if request.session.is_logged_in %}
-                        <a href="/logout" id="id_logout">Logout</a>
+                        <div class="Topnavigationbar-right">
+                            <a href="/logout" id="id_logout">Logout</a>
+                        </div>
                         {% else %}
-                        <a href="/login" id="id_login">Login</a>
+                        <div class="Topnavigationbar-right">
+                            <a href="/login" id="id_login">Login</a>
+                        </div>
                         {% endif %}
 
-                        <a href="#address"> Address  </a>
-        
+                        <div class="searchBar">
+                            <i class="fa-solid fa-magnifying-glass" style="position: relative; left: 28px; color: #3a3d38;"></i>
+                            <input type= "text" name="searchText" placeholder="Search any item..." size="44">
+                        </div>
+
+                        {% if request.session.is_logged_in %}
+                        
+                        <a href="#address"> Address  </a>        
                         <a href="#returns-order"> Returns & Orders </a>
                         <a href="#shopping-cart"> Shopping Cart </a>
-                            <input type= "text" name="searchText" placeholder="Search any item...">
+
+                        {% endif %}
+                        
                     </div>
         
                     <div class = "secondnavbar">
-                        <a href="#bestseller"> Best Sellers </a>
-                        <a href="#deals"> Deals </a>
-                        <a href="#Members deal"> Members Deals </a>
-        
                         <div class="dropdown"> 
                             <button class = "dropbutn">Categories
                                 <i class = "fa fa-caret-down"> </i> 
@@ -53,14 +62,15 @@
                                     {% csrf_token %}
                                     <input type="hidden" name="category" value="{{category}}">       
                                     <a href="../" type="submit"> 
-                                        <button>
-                                            {{category}}
-                                        </button> 
+                                        {{category}}                                        
                                     </a>
                                 </form>
                                 {% endfor %}
                             </div>
                         </div>
+                        <a href="#bestseller"> Best Sellers </a>
+                        <a href="#deals"> Deals </a>
+                        <a href="#Members deal"> Members Deals </a>
                     </div>
                 </nav>
             </header>
