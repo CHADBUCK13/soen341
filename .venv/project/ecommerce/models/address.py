@@ -5,9 +5,9 @@ class Address():
         self.streetAddress = streetAddress
         self.postalCode = postalCode 
     
-    def to_json(self):
+    def to_dict(self):
         return {'country': self.country, 'city': self.city, 'streetAddress': self.streetAddress, 'postalCode': self.postalCode}
     
-    def from_json(dict):
+    def from_dict(dict):
         return Address(dict['country'], dict['city'], dict['streetAddress'], dict['postalCode'])
         

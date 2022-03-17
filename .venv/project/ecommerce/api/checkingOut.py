@@ -34,7 +34,7 @@ def check_out(email:str, order:Order):
     """
     Takes the Order, selected PaymentInformation and email of the user checking out. Returns True if the checkout was successful, False otherwise
     """
-    orderData = order.to_json()
+    orderData = order.to_dict()
 
     ordersPath = 'buyers/'+email+"/orders"
     orderRef = db.collection(ordersPath).document()

@@ -1,10 +1,9 @@
 from django.shortcuts import redirect, render
-from ...api.bankingInfo import *
-from ...api.storage import store_image
-from ...api import itembrowsing
+from ecommerce.api.storage import store_image
+from ecommerce.api.itembrowsing import get_items_by_search, addItems
 from ecommerce.api.accountContext import AccountContext
 from ..forms.itemForm import ItemForm
-from ...models.items import Item
+from ecommerce.models.items import Item
 
 def addItem(request):
     """
@@ -34,7 +33,9 @@ def addItem(request):
                 # Save the Image File into the DB Storage
                 image_url=store_image(request.FILES.get('image',None),item_form.data['name'])
 
-                Item(add_item_form_data=item_form.data,sellerID=current_user['users'][0]['email'],photo=image_url).save()
+
+                item = Item(add_item_form_data=item_form.data,sellerID=current_user['users'][0]['email'],photo=image_url)
+                addItems(item)
 
                 return redirect('home')
             else:
@@ -57,7 +58,7 @@ def searchItems(request):
             return render(request,'home.html')
 
         # Get items that match that keyword
-        items = itembrowsing.get_items_by_search(searchText=searchText)
+        items = get_items_by_search(searchText=searchText)
 
         # Inform user that no items were found
         if len(items) == 0:

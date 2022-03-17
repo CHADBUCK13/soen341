@@ -19,7 +19,7 @@ class Order():
         self.billingAddress = billingAddress
         self.id = id
     
-    def to_json(self):
+    def to_dict(self):
         orderData = {
             "subtotal": self.subtotal,
             "total": self.total,
@@ -29,8 +29,8 @@ class Order():
             "items": self.items,
             "date": self.date.strftime("%y/%m/%d"),
             "time": self.time.strftime("%H:%M:%S"),
-            'shippingAddress': self.shippingAddress.to_json(),
-            'billingAddress': self.billingAddress.to_json()
+            'shippingAddress': self.shippingAddress.to_dict(),
+            'billingAddress': self.billingAddress.to_dict()
         }
 
         return orderData
@@ -40,7 +40,7 @@ class Order():
         orderDict = orderDoc.to_dict()
         date = datetime.datetime.strptime(orderDict['date'], "%y/%m/%d").date()
         time = datetime.datetime.strptime(orderDict['time'], "%H:%M:%S").time()
-        shippingAddress = Address.from_json(orderDict['shippingAddress'])
-        billingAddress = Address.from_json(orderDict['billingAddress'])
+        shippingAddress = Address.from_dict(orderDict['shippingAddress'])
+        billingAddress = Address.from_dict(orderDict['billingAddress'])
 
         return Order(orderDict['subtotal'], orderDict['total'], orderDict['nOfItems'], orderDict['cancelled'], orderDict['paymentInfo'], orderDict['items'], date, time, shippingAddress, billingAddress, orderDoc.id)
