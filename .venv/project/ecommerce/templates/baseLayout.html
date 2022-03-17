@@ -6,7 +6,7 @@
         <meta http-equiv="X-UA-Compatible" content="IE=edge">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <title>
-            {% block title %}Ecommerce{% endblock %}
+            {% block title %}Paradise{% endblock %}
         </title>
         {% block head %} {% endblock %}
         <link rel="stylesheet" href="{% static 'css/register.css' %}">
@@ -36,11 +36,15 @@
                             <a href="/login" id="id_login">Login</a>
                         </div>
                         {% endif %}
-
-                        <div class="searchBar">
+                        
+                        <form method="post" action="{% url 'searchItems' %}">
+                        
+                        {% csrf_token %}
+                        <div class="searchBar ">
                             <i class="fa-solid fa-magnifying-glass" style="position: relative; left: 28px; color: #3a3d38;"></i>
                             <input type= "text" name="searchText" placeholder="Search any item..." size="44">
                         </div>
+                    </form>
 
                         {% if request.session.is_logged_in %}
                         
@@ -59,10 +63,10 @@
                             </button>
                             <div class = "dropdown-content">
                                 {% for category in request.session.categoriesOptions %}
-                                <form method="post">
+                                <form id="categoryFilter{{category}}" method="post" action="{% url 'home' %}">
                                     {% csrf_token %}
                                     <input type="hidden" name="category" value="{{category}}">       
-                                    <a href="../" type="submit"> 
+                                    <a href="#" onclick="document.getElementById('categoryFilter{{category}}').submit()"> 
                                         {{category}}                                        
                                     </a>
                                 </form>
@@ -81,4 +85,5 @@
             {% endblock %}
         </main>
     </body>
+    <script src="https://kit.fontawesome.com/e530a0ab96.js" crossorigin="anonymous"></script>
 </html>

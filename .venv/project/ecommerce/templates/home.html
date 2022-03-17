@@ -33,10 +33,14 @@
 
     <!-- Items -->
 
+
     <div style="width: 1300px; top: -400px; margin: auto; position: relative">
+        <h1 style="display: flex; justify-content: center; flex-wrap: wrap;">{{category}}</h1>
+        <h1 style="display: flex; justify-content: center; flex-wrap: wrap;">{{searchText}}</h1>
         <div class ="row" style = "display: flex; justify-content: center; flex-wrap: wrap;">
 
-            {% for item in request.session.items %}
+            
+            {% for item in items %}
             <div class="product-container">
                 <div class = "card">
                     <div class = "card-image"><img src="{{item.photo}}" style=" width: 100%; height: 100%; object-fit: cover; "></div>
@@ -59,7 +63,10 @@ showSlides(slideIndex);
 
 //Next/previous controls
 function plusSlides(n) {
-showSlides(slideIndex += n);
+    if(n==-1 && slideIndex == 0){
+        slideIndex=4
+    }
+    showSlides(slideIndex += n);
 }
 //Image control
 function currentSlide(n) {
@@ -117,7 +124,6 @@ function removeClass(element, name) {
  }
  element.className = el.join(" ");
 }
-
 
 </script>
 </main>

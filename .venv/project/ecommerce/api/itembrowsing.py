@@ -117,7 +117,7 @@ def get_all_items_dict(numberOfItems = 0):
 
 def get_items_by_category(category = "", numberOfItems=0):
     try:
-        itemsRef = items_ref.where(u'category', u'==', category).limit(numberOfItems).stream()        
+        itemsRef = items_ref.where(u'category.category_name', u'==', category).limit(numberOfItems).stream()        
         return item_collection_to_dict(itemsRef)
 
     except HTTPError as e:
