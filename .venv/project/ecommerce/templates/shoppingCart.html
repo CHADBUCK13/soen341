@@ -102,10 +102,10 @@ body{
             <td><b>-${{ object.coupon.amount }}</b></td>
         </tr>
         {% endif %}
-        {% if object.get_total %}
+        {% if updateCartTotal %}
         <tr>
             <td colspan="4"><b>Order Total</b></td>
-            <td><b>${{ object.get_total }}</b></td>
+            <td><b>${{ updateCartTotal }}</b></td>
         </tr>
         <tr>
             <td colspan="5">
@@ -126,8 +126,8 @@ body{
 
 <script>
     function updateCartTotal() {
-    var cartItemContainer = document.getElementsByClassName('cart-items')[0]
-    var cartRows = cartItemContainer.getElementsByClassName('cart-row')
+    var cartItemContainer = document.getElementsByClassName('items')[0]
+    var cartRows = cartItemContainer.getElementsByClassName('row')
     var total = 0
     for (var i = 0; i < cartRows.length; i++) {
         var cartRow = cartRows[i]
