@@ -31,7 +31,7 @@
             <img src="https://images.unsplash.com/photo-1617503752587-97d2103a96ea?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxzZWFyY2h8Mnx8YXJ0d29ya3xlbnwwfHwwfHw%3D&w=1000&q=80" alt=".." style="width: 100%;">
             <div class = "text"> Caption 4 </div>
         </div>
-
++
         <!-- Previous and next buttons -->
         <a class = "previous" onclick="plusSlides(-1)">&#10094; </a>
         <a class = "next" onclick="plusSlides(1)">&#10095; </a>
@@ -53,16 +53,33 @@
     <div class ="row">
 
         {% for item in request.session.items %}
-        <div>
-            <div class="itemBox">
+        <div class="product-container" style = "display: flex;
+            justify-content: center;
+            flex-wrap: wrap;">
+            <div class = "card">
+                <div style="background-image: url('{{item.photo}}');" class = "card-image"></div>
+                <h2>{{item.name}}</h2>
+                <p>
+                   ${{item.price}}
+                </p>
+                <a href="">ADD TO CART</a>
+            </div>
+
+          
+        </div>
+
+
+
+
+            <!-- <div class="itemBox">
                 <h2> {{item.name}} </h2>
                 <h3> ONLY ${{item.price}}!!! </h3>
                 <p>
                     {{item.description}}
                 </p>
                 <button>Add to Cart</button>
-            </div>
-        </div>
+            </div> -->
+        <!-- </div> -->
         <br>
         {% endfor %}
 

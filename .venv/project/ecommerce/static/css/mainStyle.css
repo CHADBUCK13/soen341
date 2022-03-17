@@ -13,6 +13,72 @@ h4 {
     color: white;
 }
 
+*{
+    box-sizing: border-box;
+    padding: 0;
+    margin: 0;
+}
+
+.product-container {
+    display: flex;
+    justify-content: center;
+    flex-wrap: wrap;
+}
+
+.card{
+    background: white;
+    width: 220px;
+    /*height: 400px;*/
+    margin:10px;
+    border-radius: 15px;
+}
+
+.card-image{
+    background-color: aqua;
+    height: 230px;
+    margin-bottom: 15px;
+    background-size: cover;
+    border-radius: 15px 15px 0 0;
+}
+
+.item-1{
+    background-image: url('../image/Witcher_3.jpg')
+}
+
+.item-2{
+    background-image: url('../image/Re_4.jpg')
+}
+
+.item-3{
+    background-image: url('../image/Mario.jpg')
+}
+
+.card h2 {
+    padding: 2px;
+}
+
+.card p {
+    padding: 5px;
+}
+
+.card a {
+    background-color: black;
+    color: white;
+    padding: 5px 5px;
+    display: block;
+    text-align: center;
+    margin: 5px 20px;
+    text-decoration: none;
+}
+
+.card:hover {
+    background-color: rgb(62,62,62);
+    color: white;
+    cursor: pointer;
+    transform: scale(1.05); 
+    transition: all 1s ease;
+}
+
 /*Top navigation bar*/
 
 .Topnavigationbar {
@@ -239,7 +305,7 @@ h4 {
 .itemBox {
     position: relative;
     width: 100%;
-    background-color:rgb(5, 92, 92);
+    background-color:rgb(5, 129, 129);
     padding: 10px;
 }
 .image {
