@@ -9,40 +9,23 @@
     <!-- Slideshow container -->
     <div class = "slideshow">
         <div class ="mySlides">
-            <div class ="number"> 1 / 4 </div>
-            <img src="https://cdn.theculturetrip.com/wp-content/uploads/2017/12/33554467340_65375926e8_k.jpg" alt="..." style="width: 100%">
-            <div class ="text"> Caption </div>
+            <div style="width: 100%; height: 100%; object-fit: cover; background-image: linear-gradient(to bottom, transparent, rgb(242, 242, 250)), url('https://cdn.theculturetrip.com/wp-content/uploads/2017/12/33554467340_65375926e8_k.jpg');"></div>
         </div>
 
         <div class="mySlides">
-            <div class = "number"> 2 / 4 </div>
-            <img src="https://www.tate.org.uk/art/images/work/N/N05/N05976_9.jpg" alt=".." style="width: 100%;">
-            <div class = "text"> Caption </div>
+            <div style="width: 100%; height: 100%; object-fit: cover; background-image: linear-gradient(to bottom, transparent, rgb(242, 242, 250)), url('https://www.tate.org.uk/art/images/work/N/N05/N05976_9.jpg');"></div>
         </div>
 
         <div class="mySlides">
-            <div class = "number"> 3 / 4 </div>
-            <img src="https://www.streetartbio.com/wp-content/uploads/2020/07/Capture4.jpg" alt=".." style="width: 100%;">
-            <div class = "text"> Caption </div>
+            <div style="width: 100%; height: 100%; object-fit: cover; background-image: linear-gradient(to bottom, transparent, rgb(242, 242, 250)), url('https://www.streetartbio.com/wp-content/uploads/2020/07/Capture4.jpg');"></div>
         </div>
 
         <div class="mySlides">
-            <div class = "number"> 4 / 4 </div>
-            <img src="https://images.unsplash.com/photo-1617503752587-97d2103a96ea?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxzZWFyY2h8Mnx8YXJ0d29ya3xlbnwwfHwwfHw%3D&w=1000&q=80" alt=".." style="width: 100%;">
-            <div class = "text"> Caption 4 </div>
+            <div style="width: 100%; height: 100%; object-fit: cover; background-image: linear-gradient(to bottom, transparent, rgb(242, 242, 250)), url('https://images.unsplash.com/photo-1617503752587-97d2103a96ea?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxzZWFyY2h8Mnx8YXJ0d29ya3xlbnwwfHwwfHw%3D&w=1000&q=80');"></div>
         </div>
-+
         <!-- Previous and next buttons -->
         <a class = "previous" onclick="plusSlides(-1)">&#10094; </a>
         <a class = "next" onclick="plusSlides(1)">&#10095; </a>
-    </div>
-
-    <!-- Dots -->
-    <div style ="text-align:center">
-         <span class ="dot" onclick="currentSlide(0)"></span>
-         <span class ="dot" onclick="currentSlide(1)"></span>
-         <span class ="dot" onclick="currentSlide(2)"></span>
-         <span class ="dot" onclick="currentSlide(3)"></span>
     </div>
 
     <!-- Item box -->
@@ -50,161 +33,27 @@
 
     <!-- Items -->
 
-    <div class ="row">
 
-        {% for item in request.session.items %}
-        <div class="product-container" style = "display: flex;
-            justify-content: center;
-            flex-wrap: wrap;">
-            <div class = "card">
-                <div style="background-image: url('{{item.photo}}');" class = "card-image"></div>
-                <h2>{{item.name}}</h2>
-                <p>
-                   ${{item.price}}
-                </p>
-                <a href="">ADD TO CART</a>
-            </div>
+    <div style="width: 1300px; top: -400px; margin: auto; position: relative">
+        <h1 style="display: flex; justify-content: center; flex-wrap: wrap;">{{category}}</h1>
+        <h1 style="display: flex; justify-content: center; flex-wrap: wrap;">{{searchText}}</h1>
+        <div class ="row" style = "display: flex; justify-content: center; flex-wrap: wrap;">
 
-          
-        </div>
-
-
-
-
-            <!-- <div class="itemBox">
-                <h2> {{item.name}} </h2>
-                <h3> ONLY ${{item.price}}!!! </h3>
-                <p>
-                    {{item.description}}
-                </p>
-                <button>Add to Cart</button>
-            </div> -->
-        <!-- </div> -->
-        <br>
-        {% endfor %}
-
-        <!--
-        <div class ="column Clothing">
-            <div class="itemBox">
-                <img src="https://99designs-blog.imgix.net/blog/wp-content/uploads/2016/08/bp.png?auto=format&q=60&fit=max&w=930" alt=".." class ="image" style="width: 100%">
-                <h4> Women </h4>
-                <div class = "bCaption">  
-                    <div class= "bText"> Shop Women </div>
-                </div> 
+            
+            {% for item in items %}
+            <div class="product-container">
+                <div class = "card">
+                    <div class = "card-image"><img src="{{item.photo}}" style=" width: 100%; height: 100%; object-fit: cover; "></div>
+                    <h2>{{item.name}}</h2>
+                    <p>
+                    ${{item.price}}
+                    </p>
+                    <a href="">ADD TO CART</a>
+                </div>          
             </div>
+            {% endfor %}
         </div>
-        <div class ="column Clothing">
-            <div class="itemBox">
-                <img src="https://99designs-blog.imgix.net/blog/wp-content/uploads/2016/08/bp.png?auto=format&q=60&fit=max&w=930" alt=".." class ="image" style="width: 100%">
-                <h4> Men </h4>   
-                <div class = "bCaption">  
-                    <div class= "bText"> Shop Men </div>
-                </div> 
-            </div>
-        </div>
-        <div class ="column Clothing">
-            <div class="itemBox">
-                <img src="https://99designs-blog.imgix.net/blog/wp-content/uploads/2016/08/bp.png?auto=format&q=60&fit=max&w=930" alt=".." class ="image" style="width: 100%">
-                <h4> Children </h4>
-                <div class = "bCaption">  
-                    <div class= "bText"> Shop Children </div>
-                </div> 
-            </div>
-        </div>
-        <div class ="column Household">
-            <div class="itemBox">
-                <img src="https://99designs-blog.imgix.net/blog/wp-content/uploads/2016/08/bp.png?auto=format&q=60&fit=max&w=930" alt=".." class ="image" style="width: 100%">
-                <h4> Room </h4>
-                <div class = "bCaption">  
-                    <div class= "bText"> Shop Room </div>
-                </div> 
-            </div>
-        </div>
-        <div class ="column Household">
-            <div class="itemBox">
-                <img src="https://99designs-blog.imgix.net/blog/wp-content/uploads/2016/08/bp.png?auto=format&q=60&fit=max&w=930" alt=".." class ="image" style="width: 100%">
-                <h4> Kitchen </h4>
-                <div class = "bCaption">  
-                    <div class= "bText"> Shop Kitchen </div>
-                </div> 
-            </div>
-        </div>
-        <div class ="column Household">
-            <div class="itemBox">
-                <img src="https://99designs-blog.imgix.net/blog/wp-content/uploads/2016/08/bp.png?auto=format&q=60&fit=max&w=930" alt=".." class ="image" style="width: 100%">
-                <h4> Washroom </h4>
-                <div class = "bCaption">  
-                    <div class= "bText"> Shop Washroom </div>
-                </div> 
-            </div>
-        </div>
-        <div class ="column Backyard">
-            <div class="itemBox">
-                <img src="https://99designs-blog.imgix.net/blog/wp-content/uploads/2016/08/bp.png?auto=format&q=60&fit=max&w=930" alt=".." class ="image" style="width: 100%">
-                <h4> Plants </h4>
-                <div class = "bCaption">  
-                    <div class= "bText"> Shop Plants </div>
-                </div> 
-            </div>
-        </div>
-        <div class ="column Backyard">
-            <div class="itemBox">
-                <img src="https://99designs-blog.imgix.net/blog/wp-content/uploads/2016/08/bp.png?auto=format&q=60&fit=max&w=930" alt=".." class ="image" style="width: 100%">
-                <h4> Sports </h4>
-                <div class = "bCaption">  
-                    <div class= "bText"> Shop Sports </div>
-                </div> 
-            </div>
-        </div>
-        <div class ="column Travelling">
-            <div class="itemBox">
-                <img src="https://99designs-blog.imgix.net/blog/wp-content/uploads/2016/08/bp.png?auto=format&q=60&fit=max&w=930" alt=".." class ="image" style="width: 100%">
-                <h4> Luggage </h4>
-                <div class = "bCaption">  
-                    <div class= "bText"> Shop Luggage </div>
-                </div> 
-            </div>
-        </div>
-        <div class ="column Automobile">
-            <div class="itemBox">
-                <img src="https://99designs-blog.imgix.net/blog/wp-content/uploads/2016/08/bp.png?auto=format&q=60&fit=max&w=930" alt=".." class ="image" style="width: 100%">
-                <h4> Accessory </h4>
-                <div class = "bCaption">  
-                    <div class= "bText"> Shop Car Accessory </div>
-                </div> 
-            </div>
-        </div>
-        <div class ="column Automobile">
-            <div class="itemBox">
-                <img src="https://99designs-blog.imgix.net/blog/wp-content/uploads/2016/08/bp.png?auto=format&q=60&fit=max&w=930" alt=".." class ="image" style="width: 100%">
-                <h4> Parts </h4>
-                <div class = "bCaption">  
-                    <div class= "bText"> TEXT </div>
-                </div> 
-            </div>
-        </div>
-        <div class ="column Automobile">
-            <div class="itemBox">
-                <img src="https://99designs-blog.imgix.net/blog/wp-content/uploads/2016/08/bp.png?auto=format&q=60&fit=max&w=930" alt=".." class ="image" style="width: 100%">
-                <h4> Oil </h4>
-                <div class = "bCaption">  
-                    <div class= "bText"> Shop Oil </div>
-                </div> 
-            </div>
-        </div>
-
-
-    -->
     </div>
-
-
-
-    
-
-
-
-
-
 </div>
 <script >
     //SLideshow 
@@ -214,7 +63,10 @@ showSlides(slideIndex);
 
 //Next/previous controls
 function plusSlides(n) {
-showSlides(slideIndex += n);
+    if(n==-1 && slideIndex == 0){
+        slideIndex=4
+    }
+    showSlides(slideIndex += n);
 }
 //Image control
 function currentSlide(n) {
@@ -272,7 +124,6 @@ function removeClass(element, name) {
  }
  element.className = el.join(" ");
 }
-
 
 </script>
 </main>
