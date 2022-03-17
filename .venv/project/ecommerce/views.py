@@ -43,21 +43,28 @@ def shopCart(request):
     request.session['shoppingCartItems'] = [Item(Banana,1,2)]
     return render(request, 'shoppingCart.html')
     
-if order.items().exists():
+def addToCart():
+    """
+    Increament the number of an item
+    """
+    if request.method == "POST":
+
+     if order.items().exists():
             order_item.quantity += 1
             order_item.save()
             messages.info(request, "This item quantity was updated.")
             return redirect("shopCart")
-                #add_to_cart
-        if order.items().exists():
+def removeSingleItemFromCart():
+    if order.items().exists():
             if order_item.quantity > 1:
                 order_item.quantity -= 1
                 order_item.save()
+                messages.info(request, "This item quantity was updated.")
             else:
                 order.items.remove(order_item)
-            messages.info(request, "This item quantity was updated.")
             return redirect("shopCart")
-   
+def checkout():
+    
 
 # def get_coupon(request, code):
 #     try:

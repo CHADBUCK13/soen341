@@ -70,9 +70,9 @@ body{
             <td>{{ item.name }}</td>
             <td>{{ item.price }}</td>
             <td>
-                <a href="Remove from cart func"><i class="fas fa-minus mr-2"></i></a>
+                <a href="Remove from cart url"><i class="fas fa-minus mr-2"></i></a>
                 {{ order_item.quantity }}
-                <a href="Add to cart function"><i class="fas fa-plus ml-2"></i></a>
+                <a href="Add to cart url"><i class="fas fa-plus ml-2"></i></a>
             </td>
             <td>
             {% if order_item.item.discount_price %}
@@ -81,7 +81,7 @@ body{
             {% else %}
                 ${{ order_item.get_total_item_price }}
             {% endif %}
-            <a style='color: red;' href="controller/ remove item">
+            <a style='color: red;' href="remove url">
                 <i class="fas fa-trash float-right"></i>
             </a>
             </td>
