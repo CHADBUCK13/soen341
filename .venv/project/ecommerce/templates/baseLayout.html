@@ -6,7 +6,7 @@
         <meta http-equiv="X-UA-Compatible" content="IE=edge">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <title>
-            {% block title %}Ecommerce{% endblock %}
+            {% block title %}Paradise{% endblock %}
         </title>
         {% block head %} {% endblock %}
         <link rel="stylesheet" href="{% static 'css/register.css' %}">
@@ -15,22 +15,8 @@
         <link rel="preconnect" href="https://fonts.gstatic.com">
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
         <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;500;600&display=swap" rel="stylesheet">
-        <style>
-            .categoryList{
-                display: block;
-                height: 50px;
-                width: 100%;
-                background-color: rgba(110, 134, 199, 0.479);
-                border-radius: 3px;
-                padding: 0 10px;
-                margin-top: 1px;
-                font-size: 14px;
-                font-weight: 300;
-                border: 2px solid rgba(255,255,255,0.1);
-                box-shadow: 0 0 20px rgba(8,7,16,0.6);
-                font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
-            }
-        </style>
+        <script src="https://kit.fontawesome.com/e530a0ab96.js" crossorigin="anonymous"></script>
+        
     </head>
     <body>
         <header>
@@ -38,68 +24,64 @@
             <nav class = "navbar">
                 <div class = "Topnavigationbar">
 
-                    <!-- Home Page Nav -->
-                    <a class="active" href="../" id="id_home"> Home </a>
+                        <!-- Home Page Nav -->
+                        <a class="active" href="../" id="id_home"> <i class="fa-solid fa-store" style="color: rgb(242, 242, 250);"> Paradise</i></a>
 
-                    {% if request.session.is_logged_in %}
-                        <a href="/logout" id="id_logout">Logout</a>
-                    {% else %}
-                        <a href="/login" id="id_login">Login</a>
-                    {% endif %}
-
-                    {% if request.session.is_logged_in and request.session.is_seller %}
-                        <a href="/addItem" id="id_addItem">Add Item</a>
-                    {% endif %}
-
-                    <a href="#address"> Address  </a>
-        
-                    <a href="#returns-order"> Returns & Orders </a>
-                    <a href="#shopping-cart"> Shopping Cart </a>
-
-
-                    <!-- SEARCH BAR -->
-                    <form method="post" action="{% url 'searchItems' %}">
-
+                        {% if request.session.is_logged_in %}
+                        <div class="Topnavigationbar-right">
+                            <a href="/logout" id="id_logout">Logout</a>
+                        </div>
+                        {% else %}
+                        <div class="Topnavigationbar-right">
+                            <a href="/login" id="id_login">Login</a>
+                        </div>
+                        {% endif %}
+                        {% if request.session.is_logged_in and request.session.is_seller %}
+                        <div class="Topnavigationbar-right">
+                            <a href="/addItem" id="id_addItem">Add Item</a>
+                        </div>
+                        {% endif %}
+                        
+                        <form method="post" action="{% url 'searchItems' %}">
+                        
                         {% csrf_token %}
-
-                        <input type= "search" name="searchText" placeholder="Search Items...">
-                        <button>
-                            Search
-                        </button>
+                        <div class="searchBar ">
+                            <i class="fa-solid fa-magnifying-glass" style="position: relative; left: 28px; color: #3a3d38;"></i>
+                            <input type= "text" name="searchText" placeholder="Search any item..." size="44">
+                        </div>
                     </form>
-                </div>
+
+                        {% if request.session.is_logged_in %}
+                        
+                        <a href="#address"> Address  </a>        
+                        <a href="#returns-order"> Returns & Orders </a>
+                        <a href="#shopping-cart"> Shopping Cart </a>
+
+                        {% endif %}
+                        
+                    </div>
         
-                <div class = "secondnavbar">
-                    <a href="#bestseller"> Best Sellers </a>
-                    <a href="#deals"> Deals </a>
-                    <a href="#Members deal"> Members Deals </a>
-        
-                    <div class="dropdown"> 
-                        <button class = "dropbutn">Categories
-                            <i class = "fa fa-caret-down"> </i> 
-                        </button>
-                        <div class = "dropdown-content">
-                            {% for category in request.session.categoriesOptions %}
-                                    <a class="categoryList">
-                                        {{category}}
-                                    </a>
-                            {% endfor %}
-                            
-                            <!--
-                            {% for category in request.session.categoriesOptions %}
-                                <form method="post">
+                    <div class = "secondnavbar">
+                        <div class="dropdown"> 
+                            <button class = "dropbutn">Categories
+                                <i class = "fa fa-caret-down"> </i> 
+                            </button>
+                            <div class = "dropdown-content">
+                                {% for category in request.session.categoriesOptions %}
+                                <form id="categoryFilter{{category}}" method="post" action="{% url 'home' %}">
                                     {% csrf_token %}
                                     <input type="hidden" name="category" value="{{category}}">       
-                                    <a href="../" type="submit"> 
-                                        <button>
-                                            {{category}}
-                                        </button> 
+                                    <a href="#" onclick="document.getElementById('categoryFilter{{category}}').submit()"> 
+                                        {{category}}                                        
                                     </a>
                                 </form>
                                 {% endfor %}
-                            -->
+                            
                             </div>
                         </div>
+                        <a href="#bestseller"> Best Sellers </a>
+                        <a href="#deals"> Deals </a>
+                        <a href="#Members deal"> Members Deals </a>
                     </div>
                 </nav>
             </header>
@@ -108,4 +90,5 @@
             {% endblock %}
         </main>
     </body>
+    <script src="https://kit.fontawesome.com/e530a0ab96.js" crossorigin="anonymous"></script>
 </html>

@@ -1,6 +1,6 @@
 /* Styling */
 body {
-    background-color: rgba(0, 255, 255, 0.295);
+    background-color: rgb(242, 242, 250);
     font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
 }
 
@@ -13,11 +13,78 @@ h4 {
     color: white;
 }
 
+*{
+    box-sizing: border-box;
+    padding: 0;
+    margin: 0;
+}
+
+.product-container {
+    display: flex;
+    justify-content: center;
+    flex-wrap: wrap;
+}
+
+.card{
+    background: white;
+    width: 220px;
+    /*height: 400px;*/
+    margin:10px;
+    border-radius: 15px;
+}
+
+.card-image{
+    background-color: rgba(255, 255, 255, 0);
+    height: 230px;
+    margin-bottom: 15px;
+    background-size: cover;
+    border-radius: 15px 15px 0 0;
+}
+
+.item-1{
+    background-image: url('../image/Witcher_3.jpg')
+}
+
+.item-2{
+    background-image: url('../image/Re_4.jpg')
+}
+
+.item-3{
+    background-image: url('../image/Mario.jpg')
+}
+
+.card h2 {
+    padding: 2px;
+}
+
+.card p {
+    padding: 5px;
+}
+
+.card a {
+    background-color: black;
+    color: white;
+    padding: 5px 5px;
+    display: block;
+    text-align: center;
+    margin: 5px 20px;
+    text-decoration: none;
+}
+
+.card:hover {
+    background-color: rgb(62,62,62);
+    color: white;
+    cursor: pointer;
+    transform: scale(1.05); 
+    transition: all 1s ease;
+}
+
 /*Top navigation bar*/
 
 .Topnavigationbar {
-    background-color:rgb(5, 5, 73);
+    background-color:rgb(89, 89, 199);
     overflow: hidden;
+    position: relative;
 }
 
 .Topnavigationbar a {
@@ -26,31 +93,46 @@ h4 {
     text-align: center;
     padding: 14px 16px ;
     text-decoration: none;
-    font-size: 17px;
+    font-size: 20px;
 }
 
 .Topnavigationbar a:hover {
-    background-color: azure;
+    background-color: rgb(79, 79, 175);
     color : black;
 }
 
 .Topnavigationbar a.active {
-    background-color: cornflowerblue;
+    background-color: rgb(89, 89, 199);
     color: white;
 }
 
-.Topnavigationbar input[type=text] {
-    float: center;
-    padding: 6px;
-    border: none;
-    margin-top: 8px;
-    margin-right: 6px;
+.Topnavigationbar-right a {
+    float: right;
+    color: white;
+    text-align: center;
+    padding: 15px 16px ;
+    text-decoration: none;
     font-size: 17px;
+}
+
+.Topnavigationbar input[type=text] {
+    padding: 6px 6px 6px 28px;
+    border: none;
+    font-size: 17px;
+    border-radius: 10px;
+}
+
+.searchBar{
+    float: none;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
 }
 
 /*Second nav bar style*/
 .secondnavbar {
-    background-color:lightblue;
+    background-color:rgba(89, 89, 199, 0.5);
     overflow: hidden;
 }
 
@@ -81,9 +163,8 @@ h4 {
 .dropdown-content{
     display: none;
     position: absolute;
-    background-color: grey;
+    background-color: rgb(166 166 225);
     min-width: 160px;
-    box-shadow: 0px 9px 16px 0px rgba(0,0,0,0.2);
     z-index: 1;
 }
 
@@ -104,15 +185,18 @@ h4 {
 
 .dropdown-content a {
     float: none;
-    color: black;
+    display: inline-block;
+    background-color: rgb(166 166 225);
+    color: #FFFFFF;
     padding: 12px 16px;
+    text-align: center;
     text-decoration: none;
-    display: block;
-    text-align: left;
+    font-size: 16px;
+    opacity: 0.9;
 }
 
 .dropdown-content a:hover {
-    background-color: grey;
+    background-color: rgb(137, 137, 185);
 }
 
 .dropdown:hover .dropdown-content {
@@ -123,13 +207,21 @@ h4 {
 *{box-sizing:border-box}
 
 .slideshow {
-    max-width: 1000px;
+    max-width: 1500px;
     position: relative;
     margin: auto;
 }
 
 .mySlides {
     display: none;
+    width: 100%;
+    height: 700px;
+}
+
+.mySlides img{
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
 }
 
 /* Next & previous buttons */
@@ -230,22 +322,10 @@ h4 {
 * {
     box-sizing: border-box;
 }
-.row {
-    margin: 8px -16px;
-}
 .column {
     float: left;
     width: 33.33%;
     display: none;
-}
-.row:after{
-    content: "";
-    display: table;
-    clear: both;
-} 
-.row, 
-.row > .column {
-    padding: 8px;
 }
 .show {
     display: block;
@@ -254,7 +334,7 @@ h4 {
 .itemBox {
     position: relative;
     width: 100%;
-    background-color:rgb(5, 92, 92);
+    background-color:rgb(5, 129, 129);
     padding: 10px;
 }
 .image {

@@ -1,4 +1,4 @@
-version: "3.9.7"
+
 services:
   web:
     container_name: soen331-app
@@ -8,5 +8,6 @@ services:
       - "8000:8000"
     environment:
       - GOOGLE_APPLICATION_CREDENTIALS
+      - SOEN_341_PASSWORD
   redis:
     image: redis:latest

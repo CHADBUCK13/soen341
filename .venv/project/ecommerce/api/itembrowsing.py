@@ -1,90 +1,147 @@
+from urllib.error import HTTPError
 from firebase_admin import firestore
-from difflib import SequenceMatcher
+import json
+from django.forms.models import model_to_dict
+from requests.exceptions import HTTPError
 from ..models.items import Item
-
-
 
 db = firestore.client()
 
-#reference to items collections
 items_ref=db.collection(u'items')
 
-def addItems(name="",sellerID=0,photo="",price=0,description="",weight=0, score=0,sales=False,category=None):
-
-    itemlocation = "items"
-
+def addItems(item:Item):
     items_data = {
-        'name':name,
-        'sellerID':sellerID,
-        'photo':photo,
-        'price':price,
-        'description':description,
-        'weight':weight,
-        'sales':sales,
+        'name':item.name,
+        'sellerID':item.sellerID,
+        'photo':item.photo,
+        'price':item.price,
+        'description':item.description,
+        'weight':item.weight,
+        'sales':item.sales,
         'rating': {
-            'score':score,   
+            'score':item.score,   
             'numberofreviews':0        
         },
         'category': {
-            'category_name' : category.category_name,
-            'relatedcategory': category.related_categories
+            'category_name' : item.category.category_name,
+            'relatedcategory': item.category.related_categories
         }
     }
 
-    db.collection(itemlocation).document(name).set(items_data)
-    
-#search for items based on price range
-def order_by_price(min=0, max=0):
+    items_ref.add(items_data)
 
-    price_ref=items_ref.order_by_child('price').start_at(min).end_at(max).get()
-    print(price_ref)
+def order_by_price(min=0, max=0): 
+    """
+    search for items based on price range
+    """
+    try: 
+        items_ref=db.collection(u'items')
+        price_ref=items_ref.where(u'price',u'>',min).where(u'price',u'<',max).order_by(u'price').stream()
 
-#find related categories of a given category
-def categories(category=""):
- 
-    categories = items_ref.order_by_child(category)
-    related = categories.order_by_child('relatedcategories')
-    for key in related.items():
-        print(key)
+        return item_collection_to_dict(price_ref)
 
-#get all categories
+    except HTTPError as e:
+        return json.loads(e.strerror)
+
+
+def better_than_score(score):
+    """
+    get items with a given score
+    """
+    try:
+
+        items_ref=db.collection(u'items')
+        itemsreviewed=items_ref.where(u'score', u'<=', score).stream()
+
+        return item_collection_to_dict(itemsreviewed)
+
+    except HTTPError as e:
+        return json.loads(e.strerror)
+
+
+def worse_than_score(score):
+    """
+    get descending order for items
+    """
+
+    try:
+
+        items_ref=db.collection(u'items')
+        itemsreviewed=items_ref.where(u'score', u'>', score).stream()
+
+        return item_collection_to_dict(itemsreviewed)
+
+    except HTTPError as e:
+        return json.loads(e.strerror)
+
+
+       
 def get_categories():
+    """
+    get all categories
+    """
+    try:
+        categoryNamesRef=db.collection(u'Categories').document(u'names')
+        categoryNamesDict = categoryNamesRef.get().to_dict()
+        return categoryNamesDict['names']
 
-    categoryNamesRef=db.collection(u'Categories').document(u'names')
-    categoryNamesDict = categoryNamesRef.get().to_dict()
-    return categoryNamesDict['names']
+    except HTTPError as e:
+        return json.loads(e.strerror)
 
-#search all categories
+
 def get_all_items(numberOfItems = 0):
-    allItemsRef = items_ref.stream()
-    allItems = []
-
-    for itemDoc in allItemsRef:
-        #print(f'{itemDoc.id} => {itemDoc.to_dict()}')
-        allItems.append(itemDoc.to_dict())
-
+    try:
+        allItemsRef = items_ref.stream()
+        allItems:list = item_collection_to_dict(allItemsRef)
+        return allItems
     
+    except HTTPError as e:
+        return json.loads(e.strerror)
 
-    return allItems
+
+def get_all_items_dict(numberOfItems = 0):
+    try:
+        allItemsRef = items_ref.stream()
+        allItems = []
+
+        for itemDoc in allItemsRef:
+            item_dict = itemDoc.to_dict()
+        
+            allItems.append(item_dict)
+
+        return allItems
+    
+    except HTTPError as e:
+        return json.loads(e.strerror)
+
 
 def get_items_by_category(category = "", numberOfItems=0):
-    itemsRef = items_ref.where(u'category', u'==', category).limit(numberOfItems).stream()
-    allItems = []
+    try:
+        itemsRef = items_ref.where(u'category.category_name', u'==', category).limit(numberOfItems).stream()        
+        return item_collection_to_dict(itemsRef)
 
-    for itemDoc in itemsRef:
-        allItems.append(itemDoc.to_dict())
+    except HTTPError as e:
+        return json.loads(e.strerror)
 
-    return allItems
-
-#get all items with a certain number of sales
 def get_items_on_sale(numberOfItems):
-    itemsRef = items_ref.where(u'sale', u'==', u'True').order_by('name').limit(numberOfItems).stream()
-    allItems = {}
+    """
+    get all items with a certain number of sales
+    """
 
-    for itemDoc in itemsRef:
-        allItems.update(itemDoc.to_dict())
+    try:
+        itemsRef = items_ref.where(u'sales', u'==', True).limit(numberOfItems).stream()
+       
+        return item_collection_to_dict(itemsRef)
 
-    return allItems
+
+    except HTTPError as e:
+        return json.loads(e.strerror)
+
+def get_item_by_ID(itemID):
+    
+    item_ID_ref = items_ref.document(itemID).get()
+    item_dict = item_ID_ref.to_dict()
+    return Item(item_data= item_dict)
 
 def get_items_by_search(searchText=""):
     """
@@ -101,16 +158,18 @@ def get_items_by_search(searchText=""):
     
     return searchedItems
 
-#add reviews to items
 
-#get items with a given score
-def better_than_score(self, score):
-
-    items_ref=db.collection(u'items')
-
-    itemsreviewed=items_ref.where(u'score', u'<', u'score')
-
-    print(itemsreviewed)
+#Helper functions
 
 
-     
+def item_collection_to_dict(collection):
+    allItems = []
+
+    for itemDoc in collection:
+        item_dict = itemDoc.to_dict()
+        item = Item(item_data=item_dict)
+        
+        allItems.append(item)
+
+    return allItems
+
