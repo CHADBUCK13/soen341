@@ -25,10 +25,6 @@ class TestLogin(TestCase):
 class TestSignup(TestCase):
 
     
-    def test_signupBuyer(self):
-
-        print(DatabaseContext().delete_buyer('matintavak@yahoo.com','123*pass'))
-         
     
     def test_signup_buyer_page_response_code(self):
         url = reverse("signupBuyer")

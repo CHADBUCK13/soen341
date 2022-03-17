@@ -4,7 +4,6 @@ from  .. import models
 from  ..models.buyer  import Buyer
 from  ..models.seller  import Seller
 from  ..models.user  import User
-from model_mommy import mommy
 from ..controllers.forms.signupForm import BuyerSignupForm, SellerSignupForm
 
 
@@ -18,6 +17,3 @@ class TestSellerModel(TestCase):
     
     def test_accountType(self):
         self.assertEquals(Seller.accountType(self),"seller")
-
-    
-           
