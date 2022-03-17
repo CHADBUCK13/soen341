@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<pre>
+Hi {{ email }},
+
+Thank you for choosing Ecommerce for your purchase.
+
+Here is a summary of your order:
+</pre>
+
+<hr>
+<pre>
+
+Subtotal: {{order.subtotal}}
+Total: {{order.total}}
+Number of Items: {{order.nOfItems}}
+Payment Used: {{order.paymentInfo}}
+date: {{order.date}}
+time: {{order.time}}
+address: 
+    city: {{order.shippingAddress.city}}
+    country: {{order.shippingAddress.country}}
+    street address: {{order.shippingAddress.streetAddress}}
+    postal code: {{order.shippingAddress.postalCode}}
+</pre>
+<hr>
+
+<pre>
+
+We hope to see you again soon! &#128513;
+
+Your Ecommerce team.
+</pre>

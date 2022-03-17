@@ -11,3 +11,4 @@ chromedriver>=2.24.1
 chromedriver-py>=98.0.4758.80
 google-cloud-firestore>=2.3.4
 selenium>=4.1.2
+Pillow>=9.0.0

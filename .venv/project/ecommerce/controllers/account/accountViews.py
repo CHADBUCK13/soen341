@@ -1,16 +1,17 @@
 from django.shortcuts import redirect, render
-from ...models.seller import Seller
-from ...databaseContext import Errors
-from ...models.buyer import Buyer
-from ...models.user import User
+from ecommerce.models.seller import Seller
+from ...api.accountContext import Errors
+from ecommerce.models.buyer import Buyer
+from ecommerce.models.user import User
 from ...controllers.forms.signupForm import BuyerSignupForm, SellerSignupForm
 from ...controllers.forms.loginForm import LoginForm
+from ...controllers.forms.resetPasswordForm import ResetPasswordForm
 
-
-def login(request):
+def login(request, resetMsg=""):
     """
     Logins a user.
     """
+
     # Login form has been submitted
     if request.method == "POST":
         
@@ -32,6 +33,12 @@ def login(request):
                 login_form.add_error(None,Errors.ShowErrorMessage(user))
             
             else:
+                
+                if User.is_seller(user['email']):
+                    request.session['is_seller']=True
+                else:
+                    request.session['is_seller']=False
+
                 # Add the login status to the session
                 request.session['is_logged_in']=True
                 request.session.modified = True
@@ -51,8 +58,29 @@ def login(request):
         login_form = LoginForm()
     
     # Show the login page with the login form
-    return render(request,'register.html',{"loginForm":login_form})
-    # return render(request, 'login.html',{"form":login_form})
+    return render(request,'register.html',{"loginForm":login_form,"resetMsg":resetMsg})
+
+
+def resetPassword(request):
+
+    if request.method == "POST":
+        
+        reset_form = ResetPasswordForm(request.POST)
+
+        if reset_form.is_valid():
+            
+            email = reset_form.cleaned_data['email']
+
+            if User.is_buyer(email) or User.is_seller(email):
+                User.reset_password(email)
+                return login(request, resetMsg="Password Reset Link has been Sent!")
+            else:
+                reset_form.add_error(None,"No Account Exists with the given Email.")
+    else:
+        reset_form = ResetPasswordForm()
+
+    return render(request,'resetPassword.html',{'reset_form':reset_form})
+
 
 def logout(request):
     """
@@ -81,7 +109,6 @@ def logout(request):
     # Go to home page
     return redirectPage
 
-
 def signupBuyer(request):
     """
     Signup a new Buyer Account.
@@ -105,6 +132,7 @@ def signupBuyer(request):
             # Otherwise, login the user.
             else:
                 # Add the login status to the session
+                request.session['is_seller']=False
                 request.session['is_logged_in']=True
                 request.session.modified = True
 
@@ -148,6 +176,7 @@ def signupSeller(request):
             # Otherwise, login the user.
             else:
                 # Add the login status to the session
+                request.session['is_seller']=True
                 request.session['is_logged_in']=True
                 request.session.modified = True
 

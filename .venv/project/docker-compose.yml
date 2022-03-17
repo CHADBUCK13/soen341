@@ -8,5 +8,6 @@ services:
       - "8000:8000"
     environment:
       - GOOGLE_APPLICATION_CREDENTIALS
+      - SOEN_341_PASSWORD
   redis:
     image: redis:latest
