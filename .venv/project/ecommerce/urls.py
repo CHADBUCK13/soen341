@@ -17,7 +17,6 @@ urlpatterns = [
     path("addItem/",addItem, name="addItem"),
     path('searchItems/',searchItems, name="searchItems"),
     path("shoppingCart/", shopCart, name="shoppingCart")
-    #add/remove
 ]
 
 urlpatterns += staticfiles_urlpatterns()

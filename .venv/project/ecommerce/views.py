@@ -2,6 +2,7 @@ from multiprocessing import context
 from urllib import request
 from django.shortcuts import render
 from .api import itembrowsing
+from django.contrib import messages
 #from .models import OrderItem, Order, Address
 #from .forms import shopCartForm
 
@@ -41,6 +42,21 @@ def shopCart(request):
     #request.session['shoppingCartItems'] = get_items_from_cart(request.session['email']) 
     request.session['shoppingCartItems'] = [Item(Banana,1,2)]
     return render(request, 'shoppingCart.html')
+    
+if order.items().exists():
+            order_item.quantity += 1
+            order_item.save()
+            messages.info(request, "This item quantity was updated.")
+            return redirect("shopCart")
+                #add_to_cart
+        if order.items().exists():
+            if order_item.quantity > 1:
+                order_item.quantity -= 1
+                order_item.save()
+            else:
+                order.items.remove(order_item)
+            messages.info(request, "This item quantity was updated.")
+            return redirect("shopCart")
    
 
 # def get_coupon(request, code):
