@@ -5,6 +5,7 @@ from ecommerce.api.itembrowsing import get_items_by_search, addItems
 from ecommerce.api.accountContext import AccountContext
 from ..forms.itemForm import ItemForm
 from ecommerce.models.items import Item
+from ...views import *
 
 def addItem(request):
     """
@@ -51,18 +52,18 @@ def searchItems(request):
 
         # If no keyword was given, return to home
         if searchText == "":
-            return render(request,'home.html')
+            return home(request)
 
         # Get items that match that keyword
         items = get_items_by_search(searchText=searchText)
 
         # Inform user that no items were found
         if len(items) == 0:
-            return render(request,'searchItems.html',{'searchText':searchText,'noItems':True})
+            searchText = "No Items Found for: '"+searchText+"'"
+        else:
+            searchText = "Items Found for: '"+searchText+"'" 
 
-        # Display found items
-        return render(request,'searchItems.html',{'searchText':searchText,'items':items})
-
+        return render(request,'home.html',{'items':items,'category':searchText})
     else:
-        return render(request,'home.html')
+        return home(request)
 
