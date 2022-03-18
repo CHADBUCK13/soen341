@@ -14,8 +14,6 @@ form.reg{
     width: 50%;
 }
 
-
-
 form *.reg{
     font-family: 'Poppins',sans-serif;
     color: #000000;
@@ -23,6 +21,7 @@ form *.reg{
     outline: none;
     border: none;
 }
+
 form h3.reg{
     font-size: 32px;
     font-weight: 500;
@@ -39,6 +38,7 @@ label.reg{
     font-weight: 500;
     color: black;
 }
+
 input.reg{
     display: block;
     height: 50px;

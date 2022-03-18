@@ -16,7 +16,6 @@ class AccountContext():
         #firebase_admin.initialize_app()
         self.db = firestore.client()
         
-
     def signup_as_buyer(self,email,password,firstname="",lastname="",country="",city="",address="",postal_code="",date_of_birth=""):
         try:
             # Set User Type

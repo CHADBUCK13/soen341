@@ -36,14 +36,22 @@
                             <a href="/login" id="id_login">Login</a>
                         </div>
                         {% endif %}
+
+
+                        {% if request.session.is_logged_in %}
+                        <div class="Topnavigationbar-right">
+                            <a href="/banking" id="payment_info">Payment Info</a>
+                        </div>
+                        {% endif %}
+
                         {% if request.session.is_logged_in and request.session.is_seller %}
                         <div class="Topnavigationbar-right">
                             <a href="/addItem" id="id_addItem">Add Item</a>
                         </div>
                         {% endif %}
-                        
+
+
                         <form method="post" action="{% url 'searchItems' %}">
-                        
                         {% csrf_token %}
                         <div class="searchBar ">
                             <i class="fa-solid fa-magnifying-glass" style="position: relative; left: 28px; color: #3a3d38;"></i>
@@ -55,7 +63,7 @@
                         
                         <a href="#address"> Address  </a>        
                         <a href="#returns-order"> Returns & Orders </a>
-                        <a href="#shopping-cart"> Shopping Cart </a>
+                        <a href="/shoppingCart"> Shopping Cart </a>
 
                         {% endif %}
                         

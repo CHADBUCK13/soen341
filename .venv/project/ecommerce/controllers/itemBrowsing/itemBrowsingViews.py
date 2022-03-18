@@ -1,5 +1,4 @@
 from django.shortcuts import redirect, render
-
 from ecommerce.api.storage import store_image
 from ecommerce.api.itembrowsing import get_items_by_search, addItems
 from ecommerce.api.accountContext import AccountContext
@@ -30,13 +29,18 @@ def addItem(request):
                 token = request.COOKIES.get('idToken',None)
                 current_user = AccountContext().get_account_info(token)
             
-            # Save the Image File into the DB Storage
-            image_url=store_image(request.FILES.get('image',None),item_form.data['name'])
+            if hasPaymentInfo(current_user['users'][0]['email']):
 
-            item = Item(add_item_form_data=item_form.data,sellerID=current_user['users'][0]['email'],photo=image_url)
-            addItems(item)
+                # Save the Image File into the DB Storage
+                image_url=store_image(request.FILES.get('image',None),item_form.data['name'])
 
-            return redirect('home')
+
+                item = Item(add_item_form_data=item_form.data,sellerID=current_user['users'][0]['email'],photo=image_url)
+                addItems(item)
+
+                return redirect('home')
+            else:
+                item_form.add_error(None,"Please Update your Payment Information before Adding Items for Sale.")
     else:
         item_form = ItemForm()
 

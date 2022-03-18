@@ -81,8 +81,8 @@ def delete_items_from_cart(email, itemId):
 
 def update_item_quantity(email, itemId, quantity):
 
-    if (quantity<0):
-        return False
+    #if quantity<0:
+    #    return False
 
     try:
         item_ref = db.collection(u'shopping_cart').document(email)
