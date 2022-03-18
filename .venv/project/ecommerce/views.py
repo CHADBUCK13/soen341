@@ -63,7 +63,9 @@ def removeSingleItemFromCart():
             else:
                 order.items.remove(order_item)
             return redirect("shopCart")
+
 def checkout():
+    pass
     
 
 # def get_coupon(request, code):
@@ -93,4 +95,3 @@ def checkout():
 
 #Add checkout view
 #Add remove add item view(add/remove form cart)
-       
