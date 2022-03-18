@@ -60,37 +60,30 @@
         </tr>
         </thead>
         <tbody>
-        
-            {% for item in shoppingCartItems %}
-        
-                <tr>
-                    <th scope="row">
-                        {{ forloop.counter }}
-                    </th>
-                    <td>
-                        {{ item.name }}
-                    </td>
-                    <td>
-                        {{ item.price }}$
-                    </td>
-                    <td>
-                        <a href="Remove from cart func"><i class="fas fa-minus mr-2"></i></a>
-                            {{ order_item.quantity }}
-                        <a href="Add to cart function"><i class="fas fa-plus ml-2"></i></a>
-                    </td>
-                    <td>
-                        {% if order_item.item.discount_price %}
-                            ${{ order_item.get_total_discount_item_price }}
-                        <span class="badge badge-primary">Saving ${{ order_item.get_amount_saved }}</span>
-                        {% else %}
-                            ${{ order_item.get_total_item_price }}
-                        {% endif %}
-                        <a style='color: red;' href="controller/ remove item">
-                            <i class="fas fa-trash float-right"></i>
-                        </a>
-                    </td>
-                </tr>
-                
+
+        {% for item in request.session.shoppingCartItems %}
+        <tr>
+            <th scope="row">{{ forloop.counter }}</th>
+            <td>{{ item.name }}</td>
+            <td>{{ item.price }}</td>
+            <td>
+                <a href="Remove from cart url"><i class="fas fa-minus mr-2"></i></a>
+                {{ order_item.quantity }}
+                <a href="Add to cart url"><i class="fas fa-plus ml-2"></i></a>
+            </td>
+            <td>
+            {% if order_item.item.discount_price %}
+                ${{ order_item.get_total_discount_item_price }}
+                <span class="badge badge-primary">Saving ${{ order_item.get_amount_saved }}</span>
+            {% else %}
+                ${{ order_item.get_total_item_price }}
+            {% endif %}
+            <a style='color: red;' href="remove url">
+                <i class="fas fa-trash float-right"></i>
+            </a>
+            </td>
+        </tr>
+
         {% empty %}
         <tr>
             <td colspan='5'>Your cart is empty</td>
@@ -107,10 +100,10 @@
             <td><b>-${{ object.coupon.amount }}</b></td>
         </tr>
         {% endif %}
-        {% if object.get_total %}
+        {% if updateCartTotal %}
         <tr>
             <td colspan="4"><b>Order Total</b></td>
-            <td><b>${{ object.get_total }}</b></td>
+            <td><b>${{ updateCartTotal }}</b></td>
         </tr>
         <tr>
             <td colspan="5">
@@ -126,3 +119,22 @@
     </div>
 
 {% endblock content %}
+
+
+<script>
+    function updateCartTotal() {
+    var cartItemContainer = document.getElementsByClassName('items')[0]
+    var cartRows = cartItemContainer.getElementsByClassName('row')
+    var total = 0
+    for (var i = 0; i < cartRows.length; i++) {
+        var cartRow = cartRows[i]
+        var priceElement = cartRow.getElementsByClassName(item.price)[0]
+        var quantityElement = cartRow.getElementsByClassName(item.quantity)[0]
+        var price = parseFloat(priceElement.innerText.replace('$', ''))
+        var quantity = quantityElement.value
+        total = total + (price * quantity)
+    }
+    total = Math.round(total * 100) / 100
+    document.getElementsByClassName('cart-total-price')[0].innerText = '$' + total
+}
+</script>
