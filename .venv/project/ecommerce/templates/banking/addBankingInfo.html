@@ -1,0 +1,33 @@
+{% extends 'baseLayout.html' %}
+
+{% block head %}
+<style>
+    label{
+        display: block;
+        margin-top: 30px;
+        font-size: 16px;
+        font-weight: 500;
+        color: black;
+        font-family: 'Poppins',sans-serif;
+    }
+    
+</style>
+{% endblock %}
+
+{% block content %}
+{% load static %}
+
+<div class="reg">
+    <form class="reg" method="post" id="addBankingInfo_form">
+        <h3 class="reg">Payment Information</h3>
+        
+        {% csrf_token %}
+        {{ paymentForm }}
+    
+        <button class="reg" type="submit" id="id_addBankingInfo">
+            Save
+        </button>
+    </form>
+</div>
+
+{% endblock %}

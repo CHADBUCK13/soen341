@@ -2,6 +2,7 @@ import imp
 from django.urls import path
 from django.contrib.staticfiles.urls import staticfiles_urlpatterns
 from .controllers.itemBrowsing.itemBrowsingViews import addItem, searchItems
+from .controllers.banking.bankingViews import addBankingInfo
 from .views import home
 from .controllers.account.accountViews import signupBuyer,signupSeller,login,logout,resetPassword
 from .controllers.shoppingCart.shoppingCartViews import shopCart, addToCart
@@ -20,6 +21,7 @@ urlpatterns = [
     path("shoppingCart/", shopCart, name="shoppingCart"),
     path("addCartItem/", addToCart, name="addToCart"),
     #add/remove
+    path('banking/',addBankingInfo, name="addBankingInfo")
 ]
 
 urlpatterns += staticfiles_urlpatterns()

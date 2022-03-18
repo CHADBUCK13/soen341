@@ -1,10 +1,10 @@
 from django.shortcuts import redirect, render
-
-from ...api.storage import store_image
-from ...api import itembrowsing
+from ecommerce.api.storage import store_image
+from ecommerce.api.itembrowsing import get_items_by_search, addItems
 from ecommerce.api.accountContext import AccountContext
 from ..forms.itemForm import ItemForm
-from ...models.items import Item
+from ecommerce.models.items import Item
+from ...views import *
 
 def addItem(request):
     """
@@ -29,12 +29,18 @@ def addItem(request):
                 token = request.COOKIES.get('idToken',None)
                 current_user = AccountContext().get_account_info(token)
             
-            # Save the Image File into the DB Storage
-            image_url=store_image(request.FILES.get('image',None),item_form.data['name'])
+            if hasPaymentInfo(current_user['users'][0]['email']):
 
-            Item(add_item_form_data=item_form.data,sellerID=current_user['users'][0]['email'],photo=image_url).save()
+                # Save the Image File into the DB Storage
+                image_url=store_image(request.FILES.get('image',None),item_form.data['name'])
 
-            return redirect('home')
+
+                item = Item(add_item_form_data=item_form.data,sellerID=current_user['users'][0]['email'],photo=image_url)
+                addItems(item)
+
+                return redirect('home')
+            else:
+                item_form.add_error(None,"Please Update your Payment Information before Adding Items for Sale.")
     else:
         item_form = ItemForm()
 
@@ -50,18 +56,18 @@ def searchItems(request):
 
         # If no keyword was given, return to home
         if searchText == "":
-            return render(request,'home.html')
+            return home(request)
 
         # Get items that match that keyword
-        items = itembrowsing.get_items_by_search(searchText=searchText)
+        items = get_items_by_search(searchText=searchText)
 
         # Inform user that no items were found
         if len(items) == 0:
-            return render(request,'searchItems.html',{'searchText':searchText,'noItems':True})
+            searchText = "No Items Found for: '"+searchText+"'"
+        else:
+            searchText = "Items Found for: '"+searchText+"'" 
 
-        # Display found items
-        return render(request,'searchItems.html',{'searchText':searchText,'items':items})
-
+        return render(request,'home.html',{'items':items,'category':searchText})
     else:
-        return render(request,'home.html')
+        return home(request)
 

@@ -1,4 +1,3 @@
-from ..api import itembrowsing
 from difflib import SequenceMatcher
 
 class Item():
@@ -17,8 +16,7 @@ class Item():
             self.price = add_item_form_data['price']
             self.description = add_item_form_data['description']
             self.weight = add_item_form_data['weight']
-            self.category = add_item_form_data['category']
-            self.relatedCategories = add_item_form_data['relatedCategories']
+            self.category = Category(category_name=add_item_form_data['category'], related_categories=add_item_form_data['relatedCategories']) 
             self.numberofreviews = 0
             self.score = 0
             self.sales = False 
@@ -37,21 +35,6 @@ class Item():
 
         if sellerID is not None:
             self.sellerID = sellerID
-    
-    def save(self):
-        """
-        Saves the current Item in the DB.
-        """
-        itembrowsing.addItems(
-            name=self.name,
-            sellerID=self.sellerID,
-            photo=self.photo,
-            price=self.price,
-            description=self.description,
-            weight=self.weight,
-            score=self.score,
-            sales=self.sales,
-            category=Category(self.category,self.relatedCategories))
 
     def match(self,searchText=""):
         ACCEPTANCE_RATIO = 0.5
