@@ -1,47 +1,5 @@
 {% extends 'baseLayout.html' %}
 
-{% block head %}
-
-<style> 
-    body{
-        margin: 0;
-        padding: 0;
-        background: linear-gradient(to bottom right, #E3F0FF, #FAFCFF);
-        height: 100vh;
-       }
-       .Container{
-        width: 70%;
-        height: 85%;
-        background-color: #ffffff;
-        border-radius: 20px;
-        box-shadow: 0px 25px 40px #1687d933;
-       }
-    
-       .sds{
-        margin: auto;
-        width: 90%;
-        height: 15%;
-        display: flex;
-        justify-content: space-between;
-        align-items: center;
-       }
-    
-       .btn{
-        margin-top: 5px;
-        width: 100%;
-        height: 40px;
-        border: none;
-        background: linear-gradient(to bottom right, #B8D7FF, #8EB7EB);
-        border-radius: 20px;
-        cursor: pointer;
-        font-size: 16px;
-        font-family: 'Open Sans';
-        font-weight: 600;
-        color: #202020;
-       }
-    </style>
-
-{% endblock %}
 
 {% block content %}
 
@@ -61,26 +19,33 @@
         </thead>
         <tbody>
 
-        {% for item in request.session.shoppingCartItems %}
+        {% for cartItem in shoppingCartItems %}
         <tr>
             <th scope="row">{{ forloop.counter }}</th>
-            <td>{{ item.name }}</td>
-            <td>{{ item.price }}</td>
+            <td>{{ cartItem.item.name }}</td>
+            <td>{{ cartItem.item.price }}</td>
             <td>
-                <a href="Remove from cart url"><i class="fas fa-minus mr-2"></i></a>
-                {{ order_item.quantity }}
-                <a href="Add to cart url"><i class="fas fa-plus ml-2"></i></a>
+                <form method="post" id="changeAmountId{{cartItem.item.id}}" action="{% url 'changeAmount' %}">
+                    {% csrf_token %}
+                    <input type="number" name="newQuantity" placeholder="{{ cartItem.quantity }}" min="1" onformchange="document.getElementById('changeAmountId{{cartItem.item.id}}').submit()">
+                    <input type="hidden" name="quantity" value="{{ cartItem.quantity }}">
+                    <input type="hidden" name="itemID" value="{{cartItem.item.id}}">
+                </form>
             </td>
             <td>
             {% if order_item.item.discount_price %}
                 ${{ order_item.get_total_discount_item_price }}
                 <span class="badge badge-primary">Saving ${{ order_item.get_amount_saved }}</span>
             {% else %}
-                ${{ order_item.get_total_item_price }}
+                ${{ cartItem.total }}
             {% endif %}
-            <a style='color: red;' href="remove url">
-                <i class="fas fa-trash float-right"></i>
-            </a>
+            <form method="post" id="delete{{cartItem.item.id}}" action="{% url 'deleteFromCart' %}">
+                {% csrf_token %}
+                <input type="hidden" name="itemID" value="{{cartItem.item.id}}">
+                <a style='color: red;' href="#" onclick="document.getElementById('delete{{cartItem.item.id}}').submit()">
+                    <i class="fas fa-trash float-right"></i>
+                </a>
+            </form>
             </td>
         </tr>
 
@@ -113,7 +78,10 @@
         {% endif %}
         </tbody>
     </table>
-
+    <form method="post" action="{% url 'checkout' %}">
+        {% csrf_token %}
+        <button type="submit">Checkout</button>
+    </form>
     </div>
 
     </div>

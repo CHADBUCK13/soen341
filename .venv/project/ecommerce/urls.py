@@ -5,7 +5,7 @@ from .controllers.itemBrowsing.itemBrowsingViews import addItem, searchItems
 from .controllers.banking.bankingViews import addBankingInfo
 from .views import home
 from .controllers.account.accountViews import signupBuyer,signupSeller,login,logout,resetPassword
-from .controllers.shoppingCart.shoppingCartViews import shopCart, addToCart
+from .controllers.shoppingCart.shoppingCartViews import *
 
 
 urlpatterns = [
@@ -20,6 +20,9 @@ urlpatterns = [
     path('searchItems/',searchItems, name="searchItems"),
     path("shoppingCart/", shopCart, name="shoppingCart"),
     path("addCartItem/", addToCart, name="addToCart"),
+    path("changeAmount/",changeAmount, name="changeAmount"),
+    path('deletedFromCart/',removeFromCart, name="deleteFromCart"),
+    path('checkout/',checkout,name='checkout'),
     #add/remove
     path('banking/',addBankingInfo, name="addBankingInfo")
 ]

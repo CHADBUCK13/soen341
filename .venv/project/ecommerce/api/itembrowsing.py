@@ -93,6 +93,8 @@ def get_all_items(numberOfItems = 0):
     try:
         allItemsRef = items_ref.stream()
         allItems:list = item_collection_to_dict(allItemsRef)
+        print(allItems)
+        
         return allItems
     
     except HTTPError as e:
@@ -106,7 +108,8 @@ def get_all_items_dict(numberOfItems = 0):
 
         for itemDoc in allItemsRef:
             item_dict = itemDoc.to_dict()
-        
+            itemID = itemDoc.id
+            item_dict['id'] = itemID
             allItems.append(item_dict)
 
         return allItems
@@ -141,6 +144,7 @@ def get_item_by_ID(itemID):
     
     item_ID_ref = items_ref.document(itemID).get()
     item_dict = item_ID_ref.to_dict()
+    item_dict['id']=itemID
     return Item(item_data= item_dict)
 
 def get_items_by_search(searchText=""):
@@ -167,6 +171,8 @@ def item_collection_to_dict(collection):
 
     for itemDoc in collection:
         item_dict = itemDoc.to_dict()
+        itemID = itemDoc.id
+        item_dict['id'] = itemID
         item = Item(item_data=item_dict)
         
         allItems.append(item)

@@ -42,7 +42,7 @@ def check_out(email:str, order:Order):
     order.id = orderRef.id
 
     clear_shopping_cart(email)
-    send_confirmation_email(orderRef.id, order, email)
+    #send_confirmation_email(orderRef.id, order, email)
 
 def cancel_order(email:str, orderID:str):
     """

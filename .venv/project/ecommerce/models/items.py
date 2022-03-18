@@ -32,6 +32,7 @@ class Item():
             self.score=item_data['rating']['score']
             self.sellerID=item_data['sellerID']
             self.weight=item_data['weight']
+            self.id = item_data['id']
 
         if sellerID is not None:
             self.sellerID = sellerID

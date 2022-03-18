@@ -48,7 +48,14 @@
                     <p>
                     ${{item.price}}
                     </p>
-                    <a href="">ADD TO CART</a>
+                    <form id="addCart{{item.id}}" method="post" action="{% url 'addToCart' %}">
+                        {% csrf_token %}
+                        <input type="hidden" name="item" value="{{item.id}}">  
+                        <a href="#" onclick="document.getElementById('addCart{{item.id}}').submit()">
+                            ADD TO CART
+                        </a>
+                    </form>
+                    
                 </div>          
             </div>
             {% endfor %}
