@@ -1,4 +1,4 @@
-from datetime import datetime
+
 import json
 from pickle import NONE
 from requests.exceptions import HTTPError
@@ -8,7 +8,7 @@ from firebase_admin import firestore
 
 FIREBASE_CONFIG = json.load(open('pyrebaseConfig.json'))
 
-class AccountContext():
+class DatabaseContext():
 
     def __init__(self):
         self.firebase = pyrebase.initialize_app(FIREBASE_CONFIG)
@@ -176,7 +176,7 @@ class AccountContext():
                 # Sign In the User
                     user = self.auth.sign_in_with_email_and_password(email, password)
                 # delete the buyer    
-                    self.auth.delete_User(user['idToken'])
+                    self.auth.delete_user_account(user['idToken'])
                     self.db.collection('buyers').document(email).delete()
         
                 

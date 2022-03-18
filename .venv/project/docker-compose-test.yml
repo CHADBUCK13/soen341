@@ -1,0 +1,12 @@
+services:
+  web:
+    container_name: soen331-app
+    build: .
+    command: sh -c "coverage run manage.py test -v 2 && coverage report"
+    ports:
+      - "8000:8000"
+    environment:
+      - GOOGLE_APPLICATION_CREDENTIALS
+      - SOEN_341_PASSWORD
+  redis:
+    image: redis:latest
