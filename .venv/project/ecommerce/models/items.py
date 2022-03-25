@@ -32,10 +32,13 @@ class Item():
             self.score=item_data['rating']['score']
             self.sellerID=item_data['sellerID']
             self.weight=item_data['weight']
+            self.sales = item_data['sales']
             self.id = item_data['id']
 
         if sellerID is not None:
             self.sellerID = sellerID
+        else:
+            self.sellerID = ""        
 
     def match(self,searchText=""):
         ACCEPTANCE_RATIO = 0.5
@@ -51,7 +54,20 @@ class Item():
 
         return False
 
-
+    def to_dict(self):
+        dict = {
+            'name': self.name,
+            'price': self.price,
+            'description': self.description,
+            'weight': self.weight,
+            'category': {'category_name': self.category.category_name, 'relatedcategory': self.category.related_categories},
+            'rating': {'numberofreviews': self.numberofreviews, 'score': self.score},            
+            'sales': self.sales,
+            'photo': self.photo,
+            'sellerID': self.sellerID,
+            'weight': self.weight
+        }
+        return dict
 
 class Category:
     def __init__(self, category_name, related_categories):

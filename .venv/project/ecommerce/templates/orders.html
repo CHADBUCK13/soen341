@@ -1,0 +1,545 @@
+{% extends 'baseLayout.html' %}
+
+{% block head %}
+
+<style> 
+@charset "utf-8";
+
+@import url(https://fonts.googleapis.com/css?family=Open+Sans:400,700,600);
+
+
+body {
+  background-color: #fff;
+  color: #666;
+  font-family: 'Open Sans', sans-serif;
+  margin: 0 auto;
+}
+
+strong {
+  font-weight: bold;
+}
+
+.item-weight {
+  margin: 0.75rem 0 0;
+}
+.item-id {
+  margin: 0.75rem 0 0;
+  font-size: .55rem;
+}
+
+.item-name {
+  font-size: 1.5rem;
+  font-weight: normal;
+  margin: 0;
+  padding: 0;
+}
+
+button {
+  border: 0 none;
+  outline: 0 none;
+  margin-top: 20px;  
+}
+
+button {
+  border: 1px solid #666;
+  background-color: white;
+  color:#666;
+  font-size: 16px;
+  padding: 4px;
+}
+
+button:hover,
+button:focus {
+  background-color: #8e8ebd;
+  color:white;
+}
+
+img,
+.cart-module,
+.cart-labels,
+.summary-labels,
+.cart-product {
+  width: 100%;
+}
+
+input,
+.cart,
+.cart-module,
+.cart-labels,
+.summary-labels,
+.item,
+.price,
+.quantity,
+.subtotal,
+.cart-product,
+.product-details {
+  float: left;
+}
+
+
+.product-image {
+    float: left;
+    max-width: 120px;
+    max-height: 120px;
+}
+
+.price:before,
+.subtotal:before,
+.subtotal-value:before,
+.total-value:before,
+.promo-value:before {
+  content: '$';
+}
+
+.hide {
+  display: none;
+}
+
+main {
+  clear: both;
+  font-size: 0.75rem;
+  margin: 0 auto;
+  overflow: hidden;
+  padding: 1rem 0;
+  width: 900px;
+  margin-top: 100px;
+}
+
+.cart{
+  padding: 0 1rem;
+  -webkit-box-sizing: border-box;
+  -moz-box-sizing: border-box;
+  box-sizing: border-box;
+}
+
+
+.cart-module {
+  color: #111;
+}
+
+label {
+  display: block;
+  margin-bottom: 0.3125rem;
+}
+
+.cart-labels {
+  border-top: 1px solid #ccc;
+  border-bottom: 1px solid #ccc;
+  margin-top: 1.625rem;
+}
+
+ul {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+li {
+  color: #111;
+  display: inline-block;
+  padding: 0.625rem 0;
+}
+
+li.price:before,
+li.subtotal:before {
+  content: '';
+}
+
+.item {
+  width: 55%;
+  font-size: .85rem;
+}
+
+.price,
+.quantity,
+.subtotal {
+  width: 15%;
+  font-size: .85rem;
+}
+
+.subtotal {
+  text-align: right;
+}
+
+.item-heading {
+  padding-left: 4.375rem;
+  -webkit-box-sizing: border-box;
+  -moz-box-sizing: border-box;
+  box-sizing: border-box;
+}
+
+.cart-product {
+  border-bottom: 1px solid #ccc;
+  padding: 1rem 0;
+  position: relative;
+}
+
+.product-image {
+  width: 35%;
+}
+
+.product-details {
+  width: 65%;
+}
+
+
+.product-details {
+  padding: 0 1.5rem;
+  -webkit-box-sizing: border-box;
+  -moz-box-sizing: border-box;
+  box-sizing: border-box;
+}
+
+.subtotal-title,
+.subtotal-value,
+.total-title,
+.total-value,
+.promo-title,
+.promo-value {
+  color: #111;
+  float: left;
+  width: 50%;
+}
+
+.subtotal-value,
+.total-value {
+  text-align: right;
+}
+
+.total-title {
+  font-weight: bold;
+  text-transform: uppercase;
+}
+
+
+.checkout-cta {
+  display: block;
+  float: none;
+  font-size: 0.75rem;
+  text-align: center;
+  text-transform: uppercase;
+  padding: 0.625rem 0;
+  width: 100%;
+}
+
+.cart {
+    background-color: white;
+    padding: 0% 2% 2% 2%;
+    border: 1px solid #ededff;
+    flex-shrink: 0;
+}
+
+@media screen and (max-width: 640px) {
+  aside,
+  .cart,
+  .item,
+  .remove {
+    width: 100%;
+  }
+  .cart-labels {
+    display: none;
+  }
+  .cart-module {
+    margin-bottom: 1rem;
+  }
+  .item {
+    margin-bottom: 1rem;
+  }
+  .product-image {
+    width: 40%;
+  }
+  .product-details {
+    width: 60%;
+  }
+  .price,
+  .subtotal {
+    width: 33%;
+  }
+  .quantity {
+    text-align: center;
+    width: 34%;
+  }
+  .quantity-field {
+    float: none;
+  }
+  .remove {
+    bottom: 0;
+    text-align: left;
+    margin-top: 0.75rem;
+    position: relative;
+  }
+  .remove button {
+    padding: 0;
+  }
+}
+
+@media screen and (min-width: 641px) and (max-width: 960px) {
+  aside {
+    padding: 0 1rem 0 0;
+  }
+}
+
+@media screen and (max-width: 960px) {
+  main {
+    width: 100%;
+  }
+  .product-details {
+    padding: 0 1rem;
+  }
+}
+
+.order{
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  margin-bottom: 20px;
+}
+
+.summary{
+  display: flex;
+  flex-direction: column;
+  background-color: white;
+  padding: 0% 2% 2% 2%;
+  border: 1px solid #ededff;
+  background-color: #a6a6e1;
+  color: #e3e3eb;
+}
+
+.summary-labels, .summary-info{
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+}
+
+.summary-info{
+    font-size: .9rem;
+}
+
+.cancel{
+    display: flex;
+    flex-direction: row;
+    background-color: white;
+    padding: 0% 2% 2% 2%;
+    border-left: 1px solid #ededff;
+    border-right: 1px solid #ededff;
+    border-bottom: 1px solid #ededff;
+    justify-content: space-between;
+}
+
+.cancel-order{
+    opacity: 0.35;
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    margin-bottom: 20px;
+}
+
+.cancelled-text{
+    margin: 0;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    font-size: 24px;
+}
+
+.center{
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  font-size: 24px;
+}
+
+.continue-shopping{
+  border: 1px solid #666;
+  background-color: white;
+  color: #666;
+  font-size: 16px;
+  padding: 4px;
+  position: absolute;
+  top: 70%;
+  left: 50%;
+  transform: translate(-50%, 0%);
+}
+
+.continue-shopping:hover,
+.continue-shopping:focus {
+  background-color: #8e8ebd;
+  color:white;
+}
+
+.orders-empty{
+  position: relative;
+  background-color: white;
+  width: 650px;
+  height: 200px;
+  border: 1px solid #ededff;
+  margin-left: 25%;
+  margin-right: 25%;
+}
+
+</style>
+
+<script>
+  function updateTotals() {
+      var itemPrices = document.querySelectorAll('[id^=itemPrice]');
+      var quantities = document.querySelectorAll('[id^=quantity]');
+      var itemSubtotals = document.querySelectorAll('[id^=itemSubtotal]');
+      var orderTotals = document.querySelectorAll('[id^=orderTotal]');
+
+      for(let i = 0; i < itemPrices.length; i++){
+          itemSubtotals[i].innerHTML = (parseFloat(itemPrices[i].innerHTML) * parseInt(quantities[i].innerHTML)).toFixed(2);
+      }
+
+      for(let i = 0; i < orderTotals.length; i++){
+        orderTotals[i].innerHTML = parseFloat(orderTotals[i].innerHTML).toFixed(2);
+      }
+  }
+</script>
+
+{% endblock %}
+
+{% block content %}
+
+{% for order in orders%}
+
+{% if order.cancelled %}
+<div class="cancel-order">
+    <div class="cancelled-text">Cancelled</div>
+  <div class="summary">
+    <div class="summary-labels">
+        <div>Date Ordered</div>
+        <div>Shipped To</div>
+        <div># of Items</div>
+        <div>Total</div>
+    </div>
+    <div class="summary-info">
+      <div>{{order.date}}</div>
+      <div>{{order.shippingAddress.streetAddress}}</div>
+      <div>{{order.nOfItems}}</div>
+      <div id="orderTotal">{{order.total}}</div>
+    </div>
+  </div>
+
+  <div class="cart">
+      <div class="cart-labels">
+        <ul>
+          <li class="item item-heading">Item</li>
+          <li class="price">Price</li>
+          <li class="quantity">Quantity</li>
+          <li class="subtotal">Subtotal</li>
+        </ul>
+      </div>
+      {% for orderItem in order.items %}
+      <div class="cart-product">
+        <div class="item">
+          <div class="product-image">
+            <img src="{{orderItem.photo}}">
+          </div>
+          <div class="product-details">
+            <h1 class="item-name">{{orderItem.name}}</h1>
+            <p class="item-weight"><strong>{{orderItem.weight}}lb(s)</strong></p>
+          </div>
+        </div>
+        <div class="price" id="itemPrice">{{orderItem.price}}</div>
+        <div class="quantity" id="quantity">{{ orderItem.quantity }}</div>
+        <div class="subtotal" id="itemSubtotal"></div>
+      </div>
+      {% endfor %}
+  </div>
+
+  <div class="cancel">
+
+    <div>
+      <div>Order #</div>
+      <div>{{order.id}}</div>
+    </div>
+
+    <div>
+      <form method="post" id="cancel{{order.id}}" action="{% url 'cancelOrder' %}">
+        {% csrf_token %}
+        <input type="hidden" name="orderID" value="{{order.id}}">
+        <button type="submit" value="Submit"> Cancel </button>
+      </form>
+    </div>
+
+  </div>
+</div>
+{% else %}
+<div class="order">
+<div class="summary">
+  <div class="summary-labels">
+      <div>Date Ordered</div>
+      <div>Shipped To</div>
+      <div># of Items</div>
+      <div>Total</div>
+  </div>
+  <div class="summary-info">
+    <div>{{order.date}}</div>
+    <div>{{order.shippingAddress.streetAddress}}</div>
+    <div>{{order.nOfItems}}</div>
+    <div id="orderTotal">{{order.total}}</div>
+  </div>
+</div>
+
+<div class="cart">
+    <div class="cart-labels">
+      <ul>
+        <li class="item item-heading">Item</li>
+        <li class="price">Price</li>
+        <li class="quantity">Quantity</li>
+        <li class="subtotal">Subtotal</li>
+      </ul>
+    </div>
+    {% for orderItem in order.items %}
+    <div class="cart-product">
+      <div class="item">
+        <div class="product-image">
+          <img src="{{orderItem.photo}}">
+        </div>
+        <div class="product-details">
+          <h1 class="item-name">{{orderItem.name}}</h1>
+          <p class="item-weight"><strong>{{orderItem.weight}}lb(s)</strong></p>
+        </div>
+      </div>
+      <div class="price" id="itemPrice">{{orderItem.price}}</div>
+      <div class="quantity" id="quantity">{{ orderItem.quantity }}</div>
+      <div class="subtotal" id="itemSubtotal"></div>
+    </div>
+    {% endfor %}
+</div>
+
+<div class="cancel">
+
+  <div>
+    <div>Order #</div>
+    <div>{{order.id}}</div>
+  </div>
+
+  <div>
+    <form method="post" id="cancel{{order.id}}" action="{% url 'cancelOrder' %}">
+      {% csrf_token %}
+      <input type="hidden" name="orderID" value="{{order.id}}">
+      <button type="submit" value="Submit"> Cancel </button>
+    </form>
+  </div>
+
+</div>
+</div>
+{% endif %}
+
+{% empty %}
+<div class="orders-empty">
+  <div class="center">You haven't ordered anything.</div>
+  <a class="continue-shopping" href="../">Continue Shopping</a>
+</div>
+{% endfor %}
+
+</div>
+<script type="text/javascript">
+  updateTotals();
+</script>
+
+{% endblock content %}

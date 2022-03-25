@@ -1,4 +1,6 @@
 from django.shortcuts import redirect,render
+
+from ecommerce.api.bankingInfo import addPaymentInfoBuyer
 from ...models.paymentInfo import PaymentInfo
 from ..forms.bankingForm import BankingBuyerForm, BankingSellerForm
 from ...api.accountContext import *
@@ -36,7 +38,8 @@ def addBankingInfoBuyer(request):
                 token = request.COOKIES.get('idToken',None)
                 current_user = AccountContext().get_account_info(token)
             
-            PaymentInfo(email=current_user['users'][0]['email'],buyer_payment_data=payment_form.cleaned_data).save()
+            paymentData = payment_form.cleaned_data
+            addPaymentInfoBuyer(current_user['users'][0]['email'],paymentData['firstname'],paymentData['lastname'],paymentData['number'],paymentData['expirationDate'],paymentData['cvv'])
 
             return redirect('home')
 

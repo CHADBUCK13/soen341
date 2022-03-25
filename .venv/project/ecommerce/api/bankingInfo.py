@@ -9,14 +9,15 @@ def addPaymentInfoBuyer(email,firstName="",lastName="",number="",expirationDate=
     """
 
     payment_data = {
-        'firstname':firstName,
-        'lastname':lastName,
+        'name': {'first':firstName,'last':lastName,},
         'number':number,
         'expirationDate':expirationDate,
-        'cvv':cvv
+        'cvv':cvv,
+        'valid': True
     }
 
-    payments_ref.document(email).set(payment_data)
+    paymentInfoPath = 'buyers/'+email+"/payment_information"
+    db.collection(paymentInfoPath).add(payment_data)
 
 def addPaymentInfoSeller(email,transit="",institution="",account=""):
     """

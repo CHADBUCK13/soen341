@@ -156,7 +156,10 @@ def get_items_by_search(searchText=""):
     searchedItems = []
 
     for itemDoc in searchedItemsRef:
-        item = Item(item_data=itemDoc.to_dict())
+        item_dict = itemDoc.to_dict()
+        itemID = itemDoc.id
+        item_dict['id'] = itemID
+        item = Item(item_data=item_dict)
         if item.match(searchText=searchText):
             searchedItems.append(item)
     

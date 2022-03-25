@@ -11,7 +11,7 @@ class CardNumber():
             raise ValueError('Invalid Number') 
             
 class PaymentInformation():
-    def __init__(self, first:str, last:str, number:CardNumber, expirationDate:date, CVV:int, valid:bool):
+    def __init__(self, first:str, last:str, number:str, expirationDate:date, CVV:int, valid:bool):
         self.first = first
         self.last = last
         self.number = number

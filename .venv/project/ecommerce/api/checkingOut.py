@@ -17,15 +17,14 @@ def get_payment_info(email:str):
 
     for card in payments:
         cardDict = card.to_dict()
-        expirationDate = datetime.datetime.strptime(cardDict['expiration_date'], "%m/%y").date()
+        expirationDate = datetime.datetime.strptime(cardDict['expirationDate'], "%m%y").date()
 
         try:
-            number = CardNumber(cardDict['number'])
-            paymentInfo = PaymentInformation(cardDict['name']['first'],cardDict['name']['last'],number,expirationDate,cardDict['CVV'],True)
+            paymentInfo = PaymentInformation(cardDict['name']['first'],cardDict['name']['last'],cardDict['number'],expirationDate,cardDict['cvv'],True)
 
             allPayments.append(paymentInfo)
         except ValueError:
-            paymentInfo = PaymentInformation(cardDict['name']['first'],cardDict['name']['last'],number,expirationDate,cardDict['CVV'],False)
+            paymentInfo = PaymentInformation(cardDict['name']['first'],cardDict['name']['last'],cardDict['number'],expirationDate,cardDict['cvv'],False)
             allPayments.append(paymentInfo)
 
     return allPayments
@@ -35,14 +34,13 @@ def check_out(email:str, order:Order):
     Takes the Order, selected PaymentInformation and email of the user checking out. Returns True if the checkout was successful, False otherwise
     """
     orderData = order.to_dict()
-
     ordersPath = 'buyers/'+email+"/orders"
     orderRef = db.collection(ordersPath).document()
     orderRef.set(orderData)
     order.id = orderRef.id
 
     clear_shopping_cart(email)
-    #send_confirmation_email(orderRef.id, order, email)
+    send_confirmation_email(orderRef.id, order, email)
 
 def cancel_order(email:str, orderID:str):
     """
@@ -87,6 +85,6 @@ def send_confirmation_email(id, order, email):
     
     
 def clear_shopping_cart(email:str):
-    data = {}
+    data = {'items': {}}
     shoppingCartRef = db.collection("shopping_cart").document(email)
     shoppingCartRef.set(data)

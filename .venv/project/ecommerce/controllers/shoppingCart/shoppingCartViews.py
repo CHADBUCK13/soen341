@@ -1,7 +1,6 @@
-from ast import Add
-from datetime import date
-import uuid
 from django.shortcuts import redirect, render
+from datetime import datetime
+from ecommerce.controllers.forms.bankingForm import BankingBuyerForm
 
 from ...models.order import Order
 
@@ -41,8 +40,20 @@ def shopCart(request):
     #get_items_from_cart(request.session['email']) 
     #request.session['shoppingCartItems'] = [Item(example,example,example),Item(...)] # tests
     
-    
-    return render(request, 'shoppingCart.html',{'shoppingCartItems':cartItems})
+    paymentMethods = get_payment_info(current_user['users'][0]['email'])
+    methods = []
+    for method in paymentMethods:
+        number = method.number
+        method_dict = dict()
+        method_dict['first'] = method.first
+        method_dict['last'] = method.last
+        method_dict['number'] = number[len(number) - 4: len(number)]
+        method_dict['experiationDate'] = method.expirationDate
+        method_dict['CVV'] = method.CVV
+        method_dict['type'] = number[0]
+        methods.append(method_dict)
+
+    return render(request, 'shoppingCart.html',{'shoppingCartItems':cartItems, 'methods':methods})
    
 def addToCart(request):
     """
@@ -129,26 +140,33 @@ def checkout(request):
         if user is None:
             user  = AccountContext().get_seller(current_user['users'][0]['email'])
 
+        subtotal = 0.0
+        nOfItems = 0
+        paymentInfo = request.POST.get('number')
         shoppingCartItems=get_items_from_cart(current_user['users'][0]['email'])
-
-        print(user)
-
+        orderItems = []
         for item in shoppingCartItems:
-            delete_items_from_cart(current_user['users'][0]['email'],item[0].id)
-        # order = Order(
-        #     subtotal=1,
-        #     total=1,
-        #     nOfItems=1,
-        #     cancelled=False,
-        #     paymentInfo=user['paymentInfo'],
-        #     items=dict(),
-        #     date=date.today(),
-        #     time=date.today(),
-        #     shippingAddress=Address(country=user['country'],city=user['city'],streetAddress=user['address'],postalCode=user['postal_code']),
-        #     billingAddress=Address(country=user['country'],city=user['city'],streetAddress=user['address'],postalCode=user['postal_code']),
-        #     id=uuid.uuid1())
+            price = float(item[0].price)
+            quantity = item[1]
+            subtotal += price*float(quantity)
+            nOfItems += 1
+            item_dict = item[0].to_dict()
+            item_dict['quantity'] = quantity
+            orderItems.append(item_dict)
 
-        #check_out(current_user['users'][0]['email'],order)
+        order = Order(
+            subtotal= subtotal,
+            total= subtotal*1.15,
+            nOfItems=1,
+            cancelled=False,
+            paymentInfo=paymentInfo,
+            items=orderItems,
+            date=datetime.datetime.now(),
+            time=datetime.datetime.now(),
+            shippingAddress=Address(country=user['country'],city=user['city'],streetAddress=user['address'],postalCode=user['postal_code']),
+            billingAddress=Address(country=user['country'],city=user['city'],streetAddress=user['address'],postalCode=user['postal_code']))
+
+        check_out(current_user['users'][0]['email'],order)
 
     return home(request)
 

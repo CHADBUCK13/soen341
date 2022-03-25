@@ -1,12 +1,10 @@
-
-from datetime import date
 import datetime
 
 from ecommerce.models.address import Address
 
 
 class Order():
-    def __init__(self, subtotal:float, total:float, nOfItems:int, cancelled:bool, paymentInfo:str, items:dict, date:date, time:date, shippingAddress:Address, billingAddress:Address, id = ""):
+    def __init__(self, subtotal:float, total:float, nOfItems:int, cancelled:bool, paymentInfo:str, items:dict, date:datetime, time:datetime, shippingAddress:Address, billingAddress:Address, id = ""):
         self.subtotal = subtotal
         self.total = total
         self.nOfItems = nOfItems
@@ -43,4 +41,5 @@ class Order():
         shippingAddress = Address.from_dict(orderDict['shippingAddress'])
         billingAddress = Address.from_dict(orderDict['billingAddress'])
 
+        print(orderDict['items'])
         return Order(orderDict['subtotal'], orderDict['total'], orderDict['nOfItems'], orderDict['cancelled'], orderDict['paymentInfo'], orderDict['items'], date, time, shippingAddress, billingAddress, orderDoc.id)
