@@ -1,7 +1,7 @@
 from django.shortcuts import redirect, render
 from ecommerce.api.storage import store_image
 from ecommerce.api.itembrowsing import get_items_by_search, addItems
-from ecommerce.api.accountContext import AccountContext
+from ecommerce.api.account_context import AccountContext
 from ..forms.itemForm import ItemForm
 from ecommerce.models.items import Item
 from ...views import *
@@ -18,13 +18,13 @@ def addItem(request):
         if item_form.is_valid():
 
             redir=redirect('home')
-            status = AccountContext().refresh_idToken(request,redir)
+            status = AccountContext().refresh_id_token(request,redir)
 
             if status is False:
                 return redirect('logout')
             elif status is redir:
                 token = request.COOKIES.get('refreshToken',None)
-                current_user = AccountContext().get_account_from_refreshToken(token)
+                current_user = AccountContext().get_account_from_refresh_token(token)
             else:
                 token = request.COOKIES.get('idToken',None)
                 current_user = AccountContext().get_account_info(token)

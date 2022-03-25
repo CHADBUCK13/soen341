@@ -3,7 +3,7 @@ from django.shortcuts import redirect,render
 from ecommerce.api.bankingInfo import addPaymentInfoBuyer
 from ...models.paymentInfo import PaymentInfo
 from ..forms.bankingForm import BankingBuyerForm, BankingSellerForm
-from ...api.accountContext import *
+from ...api.account_context import *
 
 def addBankingInfo(request):
     """
@@ -27,13 +27,13 @@ def addBankingInfoBuyer(request):
         if payment_form.is_valid():
             
             redir=redirect('home')
-            status = AccountContext().refresh_idToken(request,redir)
+            status = AccountContext().refresh_id_token(request,redir)
 
             if status is False:
                 return redirect('logout')
             elif status is redir:
                 token = request.COOKIES.get('refreshToken',None)
-                current_user = AccountContext().get_account_from_refreshToken(token)
+                current_user = AccountContext().get_account_from_refresh_token(token)
             else:
                 token = request.COOKIES.get('idToken',None)
                 current_user = AccountContext().get_account_info(token)
@@ -60,13 +60,13 @@ def addBankingInfoSeller(request):
         if payment_form.is_valid():
             
             redir=redirect('home')
-            status = AccountContext().refresh_idToken(request,redir)
+            status = AccountContext().refresh_id_token(request,redir)
 
             if status is False:
                 return redirect('logout')
             elif status is redir:
                 token = request.COOKIES.get('refreshToken',None)
-                current_user = AccountContext().get_account_from_refreshToken(token)
+                current_user = AccountContext().get_account_from_refresh_token(token)
             else:
                 token = request.COOKIES.get('idToken',None)
                 current_user = AccountContext().get_account_info(token)

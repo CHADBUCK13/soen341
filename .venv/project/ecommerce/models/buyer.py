@@ -1,4 +1,4 @@
-from ..api.accountContext import AccountContext
+from ..api.account_context import AccountContext
 
 class Buyer():
     """

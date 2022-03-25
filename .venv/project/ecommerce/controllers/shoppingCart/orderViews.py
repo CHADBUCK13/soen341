@@ -1,19 +1,19 @@
 import re
 from django.shortcuts import redirect, render
 
-from ecommerce.api.accountContext import AccountContext
-from ecommerce.api.checkingOut import cancel_order, get_orders
+from ecommerce.api.account_context import AccountContext
+from ecommerce.api.checking_out import cancel_order, get_orders
 
 
 def orders(request):
     redir=redirect('home')
-    status = AccountContext().refresh_idToken(request,redir)
+    status = AccountContext().refresh_id_token(request,redir)
 
     if status is False:
         return redirect('logout')
     elif status is redir:
         token = request.COOKIES.get('refreshToken',None)
-        current_user = AccountContext().get_account_from_refreshToken(token)
+        current_user = AccountContext().get_account_from_refresh_token(token)
     else:
         token = request.COOKIES.get('idToken',None)
         current_user = AccountContext().get_account_info(token)
@@ -27,13 +27,13 @@ def cancelOrder(request):
         itemId = request.POST.get('orderID')
 
         redir=redirect('home')
-        status = AccountContext().refresh_idToken(request,redir)
+        status = AccountContext().refresh_id_token(request,redir)
 
         if status is False:
             return redirect('logout')
         elif status is redir:
             token = request.COOKIES.get('refreshToken',None)
-            current_user = AccountContext().get_account_from_refreshToken(token)
+            current_user = AccountContext().get_account_from_refresh_token(token)
         else:
             token = request.COOKIES.get('idToken',None)
             current_user = AccountContext().get_account_info(token)

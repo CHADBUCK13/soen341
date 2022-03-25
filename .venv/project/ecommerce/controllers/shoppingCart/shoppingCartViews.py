@@ -7,8 +7,8 @@ from ...models.order import Order
 from ...api.itembrowsing import *
 from ...views import home
 from ...api.shoppingCart import *
-from ...api.accountContext import *
-from ...api.checkingOut import *
+from ...api.account_context import *
+from ...api.checking_out import *
 from django.forms.models import model_to_dict
 from ...models.address import *
 
@@ -18,13 +18,13 @@ def shopCart(request):
     """
     
     redir=redirect('home')
-    status = AccountContext().refresh_idToken(request,redir)
+    status = AccountContext().refresh_id_token(request,redir)
 
     if status is False:
         return redirect('logout')
     elif status is redir:
         token = request.COOKIES.get('refreshToken',None)
-        current_user = AccountContext().get_account_from_refreshToken(token)
+        current_user = AccountContext().get_account_from_refresh_token(token)
     else:
         token = request.COOKIES.get('idToken',None)
         current_user = AccountContext().get_account_info(token)
@@ -65,13 +65,13 @@ def addToCart(request):
         itemID = request.POST.get("item")
         
         redir=redirect('home')
-        status = AccountContext().refresh_idToken(request,redir)
+        status = AccountContext().refresh_id_token(request,redir)
 
         if status is False:
             return redirect('logout')
         elif status is redir:
             token = request.COOKIES.get('refreshToken',None)
-            current_user = AccountContext().get_account_from_refreshToken(token)
+            current_user = AccountContext().get_account_from_refresh_token(token)
         else:
             token = request.COOKIES.get('idToken',None)
             current_user = AccountContext().get_account_info(token)
@@ -87,13 +87,13 @@ def changeAmount(request):
         itemId = request.POST.get('itemID')
 
         redir=redirect('home')
-        status = AccountContext().refresh_idToken(request,redir)
+        status = AccountContext().refresh_id_token(request,redir)
 
         if status is False:
             return redirect('logout')
         elif status is redir:
             token = request.COOKIES.get('refreshToken',None)
-            current_user = AccountContext().get_account_from_refreshToken(token)
+            current_user = AccountContext().get_account_from_refresh_token(token)
         else:
             token = request.COOKIES.get('idToken',None)
             current_user = AccountContext().get_account_info(token)
@@ -107,13 +107,13 @@ def removeFromCart(request):
         itemId = request.POST.get('itemID')
 
         redir=redirect('home')
-        status = AccountContext().refresh_idToken(request,redir)
+        status = AccountContext().refresh_id_token(request,redir)
 
         if status is False:
             return redirect('logout')
         elif status is redir:
             token = request.COOKIES.get('refreshToken',None)
-            current_user = AccountContext().get_account_from_refreshToken(token)
+            current_user = AccountContext().get_account_from_refresh_token(token)
         else:
             token = request.COOKIES.get('idToken',None)
             current_user = AccountContext().get_account_info(token)
@@ -125,13 +125,13 @@ def checkout(request):
     if request.method == "POST":
 
         redir=redirect('home')
-        status = AccountContext().refresh_idToken(request,redir)
+        status = AccountContext().refresh_id_token(request,redir)
 
         if status is False:
             return redirect('logout')
         elif status is redir:
             token = request.COOKIES.get('refreshToken',None)
-            current_user = AccountContext().get_account_from_refreshToken(token)
+            current_user = AccountContext().get_account_from_refresh_token(token)
         else:
             token = request.COOKIES.get('idToken',None)
             current_user = AccountContext().get_account_info(token)
