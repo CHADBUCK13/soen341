@@ -3,174 +3,622 @@
 {% block head %}
 
 <style> 
-    body{
-        background-color: rgb(242, 242, 250);
-        font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
-       }
-       .Container{
-        width: 70%;
-        height: 85%;
-        background-color: #ffffff;
-        border: 3px solid #f1f1f1;
-        box-shadow: 0px 25px 40px #1687d933;
-       }
+@charset "utf-8";
 
-       .table{
-        border-collapse: collapse;
-        margin: 25px 0;
-        font-size: 0.9em;
-        font-family: sans-serif;
-        min-width: 400px;
-        box-shadow: 0 0 20px rgba(0, 0, 0, 0.15);
-       }
+@import url(https://fonts.googleapis.com/css?family=Open+Sans:400,700,600);
 
-       .btn{
-        margin-top: 5px;
-        width: 100%;
-        height: 40px;
-        border: none;
-        background: linear-gradient(to bottom right, #b8c9ff, #8EB7EB);
-        border-radius: 20px;
-        cursor: pointer;
-        font-size: 16px;
-        font-family: 'Open Sans';
-        font-weight: 600;
-        color: #202020;
-       }
-
-       .r{
-        background-color: rgba(123, 132, 184, 0.39);
-    border-radius: 10px;
-    backdrop-filter: blur(10px);
-    border: 1px solid rgba(255,255,255,0.1);
-    box-shadow: 0 0 40px rgba(8,7,16,0.6);
-    padding: 2% 2%;
-    block-size: fit-content;
-    margin: auto;
-    width: 50%;
-       }
-
-       h2{
-        font-size: 32px;
-    font-weight: 500;
-    line-height: 42px;
-    text-align: center;
-    color: black;
-    font-family: 'Poppins',sans-serif;
-       }
-
-
-       table {
-  width: 100%;
-  margin: 20px auto;
-  table-layout: auto;
+html,
+html a {
+  -webkit-font-smoothing: antialiased;
+  text-shadow: 1px 1px 1px rgba(0, 0, 0, 0.004);
 }
-    </style>
+
+body {
+  background-color: #fff;
+  color: #666;
+  font-family: 'Open Sans', sans-serif;
+  margin: 0 auto;
+}
+
+a {
+  border: 0 none;
+  outline: 0;
+  text-decoration: none;
+}
+
+strong {
+  font-weight: bold;
+}
+
+.item-weight {
+  margin: 0.75rem 0 0;
+}
+.item-id {
+  margin: 0.75rem 0 0;
+  font-size: .55rem;
+}
+
+.item-name {
+  font-size: 1.5rem;
+  font-weight: normal;
+  margin: 0;
+  padding: 0;
+}
+
+input,
+button {
+  border: 0 none;
+  outline: 0 none;
+}
+
+button {
+  background-color: #a6a6e1;
+  color: #fff;
+}
+
+button:hover,
+button:focus {
+  background-color: #8e8ebd;
+}
+
+img,
+.cart-module,
+.cart-labels,
+.cart-product {
+  width: 100%;
+}
+
+input,
+.cart,
+.cart-module,
+.cart-labels,
+.item,
+.price,
+.quantity,
+.subtotal,
+.cart-product,
+.product-details {
+  float: left;
+}
+
+
+.product-image {
+    float: left;
+    max-width: 120px;
+    max-height: 120px;
+}
+
+.price:before,
+.subtotal:before,
+.subtotal-value:before,
+.total-value:before,
+.promo-value:before {
+  content: '$';
+}
+
+.hide {
+  display: none;
+}
+
+main {
+  clear: both;
+  font-size: 0.75rem;
+  margin: 0 auto;
+  overflow: hidden;
+  padding: 1rem 0;
+  width: 1300px;
+  margin-top: 100px;
+}
+
+.cart,
+aside {
+  padding: 0 1rem;
+  -webkit-box-sizing: border-box;
+  -moz-box-sizing: border-box;
+  box-sizing: border-box;
+}
+
+.cart {
+  width: 70%;
+}
+
+.cart-module {
+  color: #111;
+}
+
+label {
+  display: block;
+  margin-bottom: 0.3125rem;
+}
+
+.cart-labels {
+  border-top: 1px solid #ccc;
+  border-bottom: 1px solid #ccc;
+  margin-top: 1.625rem;
+}
+
+ul {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+li {
+  color: #111;
+  display: inline-block;
+  padding: 0.625rem 0;
+}
+
+li.price:before,
+li.subtotal:before {
+  content: '';
+}
+
+.item {
+  width: 55%;
+  font-size: .85rem;
+}
+
+.price,
+.quantity,
+.subtotal {
+  width: 15%;
+  font-size: .85rem;
+}
+
+.subtotal {
+  text-align: right;
+}
+
+.remove {
+  bottom: 1.125rem;
+  float: right;
+  position: absolute;
+  right: 0;
+  text-align: right;
+  width: 45%;
+}
+
+.remove button {
+  background-color: transparent;
+  color: #777;
+  float: none;
+  text-decoration: underline;
+  text-transform: uppercase;
+}
+
+.remove button:hover {
+  cursor: pointer;
+}
+
+.remove button:focus {
+  cursor: grabbing;
+}
+
+.item-heading {
+  padding-left: 4.375rem;
+  -webkit-box-sizing: border-box;
+  -moz-box-sizing: border-box;
+  box-sizing: border-box;
+}
+
+.cart-product {
+  border-bottom: 1px solid #ccc;
+  padding: 1rem 0;
+  position: relative;
+}
+
+.product-image {
+  width: 35%;
+}
+
+.product-details {
+  width: 65%;
+}
+
+
+.product-details {
+  padding: 0 1.5rem;
+  -webkit-box-sizing: border-box;
+  -moz-box-sizing: border-box;
+  box-sizing: border-box;
+}
+
+.quantity-field {
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  font-size: 0.75rem;
+  padding: 2px;
+  width: 3.75rem;
+}
+
+aside {
+  float: right;
+  position: relative;
+  width: 30%;
+}
+
+.summary {
+  background-color: white;
+  border: 1px solid #aaa;
+  padding: 1rem;
+  position: fixed;
+  width: 250px;
+  -webkit-box-sizing: border-box;
+  -moz-box-sizing: border-box;
+  box-sizing: border-box;
+}
+
+.summary-total-items {
+  color: #666;
+  font-size: 0.875rem;
+  text-align: center;
+}
+
+.summary-subtotal,
+.summary-total {
+  border-top: 1px solid #ccc;
+  border-bottom: 1px solid #ccc;
+  clear: both;
+  margin: 1rem 0;
+  overflow: hidden;
+  padding: 0.5rem 0;
+}
+
+.subtotal-title,
+.subtotal-value,
+.total-title,
+.total-value,
+.promo-title,
+.promo-value {
+  color: #111;
+  float: left;
+  width: 50%;
+}
+
+.subtotal-value,
+.total-value {
+  text-align: right;
+}
+
+.total-title {
+  font-weight: bold;
+  text-transform: uppercase;
+}
+
+.summary-checkout {
+  display: block;
+}
+
+.checkout-cta {
+  display: block;
+  float: none;
+  font-size: 0.75rem;
+  text-align: center;
+  text-transform: uppercase;
+  padding: 0.625rem 0;
+  width: 100%;
+}
+
+.cart {
+    background-color: white;
+    padding: 0% 2% 2% 2%;
+    border: 1px solid #ededff;
+    position: relative;
+}
+
+@media screen and (max-width: 640px) {
+  aside,
+  .cart,
+  .summary,
+  .item,
+  .remove {
+    width: 100%;
+  }
+  .cart-labels {
+    display: none;
+  }
+  .cart-module {
+    margin-bottom: 1rem;
+  }
+  .item {
+    margin-bottom: 1rem;
+  }
+  .product-image {
+    width: 40%;
+  }
+  .product-details {
+    width: 60%;
+  }
+  .price,
+  .subtotal {
+    width: 33%;
+  }
+  .quantity {
+    text-align: center;
+    width: 34%;
+  }
+  .quantity-field {
+    float: none;
+  }
+  .remove {
+    bottom: 0;
+    text-align: left;
+    margin-top: 0.75rem;
+    position: relative;
+  }
+  .remove button {
+    padding: 0;
+  }
+  .summary {
+    margin-top: 1.25rem;
+    position: relative;
+  }
+}
+
+@media screen and (min-width: 641px) and (max-width: 960px) {
+  aside {
+    padding: 0 1rem 0 0;
+  }
+  .summary {
+    width: 28%;
+  }
+}
+
+@media screen and (max-width: 960px) {
+  main {
+    width: 100%;
+  }
+  .product-details {
+    padding: 0 1rem;
+  }
+}
+
+.payment {
+  display: block;
+  position: relative;
+  padding-left: 35px;
+  margin-top: 6px;
+  margin-bottom: 6px;
+  cursor: pointer;
+  font-size: 22px;
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+}
+
+.payment input {
+  position: absolute;
+  opacity: 0;
+  cursor: pointer;
+}
+
+.checkmark {
+  position:absolute;
+  margin: auto;
+  left: 0;
+  top: 35%;  
+  height: 25px;
+  width: 25px;
+  background-color: #eee;
+  border-radius: 50%;
+}
+
+.payment:hover input ~ .checkmark {
+  background-color: #ccc;
+}
+
+.payment input:checked ~ .checkmark {
+  background-color: #a6a6e1;
+}
+
+.checkmark:after {
+  content: "";
+  position: absolute;
+  display: none;
+}
+
+.payment input:checked ~ .checkmark:after {
+  display: block;
+}
+
+.payment .checkmark:after {
+ 	top: 9px;
+	left: 9px;
+	width: 8px;
+	height: 8px;
+	border-radius: 50%;
+	background: white;
+}
+
+.payment-radio{
+    margin-top: 30px; 
+    width: 70%; 
+    padding: 2% 2%;
+    float: left;
+    background-color: white;    
+    border: 1px solid #ededff;
+}
+.payment-info{
+  display: flex;
+  justify-content: space-between;
+  padding: 2% 2%;
+  border-top: 1px solid #ccc;
+  border-bottom: 1px solid #ccc;
+}
+.payment-image{
+  height: 30px;
+  width: 53px;
+}
+.payment-type{
+  font-size: 1rem;
+}
+.payment-number{
+  font-size: 1rem;
+}
+
+.center{
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  font-size: 24px;
+}
+
+.continue-shopping{
+  border: 1px solid #666;
+  background-color: white;
+  color: #666;
+  font-size: 16px;
+  padding: 4px;
+  position: absolute;
+  top: 70%;
+  left: 50%;
+  transform: translate(-50%, 0%);
+}
+
+.continue-shopping:hover,
+.continue-shopping:focus {
+  background-color: #8e8ebd;
+  color:white;
+}
+</style>
+
+<script>
+    function updateTotals() {
+        var itemPrices = document.querySelectorAll('[id^=itemPrice]');
+        var quantities = document.querySelectorAll('[id^=quantity]');
+        var itemSubtotals = document.querySelectorAll('[id^=itemSubtotal]');
+  
+        for(let i = 0; i < itemPrices.length; i++){
+            itemSubtotals[i].innerHTML = (parseFloat(itemPrices[i].innerHTML) * parseInt(quantities[i].value)).toFixed(2);
+        }
+        updateSummary(itemSubtotals);
+    }
+  
+    function updateSummary(itemSubtotals){
+        var subtotal = 0.0
+        for(let i = 0; i < itemSubtotals.length; i++){
+            subtotal += parseFloat(itemSubtotals[i].innerHTML);
+        }
+  
+        var federalTax = subtotal * 0.05
+        var provincialTax = subtotal * .09975
+        var total = subtotal + federalTax + provincialTax
+  
+        document.getElementById("cartSubtotal").innerHTML = subtotal.toFixed(2);
+        document.getElementById("cartFederalTax").innerHTML = federalTax.toFixed(2);
+        document.getElementById("cartProvincialTax").innerHTML = provincialTax.toFixed(2);
+        document.getElementById("cartTotal").innerHTML = total.toFixed(2);
+    }
+</script>
 
 {% endblock %}
 
 {% block content %}
 
-    <div class="r">
-
-    <div class="table-responsive text-nowrap">
-    <h2>Order Summary</h2>
-    <table class="table">
-        <thead>
-        <tr>
-            <th scope="col">#</th>
-            <th scope="col">Item </th>
-            <th scope="col">Price</th>
-            <th scope="col">Quantity</th>
-            <th scope="col">Total Item Price</th>
-        </tr>
-        </thead>
-        <tbody>
-
-        {% for cartItem in shoppingCartItems %}
-        <tr>
-            <th scope="row">{{ forloop.counter }}</th>
-            <td>{{ cartItem.item.name }}</td>
-            <td>${{ cartItem.item.price }}</td>
-            <td>
-                <form method="post" id="changeAmountId{{cartItem.item.id}}" action="{% url 'changeAmount' %}">
-                    {% csrf_token %}
-                    <input type="number" name="newQuantity" placeholder="{{ cartItem.quantity }}" min="1" onformchange="document.getElementById('changeAmountId{{cartItem.item.id}}').submit()">
-                    <input type="hidden" name="quantity" value="{{ cartItem.quantity }}">
-                    <input type="hidden" name="itemID" value="{{cartItem.item.id}}">
-                </form>
-            </td>
-            <td>
-            {% if order_item.item.discount_price %}
-                ${{ order_item.get_total_discount_item_price }}
-                <span class="badge badge-primary">Saving ${{ order_item.get_amount_saved }}</span>
-            {% else %}
-                ${{ cartItem.total }}
-            {% endif %}
-            <form method="post" id="delete{{cartItem.item.id}}" action="{% url 'deleteFromCart' %}">
-                {% csrf_token %}
-                <input type="hidden" name="itemID" value="{{cartItem.item.id}}">
-                <a style='color: red;' href="#" onclick="document.getElementById('delete{{cartItem.item.id}}').submit()">
-                    <i class="fas fa-trash float-right"></i>
-                </a>
-            </form>
-            </td>
-        </tr>
-
-        {% empty %}
-        <tr>
-            <td colspan='5'>Your cart is empty</td>
-        </tr>
-        <tr>
-            <td colspan="5">
-            <a class='btn btn-primary float-right' href='/'>Continue shopping</a>
-            </td>
-        </tr>
-        {% endfor %}
-        {% if object.coupon %}
-        <tr>
-            <td colspan="4"><b>Coupon</b></td>
-            <td><b>-${{ object.coupon.amount }}</b></td>
-        </tr>
-        {% endif %}
-        {% if updateCartTotal %}
-        <tr>
-            <td colspan="4"><b>Order Total</b></td>
-            <td><b>${{ updateCartTotal }}</b></td>
-        </tr>
-        <tr>
-            <td colspan="5">
-            <a class='btn btn-warning float-right ml-2' href='/checkout html/'>Proceed to checkout</a>
-            </td>
-        </tr>
-        {% endif %}
-        </tbody>
-    </table>
-    <form method="post" action="{% url 'checkout' %}">
+<div>
+<div class="cart" onload="updateTotals()">
+    <div class="cart-labels">
+      <ul>
+        <li class="item item-heading">Item</li>
+        <li class="price">Price</li>
+        <li class="quantity">Quantity</li>
+        <li class="subtotal">Subtotal</li>
+      </ul>
+    </div>
+    {% for cartItem in shoppingCartItems %}
+    <div class="cart-product">
+      <div class="item">
+        <div class="product-image">
+          <img src="{{cartItem.item.photo}}">
+        </div>
+        <div class="product-details">
+          <h1 class="item-name">{{cartItem.item.name}}</h1>
+          <p class="item-weight"><strong>{{cartItem.item.weight}}lb(s)</strong></p>
+          <p class="item-id">Product Code - {{cartItem.item.id}}</p>
+        </div>
+      </div>
+      <div class="price" id="itemPrice">{{cartItem.item.price}}</div>
+      <div class="quantity">
+        <form method="post" id="changeAmountId{{cartItem.item.id}}" action="{% url 'changeAmount' %}">
+            {% csrf_token %}
+            <input type="number" name="newQuantity" placeholder="{{ cartItem.quantity }}" value="{{ cartItem.quantity }}" min="1" class="quantity-field"  onchange="document.getElementById('changeAmountId{{cartItem.item.id}}').submit()">
+            <input type="hidden" name="quantity" value="{{ cartItem.quantity }}" id="quantity">
+            <input type="hidden" name="itemID" value="{{cartItem.item.id}}">
+        </form>
+      </div>
+      <div class="subtotal" id="itemSubtotal"></div>
+      <form method="post" id="delete{{cartItem.item.id}}" action="{% url 'deleteFromCart' %}">
         {% csrf_token %}
-        <button type="submit" class="reg">Checkout</button>
-    </form>
+        <input type="hidden" name="itemID" value="{{cartItem.item.id}}">
+        <div class="remove">
+            <button href="#" onclick="document.getElementById('delete{{cartItem.item.id}}').submit()">
+                Remove
+            </button>
+        </div>
+        </form>
     </div>
+    {% empty %}
+    <div class="cart-product" style="border: none; padding-top: 30px; height: 100px;">
+      <div class="center">Your cart is empty.</div>
+      <a class="continue-shopping" href="../">Continue Shopping</a>
+    </div>
+    {% endfor %}
+</div>
+<aside>
+    <div class="summary">
+        <div class="summary-total-items"><span class="total-items"></span> Cart Summary</div>
+        <div class="summary-subtotal">
+        <div class="subtotal-title">Subtotal</div>
+        <div class="subtotal-value final-value" id="cartSubtotal"></div>
+        </div>
+        <div class="summary-subtotal">
+        <div class="subtotal-title">GST/HST</div>
+        <div class="subtotal-value final-value" id="cartFederalTax"></div>
+        </div>
+        <div class="summary-subtotal">
+        <div class="subtotal-title">PST/RST/QST</div>
+        <div class="subtotal-value final-value" id="cartProvincialTax"></div>
+        </div>
+        <div class="summary-total">
+        <div class="total-title">Total</div>
+        <div class="total-value final-value" id="cartTotal"></div>
+        </div>
+        <div class="summary-checkout">
+            <button class="checkout-cta" onclick="document.getElementById('paymentMethodForm').submit()">Checkout</button>
+        </div>
+    </div>
+</aside>
+</div>
 
-    </div>
+
+<div class="payment-radio">
+  <form method="post" id="paymentMethodForm" action="{% url 'checkout' %}">
+    {% csrf_token %}
+    {% for method in methods %}
+    <label class="payment">
+      <div class="payment-info">
+        {% if method.type == "5" %}
+        {% load static %}
+        <img class="payment-image" src="{% static 'resources\Mastercard_logo.jpg' %}">
+        <div class="payment-type">MasterCard</div>
+        {% else %}
+        <img class="payment-image" src="{% static 'resources\VISA-logo.png' %}">
+        <div class="payment-type">Visa</div>
+        {% endif %}        
+        <div class="payment-number">Credit card ending in  <span>&#183;</span><span>&#183;</span><span>&#183;</span><span>&#183;</span>{{method.number}}</div>
+      </div>
+      <input type="radio" checked="checked" name="number" value={{method.number}}>
+      <span class="checkmark"></span>
+    </label>
+    {% empty %}
+    {% endfor %}
+  </form>
+</div>
+<script type="text/javascript">
+    updateTotals();
+</script>
 
 {% endblock content %}
-
-
-<script>
-    function updateCartTotal() {
-    var cartItemContainer = document.getElementsByClassName('items')[0]
-    var cartRows = cartItemContainer.getElementsByClassName('row')
-    var total = 0
-    for (var i = 0; i < cartRows.length; i++) {
-        var cartRow = cartRows[i]
-        var priceElement = cartRow.getElementsByClassName(item.price)[0]
-        var quantityElement = cartRow.getElementsByClassName(item.quantity)[0]
-        var price = parseFloat(priceElement.innerText.replace('$', ''))
-        var quantity = quantityElement.value
-        total = total + (price * quantity)
-    }
-    total = Math.round(total * 100) / 100
-    document.getElementsByClassName('cart-total-price')[0].innerText = '$' + total
-}
-</script>

@@ -1,46 +1,82 @@
+"""
+Contains Order class only
+"""
 
-from datetime import date
 import datetime
 
 from ecommerce.models.address import Address
 
 
-class Order():
-    def __init__(self, subtotal:float, total:float, nOfItems:int, cancelled:bool, paymentInfo:str, items:dict, date:date, time:date, shippingAddress:Address, billingAddress:Address, id = ""):
+class Order:
+    """
+    Describes database order and contains related functions
+    """
+    def __init__(
+        self,
+        subtotal: float,
+        total: float,
+        n_of_items: int,
+        cancelled: bool,
+        payment_info: str,
+        items: dict,
+        date: datetime,
+        time: datetime,
+        shipping_address: Address,
+        billing_address: Address,
+        id="",
+    ):
         self.subtotal = subtotal
         self.total = total
-        self.nOfItems = nOfItems
+        self.n_of_items = n_of_items
         self.cancelled = cancelled
-        self.paymentInfo = paymentInfo
+        self.payment_info = payment_info
         self.items = items
         self.date = date
         self.time = time
-        self.shippingAddress = shippingAddress
-        self.billingAddress = billingAddress
+        self.shipping_address = shipping_address
+        self.billing_address = billing_address
         self.id = id
-    
+
     def to_dict(self):
-        orderData = {
+        """
+        Converts order object to dictionary
+        """
+        order_data = {
             "subtotal": self.subtotal,
             "total": self.total,
-            "nOfItems": self.nOfItems,
+            "nOfItems": self.n_of_items,
             "cancelled": self.cancelled,
-            "paymentInfo": self.paymentInfo,
+            "paymentInfo": self.payment_info,
             "items": self.items,
             "date": self.date.strftime("%y/%m/%d"),
             "time": self.time.strftime("%H:%M:%S"),
-            'shippingAddress': self.shippingAddress.to_dict(),
-            'billingAddress': self.billingAddress.to_dict()
+            "shippingAddress": self.shipping_address.to_dict(),
+            "billingAddress": self.billing_address.to_dict(),
         }
 
-        return orderData
-    
-    def from_documentReference(orderDoc):
+        return order_data
 
-        orderDict = orderDoc.to_dict()
-        date = datetime.datetime.strptime(orderDict['date'], "%y/%m/%d").date()
-        time = datetime.datetime.strptime(orderDict['time'], "%H:%M:%S").time()
-        shippingAddress = Address.from_dict(orderDict['shippingAddress'])
-        billingAddress = Address.from_dict(orderDict['billingAddress'])
+    def from_document_reference(self, order_doc):
+        """
+        Converts firebase order document reference to Order object and returns it
+        """
+        order_dict = order_doc.to_dict()
+        date = datetime.datetime.strptime(order_dict["date"], "%y/%m/%d").date()
+        time = datetime.datetime.strptime(order_dict["time"], "%H:%M:%S").time()
+        shipping_address = Address.from_dict(self, order_dict["shippingAddress"])
+        billing_address = Address.from_dict(self, order_dict["billingAddress"])
 
-        return Order(orderDict['subtotal'], orderDict['total'], orderDict['nOfItems'], orderDict['cancelled'], orderDict['paymentInfo'], orderDict['items'], date, time, shippingAddress, billingAddress, orderDoc.id)
+        print(order_dict["items"])
+        return Order(
+            order_dict["subtotal"],
+            order_dict["total"],
+            order_dict["nOfItems"],
+            order_dict["cancelled"],
+            order_dict["paymentInfo"],
+            order_dict["items"],
+            date,
+            time,
+            shipping_address,
+            billing_address,
+            order_doc.id,
+        )

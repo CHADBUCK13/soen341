@@ -29,18 +29,24 @@
 
                         {% if request.session.is_logged_in %}
                         <div class="Topnavigationbar-right">
-                            <a href="/logout" id="id_logout">Logout</a>
+                            <a href="/shoppingCart"> <i class="fa-solid fa-cart-shopping fa-xl"></i> </a>   
+
+                            <div class="dropdown-account"> 
+                                <button class = "dropbutn" style="font-size: 20px;">Account
+                                    <i class = "fa fa-caret-down"> </i> 
+                                </button>
+                                <div class = "dropdown-content">
+                                    <a href="#address"> Address  </a>        
+                                    <a href="/orders"> Returns & Orders </a>
+                                    <a href="/banking" id="payment_info">Payment Info</a>
+                                    <a href="/logout" id="id_logout">Logout</a>                            
+                                </div>
+                            </div>            
+                         
                         </div>
                         {% else %}
                         <div class="Topnavigationbar-right">
                             <a href="/login" id="id_login">Login</a>
-                        </div>
-                        {% endif %}
-
-
-                        {% if request.session.is_logged_in %}
-                        <div class="Topnavigationbar-right">
-                            <a href="/banking" id="payment_info">Payment Info</a>
                         </div>
                         {% endif %}
 
@@ -51,21 +57,13 @@
                         {% endif %}
 
 
-                        <form method="post" action="{% url 'searchItems' %}">
-                        {% csrf_token %}
-                        <div class="searchBar ">
-                            <i class="fa-solid fa-magnifying-glass" style="position: relative; left: 28px; color: #3a3d38;"></i>
-                            <input type= "text" name="searchText" placeholder="Search any item..." size="44">
-                        </div>
-                    </form>
-
-                        {% if request.session.is_logged_in %}
-                        
-                        <a href="#address"> Address  </a>        
-                        <a href="#returns-order"> Returns & Orders </a>
-                        <a href="/shoppingCart"> Shopping Cart </a>
-
-                        {% endif %}
+                        <form method="post" action="{% url 'searchItems' %}" style="position: relative; height: 50px; width: max-content; left: 50%;">
+                            {% csrf_token %}
+                            <div class="searchBar ">
+                                <i class="fa-solid fa-magnifying-glass" style="position: absolute; left: 8px; margin-top: 8px; color: #3a3d38;"></i>
+                                <input type= "text" name="searchText" placeholder="Search any item..." size="44">
+                            </div>
+                        </form>
                         
                     </div>
         
@@ -83,8 +81,7 @@
                                         {{category}}                                        
                                     </a>
                                 </form>
-                                {% endfor %}
-                            
+                                {% endfor %}                            
                             </div>
                         </div>
                         <a href="#bestseller"> Best Sellers </a>

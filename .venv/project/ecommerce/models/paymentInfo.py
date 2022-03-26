@@ -1,4 +1,4 @@
-from ..api.bankingInfo import *
+from ecommerce.api.bankingInfo import *
 import hashlib
 
 class PaymentInfo():

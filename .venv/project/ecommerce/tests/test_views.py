@@ -4,8 +4,8 @@ from time import sleep
 from ..databaseContext import DatabaseContext
 from django.test import TestCase
 from django.urls import reverse
-from  ..models.buyer  import Buyer
-from  ..models.seller import Seller
+from  ecommerce.models.buyer  import Buyer
+from  ecommerce.models.seller import Seller
 from ..controllers.forms.signupForm import BuyerSignupForm, SellerSignupForm
 from ..controllers.itemBrowsing.itemBrowsingViews import addItem,searchItems
 from ..views import home

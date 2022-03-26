@@ -3,7 +3,7 @@ from firebase_admin import firestore
 import json
 from requests.exceptions import HTTPError
 from .itembrowsing import get_item_by_ID
-from ..models.items import Item
+from ecommerce.models.items import Item
 
 
 db = firestore.client()
