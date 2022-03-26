@@ -1,6 +1,6 @@
 from django.shortcuts import redirect, render
+from ecommerce.api.account_context import show_error_message
 from ecommerce.models.seller import Seller
-from ...api.account_context import Errors
 from ecommerce.models.buyer import Buyer
 from ecommerce.models.user import User
 from ...controllers.forms.signupForm import BuyerSignupForm, SellerSignupForm
@@ -30,7 +30,7 @@ def login(request, resetMsg=""):
             
             # An error occured, so show an error message to the user
             if 'error' in user:
-                login_form.add_error(None,Errors.show_error_message(user))
+                login_form.add_error(None, show_error_message(user))
             
             else:
                 
@@ -127,7 +127,7 @@ def signupBuyer(request):
 
             # If the DB returns an error, show it in the form
             if 'error' in buyerInfo:
-                signup_form.add_error(None,Errors.show_error_message(buyerInfo))
+                signup_form.add_error(None,show_error_message(buyerInfo))
 
             # Otherwise, login the user.
             else:
@@ -171,7 +171,7 @@ def signupSeller(request):
 
             # If the DB returns an error, show it in the form
             if 'error' in sellerInfo:
-                signup_form.add_error(None,Errors.show_error_message(sellerInfo))
+                signup_form.add_error(None,show_error_message(sellerInfo))
 
             # Otherwise, login the user.
             else:

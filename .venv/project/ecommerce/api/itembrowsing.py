@@ -3,7 +3,7 @@ from firebase_admin import firestore
 import json
 from django.forms.models import model_to_dict
 from requests.exceptions import HTTPError
-from ..models.items import Item
+from ecommerce.models.items import Item
 
 db = firestore.client()
 
@@ -12,7 +12,7 @@ items_ref=db.collection(u'items')
 def addItems(item:Item):
     items_data = {
         'name':item.name,
-        'sellerID':item.sellerID,
+        'seller_id':item.seller_id,
         'photo':item.photo,
         'price':item.price,
         'description':item.description,
@@ -160,7 +160,7 @@ def get_items_by_search(searchText=""):
         itemID = itemDoc.id
         item_dict['id'] = itemID
         item = Item(item_data=item_dict)
-        if item.match(searchText=searchText):
+        if item.match(search_text=searchText):
             searchedItems.append(item)
     
     return searchedItems

@@ -7,7 +7,7 @@ from google.cloud import firestore as fs
 from django.template.loader import render_to_string
 from django.core.mail import EmailMultiAlternatives
 from ecommerce.models.order import Order
-from ecommerce.models.paymentInformation import PaymentInformation
+from ecommerce.models.payment_information import PaymentInformation
 
 
 db = firestore.client()
@@ -95,7 +95,7 @@ def get_orders(email: str, number_of_orders: int):
     all_orders = []
 
     for order_doc in orders_ref:
-        order = Order.from_documentReference(order_doc)
+        order = Order.from_document_reference(None, order_doc)
         all_orders.append(order)
 
     return all_orders

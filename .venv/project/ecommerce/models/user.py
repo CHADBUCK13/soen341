@@ -1,4 +1,4 @@
-from ..api.account_context import AccountContext
+from ecommerce.api.account_context import get_account_info, get_buyer, get_seller, is_buyer, is_seller, login_as_buyer, login_as_seller, reset_password
 from .buyer import Buyer
 from .seller import Seller
 
@@ -11,19 +11,19 @@ class User():
         """
         Returns TRUE if User is a Buyer.
         """
-        return AccountContext().is_buyer(email)
+        return is_buyer(email)
     
     def is_seller(email):
         """
         Returns TRUE if User is a Seller.
         """
-        return AccountContext().is_seller(email)
+        return is_seller(email)
 
     def reset_password(email):
         """
         Sends a Password Reset Link to the given Email.
         """
-        AccountContext().reset_password(email)
+        reset_password(email)
 
 
     def getUser(idToken):
@@ -32,14 +32,14 @@ class User():
         """
 
         # Get the email for the account represented by the token
-        email=AccountContext().get_account_info(idToken)['users'][0]['email']
+        email=get_account_info(idToken)['users'][0]['email']
         
         # If the email belongs to a buyer, then return the buyer
-        if AccountContext().is_buyer(email):
-            return Buyer(email=email,buyer_data=AccountContext().get_buyer(email))
+        if is_buyer(email):
+            return Buyer(email=email,buyer_data=get_buyer(email))
         # Otherwise, return the seller
         else:
-            return Seller(email=email,seller_data=AccountContext().get_seller(email))
+            return Seller(email=email,seller_data=get_seller(email))
 
 
     def login(login_data):
@@ -48,7 +48,7 @@ class User():
         """
 
         # Try to login as a buyer
-        user = AccountContext().login_as_buyer(
+        user = login_as_buyer(
             email=login_data['email'],
             password=login_data['password']
         )
@@ -58,7 +58,7 @@ class User():
             return user
 
         # If the user logging in is not a buyer, then try to login as a seller
-        return AccountContext().login_as_seller(
+        return login_as_seller(
             email=login_data['email'],
             password=login_data['password']
         )       

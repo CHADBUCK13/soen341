@@ -1,4 +1,4 @@
-from ..api.account_context import AccountContext
+from ecommerce.api.account_context import signup_as_buyer
 
 class Buyer():
     """
@@ -43,7 +43,7 @@ class Buyer():
         """
 
         # Signup the buyer
-        return AccountContext().signup_as_buyer(
+        return signup_as_buyer(
             email=self.email,
             password=self.password,
             firstname=self.firstname,

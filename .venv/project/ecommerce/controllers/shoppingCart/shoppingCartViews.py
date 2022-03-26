@@ -2,15 +2,15 @@ from django.shortcuts import redirect, render
 from datetime import datetime
 from ecommerce.controllers.forms.bankingForm import BankingBuyerForm
 
-from ...models.order import Order
+from ecommerce.models.order import Order
 
-from ...api.itembrowsing import *
+from ecommerce.api.itembrowsing import *
 from ...views import home
-from ...api.shoppingCart import *
-from ...api.account_context import *
-from ...api.checking_out import *
+from ecommerce.api.shoppingCart import add_item_to_cart, delete_items_from_cart, get_items_from_cart, update_item_quantity
+from ecommerce.api.account_context import get_account_from_refresh_token, get_account_info, get_buyer, get_seller, refresh_id_token
+from ecommerce.api.checking_out import check_out, get_payment_info  
 from django.forms.models import model_to_dict
-from ...models.address import *
+from ecommerce.models.address import Address
 
 def shopCart(request):
     """
@@ -18,16 +18,16 @@ def shopCart(request):
     """
     
     redir=redirect('home')
-    status = AccountContext().refresh_id_token(request,redir)
+    status = refresh_id_token( request,redir)
 
     if status is False:
         return redirect('logout')
     elif status is redir:
         token = request.COOKIES.get('refreshToken',None)
-        current_user = AccountContext().get_account_from_refresh_token(token)
+        current_user = get_account_from_refresh_token(token)
     else:
         token = request.COOKIES.get('idToken',None)
-        current_user = AccountContext().get_account_info(token)
+        current_user = get_account_info( token)
     
     shoppingCartItems=get_items_from_cart(current_user['users'][0]['email'])
     cartItems = []
@@ -48,7 +48,7 @@ def shopCart(request):
         method_dict['first'] = method.first
         method_dict['last'] = method.last
         method_dict['number'] = number[len(number) - 4: len(number)]
-        method_dict['experiationDate'] = method.expirationDate
+        method_dict['experiationDate'] = method.expiration_date
         method_dict['CVV'] = method.CVV
         method_dict['type'] = number[0]
         methods.append(method_dict)
@@ -65,16 +65,16 @@ def addToCart(request):
         itemID = request.POST.get("item")
         
         redir=redirect('home')
-        status = AccountContext().refresh_id_token(request,redir)
+        status = refresh_id_token(request,redir)
 
         if status is False:
             return redirect('logout')
         elif status is redir:
             token = request.COOKIES.get('refreshToken',None)
-            current_user = AccountContext().get_account_from_refresh_token(token)
+            current_user = get_account_from_refresh_token(token)
         else:
             token = request.COOKIES.get('idToken',None)
-            current_user = AccountContext().get_account_info(token)
+            current_user = get_account_info(token)
 
         add_item_to_cart(current_user['users'][0]['email'],itemID,1)
 
@@ -87,16 +87,16 @@ def changeAmount(request):
         itemId = request.POST.get('itemID')
 
         redir=redirect('home')
-        status = AccountContext().refresh_id_token(request,redir)
+        status = refresh_id_token(request,redir)
 
         if status is False:
             return redirect('logout')
         elif status is redir:
             token = request.COOKIES.get('refreshToken',None)
-            current_user = AccountContext().get_account_from_refresh_token(token)
+            current_user = get_account_from_refresh_token(token)
         else:
             token = request.COOKIES.get('idToken',None)
-            current_user = AccountContext().get_account_info(token)
+            current_user = get_account_info(token)
 
         update_item_quantity(current_user['users'][0]['email'],itemId,newquantity)
 
@@ -107,16 +107,16 @@ def removeFromCart(request):
         itemId = request.POST.get('itemID')
 
         redir=redirect('home')
-        status = AccountContext().refresh_id_token(request,redir)
+        status = refresh_id_token(request,redir)
 
         if status is False:
             return redirect('logout')
         elif status is redir:
             token = request.COOKIES.get('refreshToken',None)
-            current_user = AccountContext().get_account_from_refresh_token(token)
+            current_user = get_account_from_refresh_token(token)
         else:
             token = request.COOKIES.get('idToken',None)
-            current_user = AccountContext().get_account_info(token)
+            current_user = get_account_info(token)
 
         delete_items_from_cart(current_user['users'][0]['email'],itemId)
     return shopCart(request)
@@ -125,31 +125,31 @@ def checkout(request):
     if request.method == "POST":
 
         redir=redirect('home')
-        status = AccountContext().refresh_id_token(request,redir)
+        status = refresh_id_token(request,redir)
 
         if status is False:
             return redirect('logout')
         elif status is redir:
             token = request.COOKIES.get('refreshToken',None)
-            current_user = AccountContext().get_account_from_refresh_token(token)
+            current_user = get_account_from_refresh_token(token)
         else:
             token = request.COOKIES.get('idToken',None)
-            current_user = AccountContext().get_account_info(token)
+            current_user = get_account_info(token)
 
-        user  = AccountContext().get_buyer(current_user['users'][0]['email'])
+        user  = get_buyer(current_user['users'][0]['email'])
         if user is None:
-            user  = AccountContext().get_seller(current_user['users'][0]['email'])
+            user  = get_seller(current_user['users'][0]['email'])
 
         subtotal = 0.0
-        nOfItems = 0
-        paymentInfo = request.POST.get('number')
+        n_of_items = 0
+        payment_info = request.POST.get('number')
         shoppingCartItems=get_items_from_cart(current_user['users'][0]['email'])
         orderItems = []
         for item in shoppingCartItems:
             price = float(item[0].price)
             quantity = item[1]
             subtotal += price*float(quantity)
-            nOfItems += 1
+            n_of_items += 1
             item_dict = item[0].to_dict()
             item_dict['quantity'] = quantity
             orderItems.append(item_dict)
@@ -157,14 +157,14 @@ def checkout(request):
         order = Order(
             subtotal= subtotal,
             total= subtotal*1.15,
-            nOfItems=1,
+            n_of_items=1,
             cancelled=False,
-            paymentInfo=paymentInfo,
+            payment_info=payment_info,
             items=orderItems,
-            date=datetime.datetime.now(),
-            time=datetime.datetime.now(),
-            shippingAddress=Address(country=user['country'],city=user['city'],streetAddress=user['address'],postalCode=user['postal_code']),
-            billingAddress=Address(country=user['country'],city=user['city'],streetAddress=user['address'],postalCode=user['postal_code']))
+            date=datetime.now(),
+            time=datetime.now(),
+            shipping_address=Address(country=user['country'],city=user['city'],street_address=user['address'],postal_code=user['postal_code']),
+            billing_address=Address(country=user['country'],city=user['city'],street_address=user['address'],postal_code=user['postal_code']))
 
         check_out(current_user['users'][0]['email'],order)
 

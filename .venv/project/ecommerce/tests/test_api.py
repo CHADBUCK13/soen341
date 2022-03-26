@@ -1,6 +1,6 @@
 from django.test import TestCase
 from firebase_admin import firestore
-from ..api.itembrowsing import order_by_price,better_than_score,worse_than_score,get_categories,get_all_items,get_all_items_dict,get_items_by_search,item_collection_to_dict
+from ecommerce.api.itembrowsing import order_by_price,better_than_score,worse_than_score,get_categories,get_all_items,get_all_items_dict,get_items_by_search,item_collection_to_dict
 
 class TestItemBorwsing(TestCase):
 

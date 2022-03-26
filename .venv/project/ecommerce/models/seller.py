@@ -1,4 +1,4 @@
-from ..api.account_context import AccountContext
+from ecommerce.api.account_context import signup_as_seller
 
 class Seller():
     """
@@ -41,7 +41,7 @@ class Seller():
         """   
 
         # Signup the user
-        return AccountContext().signup_as_seller(
+        return signup_as_seller(
             email=self.email,
             password=self.password,
             name=self.name,
