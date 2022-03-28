@@ -1,7 +1,6 @@
 
 import os
 from time import sleep
-from ..databaseContext import DatabaseContext
 from django.test import TestCase
 from django.urls import reverse
 from  ecommerce.models.buyer  import Buyer
