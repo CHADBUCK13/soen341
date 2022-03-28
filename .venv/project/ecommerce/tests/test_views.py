@@ -1,11 +1,13 @@
 
 import os
+import pdb
 from time import sleep
 from ..databaseContext import DatabaseContext
 from django.test import TestCase
 from django.urls import reverse
 from  ..models.buyer  import Buyer
 from  ..models.seller import Seller
+from ..controllers.forms.loginForm import LoginForm
 from ..controllers.forms.signupForm import BuyerSignupForm, SellerSignupForm
 from ..controllers.itemBrowsing.itemBrowsingViews import addItem,searchItems
 from ..views import home
@@ -86,4 +88,21 @@ class TestItemBrowsingViews(TestCase):
         url = reverse("searchItems")
         response = self.client.get(url)
         self.assertEqual(response.status_code, 200)
+        
+class TestaccountViews(TestCase):
+    def setUp(self):
+        self.login_url=reverse("login")
+        self.login_form = {
+            'email' : 'anEmail@email.com',
+            'password': "aPassword"  
+        }
+        
+    def test_login_invalid_data(self):
+       res= self.client.post(self.login_url)
+       self.assertEqual(res.status_code,400)
     
+    def test_login_valid_data(self):
+        
+        res= self.client.post(self.login_url,self.login_form,format="json")
+
+        self.assertEqual(res.status_code,201)
