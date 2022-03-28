@@ -1,10 +1,11 @@
 from django.shortcuts import redirect, render
+from ecommerce.api.bankingInfo import hasPaymentInfo
 from ecommerce.api.storage import store_image
 from ecommerce.api.itembrowsing import get_items_by_search, addItems
-from ecommerce.api.accountContext import AccountContext
+from ecommerce.api.account_context import get_account_from_refresh_token, get_account_info, refresh_id_token
 from ..forms.itemForm import ItemForm
 from ecommerce.models.items import Item
-from ...views import *
+from ...views import home
 
 def addItem(request):
     """
@@ -18,16 +19,16 @@ def addItem(request):
         if item_form.is_valid():
 
             redir=redirect('home')
-            status = AccountContext().refresh_idToken(request,redir)
+            status = refresh_id_token(request,redir)
 
             if status is False:
                 return redirect('logout')
             elif status is redir:
                 token = request.COOKIES.get('refreshToken',None)
-                current_user = AccountContext().get_account_from_refreshToken(token)
+                current_user = get_account_from_refresh_token(token)
             else:
                 token = request.COOKIES.get('idToken',None)
-                current_user = AccountContext().get_account_info(token)
+                current_user = get_account_info(token)
             
             if hasPaymentInfo(current_user['users'][0]['email']):
 
@@ -35,12 +36,12 @@ def addItem(request):
                 image_url=store_image(request.FILES.get('image',None),item_form.data['name'])
 
 
-                item = Item(add_item_form_data=item_form.data,sellerID=current_user['users'][0]['email'],photo=image_url)
+                item = Item(add_item_form_data=item_form.data,seller_id=current_user['users'][0]['email'],photo=image_url)
                 addItems(item)
 
                 return redirect('home')
             else:
-                item_form.add_error(None,"Please Update your Payment Information before Adding Items for Sale.")
+                item_form.add_error("Please Update your Payment Information before Adding Items for Sale.")
     else:
         item_form = ItemForm()
 

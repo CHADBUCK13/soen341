@@ -1,7 +1,9 @@
 from django.shortcuts import redirect,render
-from ...models.paymentInfo import PaymentInfo
+
+from ecommerce.api.bankingInfo import addPaymentInfoBuyer
+from ecommerce.models.paymentInfo import PaymentInfo
 from ..forms.bankingForm import BankingBuyerForm, BankingSellerForm
-from ...api.accountContext import *
+from ecommerce.api.account_context import get_account_from_refresh_token, get_account_info, refresh_id_token
 
 def addBankingInfo(request):
     """
@@ -25,18 +27,19 @@ def addBankingInfoBuyer(request):
         if payment_form.is_valid():
             
             redir=redirect('home')
-            status = AccountContext().refresh_idToken(request,redir)
+            status = refresh_id_token(request,redir)
 
             if status is False:
                 return redirect('logout')
             elif status is redir:
                 token = request.COOKIES.get('refreshToken',None)
-                current_user = AccountContext().get_account_from_refreshToken(token)
+                current_user = get_account_from_refresh_token(token)
             else:
                 token = request.COOKIES.get('idToken',None)
-                current_user = AccountContext().get_account_info(token)
+                current_user = get_account_info(token)
             
-            PaymentInfo(email=current_user['users'][0]['email'],buyer_payment_data=payment_form.cleaned_data).save()
+            paymentData = payment_form.cleaned_data
+            addPaymentInfoBuyer(current_user['users'][0]['email'],paymentData['firstname'],paymentData['lastname'],paymentData['number'],paymentData['expirationDate'],paymentData['cvv'])
 
             return redirect('home')
 
@@ -57,16 +60,16 @@ def addBankingInfoSeller(request):
         if payment_form.is_valid():
             
             redir=redirect('home')
-            status = AccountContext().refresh_idToken(request,redir)
+            status = refresh_id_token(request,redir)
 
             if status is False:
                 return redirect('logout')
             elif status is redir:
                 token = request.COOKIES.get('refreshToken',None)
-                current_user = AccountContext().get_account_from_refreshToken(token)
+                current_user = get_account_from_refresh_token(token)
             else:
                 token = request.COOKIES.get('idToken',None)
-                current_user = AccountContext().get_account_info(token)
+                current_user = get_account_info(token)
             
             PaymentInfo(email=current_user['users'][0]['email'],seller_payment_data=payment_form.cleaned_data).save()
 

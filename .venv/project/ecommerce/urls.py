@@ -1,6 +1,8 @@
 import imp
 from django.urls import path
 from django.contrib.staticfiles.urls import staticfiles_urlpatterns
+
+from ecommerce.controllers.shoppingCart.orderViews import cancelOrder, orders
 from .controllers.itemBrowsing.itemBrowsingViews import addItem, searchItems
 from .controllers.banking.bankingViews import addBankingInfo
 from .views import home
@@ -24,7 +26,9 @@ urlpatterns = [
     path('deletedFromCart/',removeFromCart, name="deleteFromCart"),
     path('checkout/',checkout,name='checkout'),
     #add/remove
-    path('banking/',addBankingInfo, name="addBankingInfo")
+    path('banking/',addBankingInfo, name="addBankingInfo"),
+    path('orders/', orders, name="orders"),
+    path('cancelOrders/', cancelOrder, name="cancelOrder")
 ]
 
 urlpatterns += staticfiles_urlpatterns()

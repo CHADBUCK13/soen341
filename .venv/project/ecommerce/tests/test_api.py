@@ -1,8 +1,6 @@
 from django.test import TestCase
 from firebase_admin import firestore
-from ..models.user import User
-from ..api.accountContext import AccountContext
-from ..api.itembrowsing import order_by_price,better_than_score,worse_than_score,get_categories,get_all_items,get_all_items_dict,get_items_by_search,item_collection_to_dict
+from ecommerce.api.itembrowsing import order_by_price,better_than_score,worse_than_score,get_categories,get_all_items,get_all_items_dict,get_items_by_search,item_collection_to_dict
 
 class TestItemBorwsing(TestCase):
 
@@ -31,19 +29,3 @@ class TestItemBorwsing(TestCase):
         allItemsRef = items_ref.stream()
         allItems:list = item_collection_to_dict(allItemsRef)
         self.assertIsNotNone(allItems)
-        
-class TestAccountContext(TestCase):
-    def setUp(self):
-        return super().setUp()
-    
-
-        
-    def test_login_as_buyer(self):
-        user = AccountContext().login_as_buyer(
-            email="test@gmail.com",
-            password="Django1234"
-        )
-        self.assertTrue( User().is_buyer(user))
-
-      
-    

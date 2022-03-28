@@ -113,14 +113,14 @@ class DatabaseContext():
         except HTTPError as e:
             return json.loads(e.strerror)
 
-    def get_account_from_refreshToken(self,refreshToken):
+    def get_account_from_refresh_token(self,refreshToken):
         try:
             user = self.auth.get_account_info(self.auth.refresh(refreshToken)['idToken'])
             return user
         except HTTPError as e:
             return json.loads(e.strerror)
 
-    def refresh_idToken(self,request, redirect):
+    def refresh_id_token(self,request, redirect):
         try:
             idToken = request.COOKIES.get('idToken',None)
             refreshToken = request.COOKIES.get('refreshToken',None)
@@ -197,7 +197,7 @@ class DatabaseContext():
 
 
 class Errors():
-    def ShowErrorMessage(error):
+    def show_error_message(error):
         if error['error']['message'] == "EMAIL_EXISTS":
             return "This Email Address is already used by another Account."
         if error['error']['message'] == "INVALID_PASSWORD":
