@@ -22,15 +22,34 @@
         <header>
             <!-- NAVIGATION BAR -->
             <nav class = "navbar">
-                <div class = "Topnavigationbar">
+                <div class="grid-container Topnavigationbar">
+                    <div class="grid-item grid-item-1">
+                        <a class="active" href="../" id="id_home"> 
+                            <i class="fa-solid fa-store" style="color: rgb(242, 242, 250);"> 
+                                Paradise
+                            </i>
+                        </a>
+                    </div>
+                    <div class="grid-item grid-item-2">
+                        <form method="post" action="{% url 'searchItems' %}" style="position: relative;height: 50px; width: max-content; margin-top: 1%;">
+                            {% csrf_token %}
+                            <div>
+                                <i class="fa-solid fa-magnifying-glass" style="position: absolute; left: 8px; margin-top: 8px; color: #3a3d38;"></i>
+                                <input type= "text" name="searchText" placeholder="Search any item..." size="44">
+                            </div>
+                        </form>
+                    </div>
 
-                        <!-- Home Page Nav -->
-                        <a class="active" href="../" id="id_home"> <i class="fa-solid fa-store" style="color: rgb(242, 242, 250);"> Paradise</i></a>
+                    {% if request.session.is_logged_in and request.session.is_seller %}
+                        <div class="grid-item grid-item-3">
+                            <a href="/addItem" id="id_addItem">
+                                Add Item
+                            </a>
+                        </div>
+                    {% endif %}
 
-                        {% if request.session.is_logged_in %}
-                        <div class="Topnavigationbar-right">
-                            <a href="/shoppingCart"> <i class="fa-solid fa-cart-shopping fa-xl"></i> </a>   
-
+                    {% if request.session.is_logged_in %}
+                        <div class="grid-item grid-item-4 Topnavigationbar-right">
                             <div class="dropdown-account"> 
                                 <button class = "dropbutn" style="font-size: 20px;">Account
                                     <i class = "fa fa-caret-down"> </i> 
@@ -42,31 +61,19 @@
                                     <a href="/logout" id="id_logout">Logout</a>                            
                                 </div>
                             </div>            
-                         
+                        </div>
+                        <div class="grid-item grid-item-5 Topnavigationbar-right">
+                            <a href="/shoppingCart"> 
+                                <i class="fa-solid fa-cart-shopping fa-xl"></i> 
+                            </a>
                         </div>
                         {% else %}
-                        <div class="Topnavigationbar-right">
+                        <div class="grid-item grid-item-5 Topnavigationbar-right grid-login">
                             <a href="/login" id="id_login">Login</a>
                         </div>
                         {% endif %}
-
-                        {% if request.session.is_logged_in and request.session.is_seller %}
-                        <div class="Topnavigationbar-right">
-                            <a href="/addItem" id="id_addItem">Add Item</a>
-                        </div>
-                        {% endif %}
-
-
-                        <form method="post" action="{% url 'searchItems' %}" style="position: relative; height: 50px; width: max-content; left: 50%;">
-                            {% csrf_token %}
-                            <div class="searchBar ">
-                                <i class="fa-solid fa-magnifying-glass" style="position: absolute; left: 8px; margin-top: 8px; color: #3a3d38;"></i>
-                                <input type= "text" name="searchText" placeholder="Search any item..." size="44">
-                            </div>
-                        </form>
-                        
-                    </div>
-        
+                </div>
+    
                     <div class = "secondnavbar">
                         <div class="dropdown"> 
                             <button class = "dropbutn">Categories
@@ -89,8 +96,8 @@
                         <a href="#Members deal"> Members Deals </a>
                     </div>
                 </nav>
-            </header>
-              <main>
+        </header>
+        <main>
             {% block content %}
             {% endblock %}
         </main>
