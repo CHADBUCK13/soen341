@@ -81,6 +81,55 @@ h4 {
 
 /*Top navigation bar*/
 
+@media (min-width:971px){
+    .grid-container{
+        display: grid;
+        grid-template-columns: 1fr 1fr 150px 130px 60px;
+        grid-row: auto;
+        grid-row-gap: 1px;
+    }
+
+    .grid-item-1{
+        justify-self: left;
+    }
+    
+    .grid-item-2{
+        justify-self:stretch;
+    }
+    
+    .grid-item-3{
+        justify-self: right;
+    }
+    
+    .grid-item-4{
+        justify-self: right;
+    }
+    
+    .grid-item-5{
+        justify-self: right;
+    }
+
+    .grid-login{
+        grid-column: span 3;
+        justify-self: right;
+    }
+}
+
+@media (max-width:970px){
+    .grid-container{
+        display: grid;
+        grid-template-columns: 1fr;
+        grid-template-rows: auto;
+        grid-row-gap: 1px;
+    }
+
+    .grid-item{
+        justify-self: center;
+    }
+
+}
+
+
 .Topnavigationbar {
     background-color:rgb(89, 89, 199);
     overflow: hidden;
