@@ -7,12 +7,13 @@ from django import forms
 #         'aria-label': 'Recipient\'s username',
 #         'aria-describedby': 'basic-addon2'
 #     }))
-    
+
+
 class AddItemForm(forms.Form):
     item = forms.HiddenInput()
 
     class Meta:
-        fields=['item']
-    
-#Checkout form
-##Payment/Refund form?
+        fields = ['item']
+
+# Checkout form
+# Payment/Refund form?

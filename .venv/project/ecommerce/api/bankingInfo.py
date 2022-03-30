@@ -3,7 +3,7 @@ from firebase_admin import firestore
 db = firestore.client()
 payments_ref = db.collection(u'paymentsInfo')
 
-def add_payment_info_buyer(email,firstName="",lastName="",number="",expirationDate="",cvv=""):
+def addPaymentInfoBuyer(email,firstName="",lastName="",number="",expirationDate="",cvv=""):
     """
     Save the Buyer's Payment Info to the DB.
     """
@@ -19,7 +19,7 @@ def add_payment_info_buyer(email,firstName="",lastName="",number="",expirationDa
     payment_infoPath = 'buyers/'+email+"/payment_information"
     db.collection(payment_infoPath).add(payment_data)
 
-def add_payment_info_seller(email,transit="",institution="",account=""):
+def addPaymentInfoSeller(email,transit="",institution="",account=""):
     """
     Save the Seller's Payment Info to the DB.
     """
