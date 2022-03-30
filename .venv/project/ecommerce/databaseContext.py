@@ -168,22 +168,7 @@ class DatabaseContext():
         """
         self.auth.send_password_reset_email(email) 
    
-    def delete_buyer(self, email, password):
-            try:
-            # Validate Status as Buyer
-                if self.db.collection('buyers').document(email).get().exists:
-        
-                # Sign In the User
-                    user = self.auth.sign_in_with_email_and_password(email, password)
-                # delete the buyer    
-                    self.auth.delete_user_account(user['idToken'])
-                    self.db.collection('buyers').document(email).delete()
-        
-                
-                else: 
-                    return False
-            except HTTPError as e:
-                return json.loads(e.strerror)
+ 
         
     #Delete account func 
   #  def delete_account():

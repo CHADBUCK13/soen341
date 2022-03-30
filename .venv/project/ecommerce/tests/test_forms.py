@@ -46,7 +46,7 @@ class TestFrorms(TestCase):
     def test_seller_signup_form_inValid_data(self):
             seller_signup_from= SellerSignupForm(data={})
             self.assertFalse(seller_signup_from.is_valid())
-            self.assertEquals(len(seller_signup_from.errors),9)
+            self.assertEqual(len(seller_signup_from.errors),9)
         
         
     def test_login_form_valid_data(self):
