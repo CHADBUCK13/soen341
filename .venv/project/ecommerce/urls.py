@@ -1,9 +1,10 @@
 import imp
+from unicodedata import name
 from django.urls import path
 from django.contrib.staticfiles.urls import staticfiles_urlpatterns
 
 from ecommerce.controllers.shoppingCart.orderViews import cancelOrder, orders
-from .controllers.itemBrowsing.itemBrowsingViews import addItem, searchItems
+from .controllers.itemBrowsing.itemBrowsingViews import addItem, getItemDescription, searchItems
 from .controllers.banking.bankingViews import addBankingInfo
 from .views import home
 from .controllers.account.accountViews import signupBuyer,signupSeller,login,logout,resetPassword
@@ -28,7 +29,8 @@ urlpatterns = [
     #add/remove
     path('banking/',addBankingInfo, name="addBankingInfo"),
     path('orders/', orders, name="orders"),
-    path('cancelOrders/', cancelOrder, name="cancelOrder")
+    path('cancelOrders/', cancelOrder, name="cancelOrder"),
+    path('getItemDescription/', getItemDescription, name="getItemDescription")
 ]
 
 urlpatterns += staticfiles_urlpatterns()
