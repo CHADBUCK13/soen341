@@ -1,7 +1,7 @@
 from django.shortcuts import redirect, render
 from ecommerce.api.bankingInfo import hasPaymentInfo
 from ecommerce.api.storage import store_image
-from ecommerce.api.itembrowsing import get_items_by_search, addItems
+from ecommerce.api.itembrowsing import get_items_by_search, addItems, get_item_by_ID
 from ecommerce.api.account_context import get_account_from_refresh_token, get_account_info, refresh_id_token
 from ..forms.itemForm import ItemForm
 from ecommerce.models.items import Item
@@ -64,7 +64,7 @@ def searchItems(request):
 
         # Inform user that no items were found
         if len(items) == 0:
-            searchText = "No Items Found for: '"+searchText+"'"
+            searchText = "No Items Found for: '"+searchText+"'" 
         else:
             searchText = "Items Found for: '"+searchText+"'" 
 
@@ -72,3 +72,17 @@ def searchItems(request):
     else:
         return home(request)
 
+
+def getItems(request):
+
+    if request.method == "POST":
+
+        # Get the itemID
+        itemID = request.POST['itemID']
+
+        # Get items that match that keyword
+        items = get_item_by_ID(itemID=itemID)
+
+        return render(request,'itemDescription.html',{'items':items})
+    else:
+        return home(request)

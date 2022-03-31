@@ -10,10 +10,10 @@
         <link rel="stylesheet" href="{% static 'css/itemDescription.css' %}">
     </head>
     <body>
-        {% for item in items %}
+        {% for items %}
      <main>
          <div class="container">
-             <div class="cover"> <img src="{{item.photo}}">  </div>
+             <div class="cover"> <img src={{item.photo}}>  </div>
              <div class="content">
                  <div class="nav">
                      <span class="logo">{{item.name}}</span>
@@ -24,8 +24,10 @@
                          <span class="active"></span>
                      </div>
                      <div class="label">
-                         <span class="title"><b>{{item.name}}</b></span>
-                         <p> ${{item.description}}                             </p>
+                         <span class="title"><b>SOEN341</b></span>
+                         <p> {{item.description}} </p>
+                         <p> {{item.weight}} </p>
+                         <p> {{item.score}} </p>
                                  <div class="prix">
                                     <span><b>${{item.price}}</b></span>
                                 </div>
