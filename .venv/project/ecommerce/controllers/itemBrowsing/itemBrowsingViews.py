@@ -81,8 +81,8 @@ def getItems(request):
         itemID = request.POST['itemID']
 
         # Get items that match that keyword
-        items = get_item_by_ID(itemID=itemID)
+        item = get_item_by_ID(itemID=itemID)
 
-        return render(request,'itemDescription.html',{'items':items})
+        return render(request,'itemDescription.html',{'item':item})
     else:
         return home(request)
