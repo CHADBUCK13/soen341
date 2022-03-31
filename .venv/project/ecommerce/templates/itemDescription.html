@@ -1,0 +1,41 @@
+{% extends 'baseLayout.html' %}
+
+{% block head %}
+
+<html>
+    <head>
+        <title>product detais</title>
+        <meta name='viewport' content='width=device-width, initial-scale=1'>
+        <script src='https://kit.fontawesome.com/a076d05399.js'></script>
+        <link rel="stylesheet" href="{% static 'css/itemDescription.css' %}">
+    </head>
+    <body>
+        {% for item in items %}
+     <main>
+         <div class="container">
+             <div class="cover"> <img src="{{item.photo}}">  </div>
+             <div class="content">
+                 <div class="nav">
+                     <span class="logo">{{item.name}}</span>
+                     <span><i class='fab fa-sistrix' style='font-size:24px'></i></span>
+                 </div>
+                 <div class="content-body">
+                     <div class="pages">
+                         <span class="active"></span>
+                     </div>
+                     <div class="label">
+                         <span class="title"><b>{{item.name}}</b></span>
+                         <p> ${{item.description}}                             </p>
+                                 <div class="prix">
+                                    <span><b>${{item.price}}</b></span>
+                                </div>
+                     </div>
+                 </div>
+                 
+             </div>
+         </div>
+     </main>
+     {% endfor %}
+         
+    </body>
+</html>
