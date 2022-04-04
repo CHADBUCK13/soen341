@@ -60,6 +60,7 @@ class TestLogout(TestCase):
 class Testhome(TestCase):
     """Test the home view functions
     """
+
     def setUp(self):
         self.session = self.client.session
         self.session['is_logged_in'] = False
@@ -82,6 +83,7 @@ class Testhome(TestCase):
 class TestItemBrowsingViews(TestCase):
     """test the functions in itembrowsing views
     """
+
     def setUp(self):
         self.session = self.client.session
         self.session['is_logged_in'] = False
@@ -95,10 +97,6 @@ class TestItemBrowsingViews(TestCase):
 
         self.assertTemplateUsed(response, 'addItem.html')
         self.assertEqual(response.status_code, 200)
-
-        self.assertTemplateUsed(response, 'addItem.html')
-        self.assertEqual(response.status_code, 200)
-
     def test_search_item_response_code(self):
         """test that the serach item request returns the correct response code
         """

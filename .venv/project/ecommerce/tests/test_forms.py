@@ -6,6 +6,7 @@ from ..controllers.forms.signupForm import BuyerSignupForm, SellerSignupForm
 from ..controllers.forms.loginForm import LoginForm
 from ..controllers.forms.resetPasswordForm import ResetPasswordForm
 from ..controllers.forms.itemForm import ItemForm
+from ..controllers.forms.bankingForm import BankingBuyerForm, BankingSellerForm
 
 
 class TestFrorms(TestCase):
@@ -13,7 +14,7 @@ class TestFrorms(TestCase):
     """
 
     def test_buyer_sign_up_form_valid_data(self):
-        """test if the buyer sign up form is valid using valid data
+        """test if the buyer sign up/;  form is valid using valid data
         """
         buyer_signup_from = BuyerSignupForm(data={
             "email": 'matintavak@yahoo.com',
@@ -95,3 +96,23 @@ class TestFrorms(TestCase):
             'image': 'anAddress',
         })
         self.assertFalse(item_form.is_valid())
+
+    def test_banking_seller_form_valid_data(self):
+        """Test if the form is valid if we provide valid banking details
+        """
+        seller_form = BankingSellerForm(data={
+            'transit': 'trans',
+            'institution': '123',
+            'account': 'account',
+        })
+        self.assertTrue(seller_form.is_valid())
+
+    def test_banking_seller_form_invalid_data(self):
+        """Test if the form is valid if we provide wrong banking details
+        """
+        seller_form = BankingSellerForm(data={
+            'transit': 'wrongtransitNumber',
+            'institution': '123',
+            'account': 'account',
+        })
+        self.assertFalse(seller_form.is_valid())
