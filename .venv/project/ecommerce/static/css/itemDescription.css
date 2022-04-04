@@ -16,17 +16,24 @@ main{
     width: 80%;
     display: grid;
     grid-template-columns: 40% 60%;
-    grid-template-areas: "cover content";
+    grid-template-areas: "itemPic content";
     box-shadow:-2px 0px 33px 0px rgba(0,0,0,0.75);
 }
 
 .itemPic{
     object-fit: cover;
+    grid-area: itemPic;
     height: 80vh;
     background-size: cover;
     background-position: center center;
 }
 
+img{
+    width: 100%;
+    height: 100%;
+    display: block;
+    object-fit: cover;
+}
 .content{
     grid-area: content;
     background:#efefef;
