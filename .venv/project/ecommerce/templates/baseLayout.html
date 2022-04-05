@@ -16,26 +16,27 @@
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
         <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;500;600&display=swap" rel="stylesheet">
         <script src="https://kit.fontawesome.com/e530a0ab96.js" crossorigin="anonymous"></script>
-        
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>   
+
     </head>
     <body>
         <header>
             <!-- NAVIGATION BAR -->
-            <nav class = "navbar">
+            <nav id = "navbar">
                 <div class="grid-container Topnavigationbar">
                     <div class="grid-item grid-item-1">
-                        <a class="active" href="../" id="id_home"> 
-                            <i class="fa-solid fa-store" style="color: rgb(242, 242, 250);"> 
+                        <a class="paradise" href="../" id="id_home"> 
+                            <i class="fa-solid fa-spa" style="color: #63bd9f;"> 
                                 Paradise
                             </i>
                         </a>
                     </div>
                     <div class="grid-item grid-item-2">
-                        <form method="post" action="{% url 'searchItems' %}" style="position: relative;height: 50px; width: max-content; margin-top: 1%;">
+                        <form method="post" action="{% url 'searchItems' %}">
                             {% csrf_token %}
-                            <div>
-                                <i class="fa-solid fa-magnifying-glass" style="position: absolute; left: 8px; margin-top: 8px; color: #3a3d38;"></i>
-                                <input type= "text" name="searchText" placeholder="Search any item..." size="44">
+                            <div class="input-wrap">
+                                <input type= "text" name="searchText" placeholder='Search for anything' size="80">
+                                <button><i class="fa-solid fa-magnifying-glass"></i></button>
                             </div>
                         </form>
                     </div>
@@ -62,9 +63,9 @@
                                 </div>
                             </div>            
                         </div>
-                        <div class="grid-item grid-item-5 Topnavigationbar-right">
+                        <div class="grid-item grid-item-5 Topnavigationbar-right" id="shoppingCartLink">
                             <a href="/shoppingCart"> 
-                                <i class="fa-solid fa-cart-shopping fa-xl"></i> 
+                                <i class="fa-solid fa-cart-shopping fa-xl" style="color:#595e5c"></i> 
                             </a>
                         </div>
                         {% else %}
@@ -102,5 +103,4 @@
             {% endblock %}
         </main>
     </body>
-    <script src="https://kit.fontawesome.com/e530a0ab96.js" crossorigin="anonymous"></script>
 </html>

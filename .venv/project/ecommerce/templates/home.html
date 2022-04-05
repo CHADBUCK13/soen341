@@ -34,18 +34,58 @@
 
             
             {% for item in items %}
+
+            {% block javascript %}
+            {% csrf_token %}
+            <script>
+                $(document).on('click', "#addButton{{item.id}}",function () {
+                    var itemID = $("#addCart{{item.id}}").val();
+                    const csrftoken = document.querySelector('[name=csrfmiddlewaretoken]').value;
+                    const data = {'itemID': itemID}
+                    fetch(
+                        "{% url 'addToCart' %}", {
+                            method: 'POST',
+                            headers: {'X-CSRFToken': csrftoken},
+                            mode: 'same-origin',
+                            body: JSON.stringify(data)
+                        }
+                    )
+                    .then(
+                        function () {
+                            const inCartElement = document.createElement('div');
+                            inCartElement.innerHTML = 'Item In Cart';
+                            inCartElement.className = "inCartText";
+                            inCartElement.id = "inCart{{item.id}}";
+
+                            const addButton = document.getElementById("addButton{{item.id}}");
+                            addButton.parentNode.replaceChild(inCartElement, addButton);
+
+                            var shoppingCartLink = document.getElementById("shoppingCartLink");
+                            setTimeout(function() {
+                                shoppingCartLink.style.transform = "scale(1.5)"; 
+                                shoppingCartLink.style.transition = "all 0.5s ease";
+                            }, 500);
+                            setTimeout(function() {
+                                shoppingCartLink.style.transform = "scale(1.00)"; 
+                                shoppingCartLink.style.transition = "all 0.5s ease";
+                            }, 1000);
+                        }
+                    );
+                });
+            </script>
+            {% endblock %}
+
             <div class="product-container">
                 <div class = "card">
                     <div class = "card-image"><img src="{{item.photo}}" style=" width: 100%; height: 100%; object-fit: cover; "></div>
-                    <h2>{{item.name}}</h2>
+                    <h2><span>{{item.name}}</span></h2>
                     <p>
                     ${{item.price}}
                     </p>
-                    <form id="addCart{{item.id}}" method="post" action="{% url 'addToCart' %}">
-                        {% csrf_token %}
-                        <input type="hidden" name="item" value="{{item.id}}">  
-                        <a href="#" onclick="document.getElementById('addCart{{item.id}}').submit()">
-                            ADD TO CART
+                    <form method="post" action="{% url 'addToCart' %}">                        
+                        <input type="hidden" name="item" value="{{item.id}}" id="addCart{{item.id}}">  
+                        <a  id="addButton{{item.id}}">
+                            Add To Cart
                         </a>
                     </form>
                     

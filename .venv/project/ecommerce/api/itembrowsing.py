@@ -93,7 +93,6 @@ def get_all_items(numberOfItems = 0):
     try:
         allItemsRef = items_ref.stream()
         allItems:list = item_collection_to_dict(allItemsRef)
-        print(allItems)
         
         return allItems
     

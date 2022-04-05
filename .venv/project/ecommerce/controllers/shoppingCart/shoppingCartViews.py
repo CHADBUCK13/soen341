@@ -1,5 +1,6 @@
 from django.shortcuts import redirect, render
 from datetime import datetime
+import json
 from ecommerce.controllers.forms.bankingForm import BankingBuyerForm
 
 from ecommerce.models.order import Order
@@ -62,7 +63,7 @@ def addToCart(request):
 
     if request.method == "POST":
         
-        itemID = request.POST.get("item")
+        itemID = json.load(request)['itemID']
         
         redir=redirect('home')
         status = refresh_id_token(request,redir)
@@ -170,6 +171,7 @@ def checkout(request):
 
     return home(request)
 
+
 # def get_coupon(request, code):
 #     try:
 #         coupon = Coupon.objects.get(code=code)
@@ -197,4 +199,4 @@ def checkout(request):
 
 #Add checkout view
 #Add remove add item view(add/remove form cart)
-       
+
