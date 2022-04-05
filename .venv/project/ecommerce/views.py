@@ -33,7 +33,7 @@ def home(request):
         if len(items) == 0:
             category = "No Items in "+category
     else:
-        items = get_all_items_dict(100)
+        items = get_all_items_dict()
 
     request.session.modified = True
 
