@@ -2,12 +2,12 @@ import imp
 from django.urls import path
 from django.contrib.staticfiles.urls import staticfiles_urlpatterns
 
-from ecommerce.controllers.shoppingCart.orderViews import cancelOrder, orders
-from .controllers.itemBrowsing.itemBrowsingViews import addItem, searchItems
+from ecommerce.controllers.shopping_cart.orderViews import cancelOrder, orders
+from .controllers.item_browsing.item_browsingViews import addItem, searchItems
 from .controllers.banking.bankingViews import addBankingInfo
 from .views import home
 from .controllers.account.accountViews import signupBuyer,signupSeller,login,logout,resetPassword
-from .controllers.shoppingCart.shoppingCartViews import *
+from .controllers.shopping_cart.shopping_cartViews import *
 
 
 urlpatterns = [
@@ -20,7 +20,7 @@ urlpatterns = [
     path("signupS/",signupSeller,name="signupSeller"),
     path("addItem/",addItem, name="addItem"),
     path('searchItems/',searchItems, name="searchItems"),
-    path("shoppingCart/", shopCart, name="shoppingCart"),
+    path("shopping_cart/", shopCart, name="shopping_cart"),
     path("addCartItem/", addToCart, name="addToCart"),
     path("changeAmount/",changeAmount, name="changeAmount"),
     path('deletedFromCart/',removeFromCart, name="deleteFromCart"),

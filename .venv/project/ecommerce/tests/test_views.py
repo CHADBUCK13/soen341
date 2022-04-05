@@ -6,7 +6,7 @@ from django.urls import reverse
 from  ecommerce.models.buyer  import Buyer
 from  ecommerce.models.seller import Seller
 from ..controllers.forms.signupForm import BuyerSignupForm, SellerSignupForm
-from ..controllers.itemBrowsing.itemBrowsingViews import addItem,searchItems
+from ..controllers.item_browsing.item_browsingViews import addItem,searchItems
 from ..views import home
 
 class TestLogin(TestCase):    
@@ -64,7 +64,7 @@ class Testhome(TestCase):
         self.assertFalse( self.session['is_logged_in'])
         
         
-class TestItemBrowsingViews(TestCase):
+class Testitem_browsingViews(TestCase):
     def setUp(self):
         self.session = self.client.session
         self.session['is_logged_in']=False

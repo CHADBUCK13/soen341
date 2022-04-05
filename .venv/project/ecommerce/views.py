@@ -1,11 +1,11 @@
 from multiprocessing import context
 from urllib import request
 from django.shortcuts import render
-from .api import itembrowsing
+from .api import item_browsing
 from django.contrib import messages
 #from .models import OrderItem, Order, Address
 #from .forms import shopCartForm
-from .api.itembrowsing import get_categories, get_items_by_category, get_all_items_dict
+from .api.item_browsing import get_categories, get_items_by_category, get_all_items_dict
 
 def home(request):
     

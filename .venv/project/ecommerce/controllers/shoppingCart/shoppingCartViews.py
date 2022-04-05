@@ -4,9 +4,9 @@ from ecommerce.controllers.forms.bankingForm import BankingBuyerForm
 
 from ecommerce.models.order import Order
 
-from ecommerce.api.itembrowsing import *
+from ecommerce.api.item_browsing import *
 from ...views import home
-from ecommerce.api.shoppingCart import add_item_to_cart, delete_items_from_cart, get_items_from_cart, update_item_quantity
+from ecommerce.api.shopping_cart import add_item_to_cart, delete_items_from_cart, get_items_from_cart, update_item_quantity
 from ecommerce.api.account_context import get_account_from_refresh_token, get_account_info, get_buyer, get_seller, refresh_id_token
 from ecommerce.api.checking_out import check_out, get_payment_info  
 from django.forms.models import model_to_dict
@@ -29,16 +29,16 @@ def shopCart(request):
         token = request.COOKIES.get('idToken',None)
         current_user = get_account_info( token)
     
-    shoppingCartItems=get_items_from_cart(current_user['users'][0]['email'])
+    shopping_cartItems=get_items_from_cart(current_user['users'][0]['email'])
     cartItems = []
-    for item in shoppingCartItems:
+    for item in shopping_cartItems:
         itemV = dict()
         itemV['item']=item[0]
         itemV['quantity']=item[1]
         itemV['total']=float(item[0].price)*int(item[1])
         cartItems.append(itemV)
     #get_items_from_cart(request.session['email']) 
-    #request.session['shoppingCartItems'] = [Item(example,example,example),Item(...)] # tests
+    #request.session['shopping_cartItems'] = [Item(example,example,example),Item(...)] # tests
     
     paymentMethods = get_payment_info(current_user['users'][0]['email'])
     methods = []
@@ -53,7 +53,7 @@ def shopCart(request):
         method_dict['type'] = number[0]
         methods.append(method_dict)
 
-    return render(request, 'shoppingCart.html',{'shoppingCartItems':cartItems, 'methods':methods})
+    return render(request, 'shopping_cart.html',{'shopping_cartItems':cartItems, 'methods':methods})
    
 def addToCart(request):
     """
@@ -143,9 +143,9 @@ def checkout(request):
         subtotal = 0.0
         n_of_items = 0
         payment_info = request.POST.get('number')
-        shoppingCartItems=get_items_from_cart(current_user['users'][0]['email'])
+        shopping_cartItems=get_items_from_cart(current_user['users'][0]['email'])
         orderItems = []
-        for item in shoppingCartItems:
+        for item in shopping_cartItems:
             price = float(item[0].price)
             quantity = item[1]
             subtotal += price*float(quantity)
