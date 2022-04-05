@@ -1,7 +1,7 @@
 from django.shortcuts import redirect, render
 from ecommerce.api.bankingInfo import hasPaymentInfo
 from ecommerce.api.storage import store_image
-from ecommerce.api.itembrowsing import get_items_by_search, addItems
+from ecommerce.api.itembrowsing import get_items_by_search, 
 from ecommerce.api.account_context import get_account_from_refresh_token, get_account_info, refresh_id_token
 from ..forms.itemForm import ItemForm
 from ecommerce.models.items import Item
