@@ -81,9 +81,10 @@ class Testhome(TestCase):
         
         
 class Testitem_browsingViews(TestCase):
-   """test the functions in itembrowsing views
     """
-
+   test the functions in itembrowsing views
+   """
+   
     def setUp(self):
         self.session = self.client.session
         self.session['is_logged_in'] = False
