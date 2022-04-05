@@ -2,7 +2,7 @@
 from django.test import TestCase
 from django.urls import reverse, resolve
 from ..views import home
-from ..controllers.item_browsing.item_browsingViews import addItem,searchItems
+from ..controllers.itemBrowsing.itemBrowsingViews import addItem,searchItems
 from ..controllers.account.accountViews import login,logout,signupBuyer,signupSeller
 
 

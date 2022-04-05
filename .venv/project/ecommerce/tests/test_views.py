@@ -6,7 +6,7 @@ from django.urls import reverse
 from  ecommerce.models.buyer  import Buyer
 from  ecommerce.models.seller import Seller
 from ..controllers.forms.signupForm import BuyerSignupForm, SellerSignupForm
-from ..controllers.item_browsing.item_browsingViews import addItem,searchItems
+from ..controllers.itemBrowsing.itemBrowsingViews import addItem,searchItems
 from ..views import home
 
 class TestLogin(TestCase):    
