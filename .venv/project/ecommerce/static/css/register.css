@@ -3,11 +3,10 @@ div.reg{
 }
 
 form.reg{
-    background-color: rgba(123, 132, 184, 0.39);
+    background-color: #63bd9f8a;
     border-radius: 10px;
     backdrop-filter: blur(10px);
-    border: 1px solid rgba(255,255,255,0.1);
-    box-shadow: 0 0 40px rgba(8,7,16,0.6);
+    box-shadow: 0 0 15px rgba(8,7,16,0.4);
     padding: 2% 2%;
     block-size: fit-content;
     margin: auto;
@@ -15,7 +14,7 @@ form.reg{
 }
 
 form *.reg{
-    font-family: 'Poppins',sans-serif;
+    font-family: 'Helvetica', 'Arial Narrow', Arial, sans-serif;
     color: #000000;
     letter-spacing: 0.5px;
     outline: none;
@@ -23,12 +22,19 @@ form *.reg{
 }
 
 form h3.reg{
-    font-size: 32px;
+    font-size: 24px;
     font-weight: 500;
-    line-height: 42px;
     text-align: center;
     color: black;
-    font-family: 'Poppins',sans-serif;
+    font-family: 'Helvetica', 'Arial Narrow', Arial, sans-serif;
+}
+
+form h5.reg{
+    font-size: 16px;
+    font-weight: 500;
+    text-align: center;
+    color: black;
+    font-family: 'Helvetica', 'Arial Narrow', Arial, sans-serif;
 }
 
 label.reg{
@@ -43,20 +49,20 @@ input.reg{
     display: block;
     height: 50px;
     width: 100%;
-    background-color: rgba(255, 255, 255, 0.39);
+    background-color: white;
     border-radius: 3px;
     padding: 0 10px;
     margin-top: 8px;
     font-size: 14px;
     font-weight: 300;
     border: 2px solid rgba(255,255,255,0.1);
-    box-shadow: 0 0 20px rgba(8,7,16,0.6);
 }
 ::placeholder{
     color: #000000;
 }
 button.reg{
-    margin-top: 20px;
+    margin-top: 10px;
+    margin-bottom: 10px;
     width: 100%;
     background-color: #ffffff;
     color: #080710;
@@ -72,12 +78,19 @@ button.reg{
     list-style-type: none;
     border: 2px;
     border-color: #080710;
-    font-family: 'Poppins',sans-serif;
+    font-family: 'Helvetica', 'Arial Narrow', Arial, sans-serif;
     padding-top: 20px;
 }
 
 p.reg{
     color: #000000;
     padding-top: 20px;
-    font-family: 'Poppins',sans-serif;
+    font-family: 'Helvetica', 'Arial Narrow', Arial, sans-serif;
+}
+
+#id_resetP{
+    text-decoration: none;
+    color: black;
+    border: 1px solid;
+    padding: 2px;
 }

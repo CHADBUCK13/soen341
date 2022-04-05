@@ -1,6 +1,45 @@
 {% load static %}
 <!DOCTYPE html>
 <html>
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>
+            {% block title %}Paradise{% endblock %}
+        </title>
+        {% block head %} {% endblock %}
+        <link rel="stylesheet" href="{% static 'css/register.css' %}">
+        <link rel="stylesheet" href="{% static 'css/addItem.css' %}">
+        <link rel="stylesheet" href="{% static 'css/mainStyle.css' %}">
+        <link rel="preconnect" href="https://fonts.gstatic.com">
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+        <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;500;600&display=swap" rel="stylesheet">
+        <script src="https://kit.fontawesome.com/e530a0ab96.js" crossorigin="anonymous"></script>
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>   
+
+    </head>
+    <body>
+        <header>
+            <!-- NAVIGATION BAR -->
+            <nav id = "navbar">
+                <div class="grid-container Topnavigationbar">
+                    <div class="grid-item grid-item-1">
+                        <a class="paradise" href="../" id="id_home"> 
+                            <i class="fa-solid fa-spa" style="color: #63bd9f;"> 
+                                Paradise
+                            </i>
+                        </a>
+                    </div>
+                    <div class="grid-item grid-item-2">
+                        <form method="post" action="{% url 'searchItems' %}">
+                            {% csrf_token %}
+                            <div class="input-wrap">
+                                <input type= "text" name="searchText" placeholder='Search for anything' size="80">
+                                <button><i class="fa-solid fa-magnifying-glass"></i></button>
+                            </div>
+                        </form>
+                    </div>
 
 <head>
     <meta charset="utf-8">
@@ -17,8 +56,6 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;500;600&display=swap" rel="stylesheet">
     <script src="https://kit.fontawesome.com/e530a0ab96.js" crossorigin="anonymous"></script>
-
-
 </head>
 
 <body>
@@ -41,7 +78,31 @@
                             <i class="fa-solid fa-magnifying-glass"
                                 style="position: absolute; left: 8px; margin-top: 8px; color: #3a3d38;"></i>
                             <input type="text" name="searchText" placeholder="Search any item..." size="44">
+
+                    {% if request.session.is_logged_in %}
+                        <div class="grid-item grid-item-4 Topnavigationbar-right">
+                            <div class="dropdown-account"> 
+                                <button class = "dropbutn" style="font-size: 20px;">Account
+                                    <i class = "fa fa-caret-down"> </i> 
+                                </button>
+                                <div class = "dropdown-content">
+                                    <a href="#address"> Address  </a>        
+                                    <a href="/orders"> Returns & Orders </a>
+                                    <a href="/banking" id="payment_info">Payment Info</a>
+                                    <a href="/logout" id="id_logout">Logout</a>                            
+                                </div>
+                            </div>            
                         </div>
+                        <div class="grid-item grid-item-5 Topnavigationbar-right" id="shoppingCartLink">
+                            <a href="/shoppingCart"> 
+                                <i class="fa-solid fa-cart-shopping fa-xl" style="color:#595e5c"></i> 
+                            </a>
+                        </div>
+                        {% else %}
+                        <div class="grid-item grid-item-5 Topnavigationbar-right grid-login">
+                            <a href="/login" id="id_login">Login</a>
+                        </div>
+                    {% endif %}
                     </form>
                 </div>
 
@@ -108,5 +169,11 @@
     </main>
 </body>
 <script src="https://kit.fontawesome.com/e530a0ab96.js" crossorigin="anonymous"></script>
-
+                </nav>
+        </header>
+        <main>
+            {% block content %}
+            {% endblock %}
+        </main>
+    </body>
 </html>

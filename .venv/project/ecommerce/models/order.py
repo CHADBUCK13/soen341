@@ -65,8 +65,7 @@ class Order:
         time = datetime.datetime.strptime(order_dict["time"], "%H:%M:%S").time()
         shipping_address = Address.from_dict(self, order_dict["shippingAddress"])
         billing_address = Address.from_dict(self, order_dict["billingAddress"])
-
-        print(order_dict["items"])
+        
         return Order(
             order_dict["subtotal"],
             order_dict["total"],
