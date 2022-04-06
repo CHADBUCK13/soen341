@@ -22,9 +22,9 @@ def add_items(item:Item):
         'weight':item.weight,
         'sales':item.sales,
         'rating': {
-            'score':item.score,   
-            'numberofreviews':0        
-        },
+            'score':item.score,
+            'numberofreviews':0
+            },
         'category': {
             'category_name' : item.category.category_name,
             'relatedcategory': item.category.related_categories
@@ -33,11 +33,11 @@ def add_items(item:Item):
 
     items_ref.add(items_data)
 
-def order_by_price(min_price=0, max_price=0): 
+def order_by_price(min_price=0, max_price=0):
     """
     search for items based on price range
     """
-    try: 
+    try:
 
         price_ref=items_ref.where('price','>',min_price).where('price','<',max_price)
         ordered_price_ref = price_ref.order_by('price').stream()
@@ -66,6 +66,7 @@ def worse_than_score(score):
     """
     get descending order for items
     """
+
     try:
 
         itemsreviewed=items_ref.where('score', '>', score).stream()
@@ -76,7 +77,6 @@ def worse_than_score(score):
         return json.loads(error.strerror)
 
 
-       
 def get_categories():
     """
     get all categories
@@ -98,7 +98,7 @@ def get_all_items(number_of_items = 0):
         all_items_ref = items_ref.stream()
         all_items:list = item_collection_to_dict(all_items_ref)
         return all_items
-    
+
     except HTTPError as error:
         return json.loads(error.strerror)
 
@@ -113,11 +113,12 @@ def get_all_items_dict(number_of_items = 0):
 
         for item_doc in all_items_ref:
             item_dict = item_doc.to_dict()
-
+            item_id = item_doc.id
+            item_dict['id'] = item_id
             all_items.append(item_dict)
 
         return all_items
-    
+
     except HTTPError as error:
         return json.loads(error.strerror)
 
@@ -127,7 +128,7 @@ def get_items_by_category(category = "", number_of_items=0):
     get items by category
     """
     try:
-        new_items_ref = items_ref.where('category', '==', category).limit(number_of_items).stream()
+        new_items_ref = items_ref.where('category.category_name', '==', category).limit(number_of_items).stream()        
         return item_collection_to_dict(new_items_ref)
 
     except HTTPError as error:
@@ -140,9 +141,8 @@ def get_items_on_sale(number_of_items):
 
     try:
         new_items_ref = items_ref.where('sales', '==', True).limit(number_of_items).stream()
-
+       
         return item_collection_to_dict(new_items_ref)
-
 
     except HTTPError as error:
         return json.loads(error.strerror)
@@ -151,11 +151,10 @@ def get_item_by_id(item_id):
     """
     get items by their id
     """
-
     item_id_ref = items_ref.document(item_id).get()
     item_dict = item_id_ref.to_dict()
+    item_dict['id']=item_id
     return Item(item_data= item_dict)
-
 
 def get_items_by_search(search_text=""):
     """
@@ -166,10 +165,13 @@ def get_items_by_search(search_text=""):
     searched_items = []
 
     for item_doc in searched_items_ref:
-        item = Item(item_data=item_doc.to_dict())
+        item_dict = item_doc.to_dict()
+        item_id = item_doc.id
+        item_dict['id'] = item_id
+        item = Item(item_data=item_dict)
         if item.match(search_text=search_text):
             searched_items.append(item)
-
+    
     return searched_items
 
 
@@ -184,8 +186,10 @@ def item_collection_to_dict(collection):
 
     for item_doc in collection:
         item_dict = item_doc.to_dict()
+        item_id = item_doc.id
+        item_dict['id'] = item_id
         item = Item(item_data=item_dict)
-
+        
         all_items.append(item)
 
     return all_items
