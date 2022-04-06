@@ -1,3 +1,7 @@
+"""
+This module contains all the logic required the item browsing views
+"""
+
 from django.shortcuts import redirect, render
 from ecommerce.api.banking_info import has_payment_info
 from ecommerce.api.storage import store_image
@@ -13,7 +17,7 @@ def add_item(request):
     """
 
     if request.method=="POST":
-        
+
         item_form = ItemForm(request.POST,request.FILES)
 
         if item_form.is_valid():
@@ -23,52 +27,55 @@ def add_item(request):
 
             if status is False:
                 return redirect('logout')
-            elif status is redir:
+            if status is redir:
                 token = request.COOKIES.get('refreshToken',None)
                 current_user = get_account_from_refresh_token(token)
             else:
                 token = request.COOKIES.get('idToken',None)
                 current_user = get_account_info(token)
-            
-            if hasPaymentInfo(current_user['users'][0]['email']):
+
+            if has_payment_info(current_user['users'][0]['email']):
 
                 # Save the Image File into the DB Storage
                 image_url=store_image(request.FILES.get('image',None),item_form.data['name'])
 
-
-                item = Item(add_item_form_data=item_form.data,seller_id=current_user['users'][0]['email'],photo=image_url)
+                item = Item(add_item_form_data=item_form.data,
+                seller_id=current_user['users'][0]['email'],
+                photo=image_url)
                 add_items(item)
 
                 return redirect('home')
-            else:
-                item_form.add_error("Please Update your Payment Information before Adding Items for Sale.")
+
+            item_form.add_error("Please Update your Payment Information before Adding Items for Sale.")
     else:
         item_form = ItemForm()
 
     return render(request,'add_item.html',{"itemForm":item_form})
 
 
-def searchItems(request):
+def search_items(request):
+    """
+    Search for specific items
+    """
 
     if request.method == "POST":
 
         # Get the search Keyword
-        searchText = request.POST['searchText']
+        search_text = request.POST['searchText']
 
         # If no keyword was given, return to home
-        if searchText == "":
+        if search_text == "":
             return home(request)
 
         # Get items that match that keyword
-        items = get_items_by_search(searchText=searchText)
+        items = get_items_by_search(searchText=search_text)
 
         # Inform user that no items were found
         if len(items) == 0:
-            searchText = "No Items Found for: '"+searchText+"'"
+            search_text = "No Items Found for: '"+search_text+"'"
         else:
-            searchText = "Items Found for: '"+searchText+"'" 
+            search_text = "Items Found for: '"+search_text+"'"
 
-        return render(request,'home.html',{'items':items,'category':searchText})
+        return render(request,'home.html',{'items':items,'category':search_text})
     else:
         return home(request)
-

@@ -2,12 +2,12 @@ import imp
 from django.urls import path
 from django.contrib.staticfiles.urls import staticfiles_urlpatterns
 
-from ecommerce.controllers.shoppingCart.orderViews import cancelOrder, orders
-from .controllers.itemBrowsing.itemBrowsingViews import add_item, searchItems
+from ecommerce.controllers.shoppingCart.order_views import cancel_an_order, orders
+from .controllers.itemBrowsing.item_browsing_views import add_item, search_items
 from .controllers.banking.banking_views import add_banking_info
 from .views import home
 from .controllers.account.account_views import signup_buyer,signup_seller,login,logout,reset_password
-from .controllers.shoppingCart.shoppingCartViews import *
+from .controllers.shoppingCart.shopping_cart_views import shop_cart
 
 
 urlpatterns = [
@@ -19,15 +19,15 @@ urlpatterns = [
     path("signupB/",signup_buyer,name="signupBuyer"),
     path("signupS/",signup_seller,name="signupSeller"),
     path("addItem/",add_item, name="addItem"),
-    path('searchItems/',searchItems, name="searchItems"),
-    path("shopping_cart/", shopCart, name="shopping_cart"),
+    path('searchItems/',search_items, name="searchItems"),
+    path("shopping_cart/", shop_cart, name="shopping_cart"),
     path("addCartItem/", addToCart, name="addToCart"),
     path("changeAmount/",changeAmount, name="changeAmount"),
     path('deletedFromCart/',removeFromCart, name="deleteFromCart"),
     path('checkout/',checkout,name='checkout'),
     path('banking/',add_banking_info, name="addBankingInfo"),
     path('orders/', orders, name="orders"),
-    path('cancelOrders/', cancelOrder, name="cancelOrder")
+    path('cancelOrders/', cancel_an_order, name="cancelOrder")
 ]
 
 urlpatterns += staticfiles_urlpatterns()

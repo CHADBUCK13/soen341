@@ -7,9 +7,9 @@ from ecommerce.api.account_context import show_error_message
 from ecommerce.models.seller import Seller
 from ecommerce.models.buyer import Buyer
 from ecommerce.models.user import User
-from ...controllers.forms.signupForm import BuyerSignupForm, SellerSignupForm
-from ...controllers.forms.loginForm import LoginForm
-from ...controllers.forms.resetPasswordForm import ResetPasswordForm
+from ecommerce.controllers.forms.signup_form import BuyerSignupForm, SellerSignupForm
+from ecommerce.controllers.forms.login_form import LoginForm
+from ecommerce.controllers.forms.reset_password_form import ResetPasswordForm
 
 def login(request, reset_msg=""):
     """
@@ -18,26 +18,27 @@ def login(request, reset_msg=""):
 
     # Login form has been submitted
     if request.method == "POST":
-        
+
         # Get login form info
         login_form = LoginForm(request.POST)
-        
+
         # The form info is valid
         if login_form.is_valid():
 
             # Authenticate the user
             user = User.login(login_form.data)
-            
+
             # User does not exist, ask him to create an account
             if user is False:
-                login_form.add_error(None,"No Account exists for the given Email Address. Please go to the Signup Page.")
-            
+                login_form.add_error(None,
+                "No Account exists for the given Email Address. Please go to the Signup Page.")
+
             # An error occured, so show an error message to the user
             if 'error' in user:
                 login_form.add_error(None, show_error_message(user))
-            
+
             else:
-                
+
                 if User.is_seller(user['email']):
                     request.session['is_seller']=True
                 else:
@@ -60,7 +61,7 @@ def login(request, reset_msg=""):
     else:
         # Create the Login Form
         login_form = LoginForm()
-    
+
     # Show the login page with the login form
     return render(request,'register.html',{"loginForm":login_form,"reset_msg":reset_msg})
 
@@ -71,11 +72,11 @@ def reset_password(request):
     """
 
     if request.method == "POST":
-        
+
         reset_form = ResetPasswordForm(request.POST)
 
         if reset_form.is_valid():
-            
+
             email = reset_form.cleaned_data['email']
 
             if User.is_buyer(email) or User.is_seller(email):

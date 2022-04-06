@@ -1,4 +1,7 @@
-from attr import attr
+"""
+This module contains all the forms required for the buyer and seller signup
+"""
+
 from django import forms
 from django.contrib.auth.forms import UserCreationForm
 from django.contrib.auth.models import User
@@ -7,7 +10,7 @@ class BuyerSignupForm(UserCreationForm):
     """
     Form that takes in the required fields to Signup a Buyer.
     """
-    
+
     email = forms.EmailField(
         label="Email", 
         widget=forms.EmailInput(attrs={
@@ -30,7 +33,7 @@ class BuyerSignupForm(UserCreationForm):
             'type':'text',
             'placeholder':'Last Name'
         }))
-    
+
     country = forms.CharField(
         label="Country",
         widget=forms.TextInput(attrs={
@@ -46,7 +49,7 @@ class BuyerSignupForm(UserCreationForm):
             'type':'text',
             'placeholder':'City'
         }))
-    
+
     address = forms.CharField(
         label="Address",
         widget=forms.TextInput(attrs={
@@ -70,11 +73,16 @@ class BuyerSignupForm(UserCreationForm):
             'type':'text',
             'placeholder':'Date of Birth'
         }))
-    
+
 
     class Meta:
+        """
+        Meta data for the buyer signup form
+        """
         model=User
-        fields=["email","password1","password2","firstname","lastname","country","city","address","postal_code","date_of_birth"]
+        fields=["email","password1","password2","firstname",
+        "lastname","country","city","address","postal_code","date_of_birth"]
+
 
 class SellerSignupForm(UserCreationForm):
     """
@@ -130,9 +138,13 @@ class SellerSignupForm(UserCreationForm):
         widget=forms.TextInput(attrs={
             'class':'reg',
             'type':'text',
-            'placeholder':'Service Number' 
+            'placeholder':'Service Number'
         }))
 
     class Meta:
+        """
+        Meta data for the seller signup form
+        """
         model=User
-        fields=["email","password1","password2","name","country","city","address","postal_code","service_number"]
+        fields=["email","password1","password2","name","country",
+        "city","address","postal_code","service_number"]
