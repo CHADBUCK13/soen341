@@ -1,0 +1,40 @@
+{% extends 'baseLayout.html' %}
+
+{% block head %}
+
+{% load static %}
+<title>product detais</title>
+<meta name='viewport' content='width=device-width, initial-scale=1'>
+<script src='https://kit.fontawesome.com/a076d05399.js'></script>
+<link rel="stylesheet" href="{% static 'css/itemDescription.css' %}">
+
+{% endblock %}
+
+{% block content %}
+<main>
+    <div class="container">
+        <div class="itemPic"> <img src={{item.photo}}> </div>
+        <div class="content">
+            <div class="nav">
+                <span class="logo">{{item.name}}</span>
+                <span><i class='fab fa-sistrix' style='font-size:24px'></i></span>
+            </div>
+            <div class="content-body">
+                <div class="pages">
+                    <span class="active"></span>
+                </div>
+                <div class="label">
+                    <span class="title"><b>{{item.name}}</b></span>
+                    <p> Description of the item : {{item.description}} </p>
+                    <p> The weight of this item is : {{item.weight}} </p>
+                    <p> This item has an overall score of : {{item.score}}/5 </p>
+                    <div class="prix">
+                        <span><b>Price = ${{item.price}}</b></span>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+</main>
+{% endblock %}

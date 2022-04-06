@@ -5,7 +5,7 @@ This contains all url tests
 from django.test import TestCase
 from django.urls import reverse, resolve
 from ..views import home
-from ..controllers.itemBrowsing.itemBrowsingViews import addItem, searchItems
+from ..controllers.itemBrowsing.item_browsing_views import add_item, search_items
 from ..controllers.account.accountViews import login, logout, signupBuyer, signupSeller
 
 
@@ -55,11 +55,11 @@ tests for various urls
         test to see if the add item request resolves to the correct page
         """
         url = reverse("addItem")
-        self.assertEqual(resolve(url).func, addItem)
+        self.assertEqual(resolve(url).func, add_item)
 
     def test_search_items_url_is_resolved(self):
         """
         test to see if the search item request resolves to the correct page
         """
         url = reverse("searchItems")
-        self.assertEqual(resolve(url).func, searchItems)
+        self.assertEqual(resolve(url).func, search_items)
