@@ -2,7 +2,6 @@
 All functions required to pass data between api and UI
 """
 
-from msilib.schema import Error
 from django.shortcuts import redirect, render
 from ecommerce.api.bankingInfo import hasPaymentInfo
 from ecommerce.api.storage import store_image
@@ -58,7 +57,7 @@ def add_item(request):
             else:
                 item_form.add_error(
                     "Please Update your Payment Information before Adding Items for Sale.",
-                    Error,
+                    None,
                 )
     else:
         item_form = ItemForm()
