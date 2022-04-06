@@ -6,9 +6,11 @@ from requests.exceptions import HTTPError
 from .item_browsing import get_item_by_id
 from ecommerce.models.items import Item
 
+
 db = firestore.client()
 
 items_ref=db.collection('items')
+
 
 def add_item_to_cart(email, item_id, quantity):
     """
@@ -34,10 +36,10 @@ def add_item_to_cart(email, item_id, quantity):
 
 def get_items_from_cart(email):
     """
-    from email find items in item database with same itemID
+    from email find items in item database with same itemID, return collection of items with info
     """
-
     shopping_cart_ref = db.collection('shopping_cart').document(email).get()
+
     try:
         return shopping_cart_to_dict(shopping_cart_ref)
 
@@ -50,7 +52,6 @@ def shopping_cart_to_dict(cart_document):
     save shopping cart collection as a dictionnary
     """
     all_items = []
-
     cart=cart_document.to_dict()['items']
 
 
@@ -61,16 +62,17 @@ def shopping_cart_to_dict(cart_document):
 
     return all_items
 
-
 def delete_items_from_cart(email, item_id):
     """
-    delete item from cart
+    delete item
     """
     try:
         shopping_cart_ref = db.collection('shopping_cart').document(email)
         shopping_cart_ref.get()
         shopping_cart_ref.update({'items.'+item_id: fs.DELETE_FIELD})
+
         return True
+
     except HTTPError as error:
         return json.loads(error.strerror)
 
@@ -82,19 +84,19 @@ def update_item_quantity(email, item_id, quantity):
     """
     if quantity<0:
         return False
+
     try:
         item_ref = db.collection('shopping_cart').document(email)
         item_ref.update({'items.'+item_id: quantity})
 
     except HTTPError as error:
-        return json.loads(error.strerror)
+            return json.loads(error.strerror)
 
 
 def create_cart(email):
     """
     create a new shopping cart
     """
-
     try:
         cart_ref = db.collection('shopping_cart').document(email)
         if cart_ref.get().exists:
