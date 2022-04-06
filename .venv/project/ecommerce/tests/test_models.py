@@ -4,7 +4,7 @@ from  .. import models
 from  ecommerce.models.buyer  import Buyer
 from  ecommerce.models.seller  import Seller
 from  ecommerce.models.user  import User
-from ..controllers.forms.signupForm import BuyerSignupForm, SellerSignupForm
+from ..controllers.forms.signup_form import BuyerSignupForm, SellerSignupForm
 
 
 class TestBuyerModel(TestCase):

@@ -1,8 +1,8 @@
 from django.test import TestCase
-from ..controllers.forms.signupForm import BuyerSignupForm, SellerSignupForm
-from ..controllers.forms.loginForm import LoginForm
-from ..controllers.forms.resetPasswordForm import ResetPasswordForm
-from ..controllers.forms.itemForm import ItemForm
+from ..controllers.forms.signup_form import BuyerSignupForm, SellerSignupForm
+from ..controllers.forms.login_form import LoginForm
+from ..controllers.forms.reset_password_form import ResetPasswordForm
+from ..controllers.forms.item_form import ItemForm
 
 
 class TestFrorms(TestCase):

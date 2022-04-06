@@ -5,8 +5,8 @@ from django.test import TestCase
 from django.urls import reverse
 from  ecommerce.models.buyer  import Buyer
 from  ecommerce.models.seller import Seller
-from ..controllers.forms.signupForm import BuyerSignupForm, SellerSignupForm
-from ..controllers.itemBrowsing.itemBrowsingViews import addItem,searchItems
+from ..controllers.forms.signup_form import BuyerSignupForm, SellerSignupForm
+from ..controllers.itemBrowsing.item_browsing_views import add_item,search_items
 from ..views import home
 
 class TestLogin(TestCase):    
