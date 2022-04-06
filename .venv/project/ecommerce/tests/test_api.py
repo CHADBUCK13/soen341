@@ -4,7 +4,7 @@ import json
 from django.test import TestCase
 import pyrebase
 from firebase_admin import firestore
-from ..api.itembrowsing import item_collection_to_dict
+from ..api.item_browsing import item_collection_to_dict
 
 
 class TestItemBorwsing(TestCase):

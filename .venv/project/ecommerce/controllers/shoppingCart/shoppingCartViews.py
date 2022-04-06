@@ -4,9 +4,9 @@ from ecommerce.controllers.forms.bankingForm import BankingBuyerForm
 
 from ecommerce.models.order import Order
 
-from ecommerce.api.itembrowsing import *
+from ecommerce.api.item_browsing import *
 from ...views import home
-from ecommerce.api.shoppingCart import add_item_to_cart, delete_items_from_cart, get_items_from_cart, update_item_quantity
+from ecommerce.api.shopping_cart import add_item_to_cart, delete_items_from_cart, get_items_from_cart, update_item_quantity
 from ecommerce.api.account_context import get_account_from_refresh_token, get_account_info, get_buyer, get_seller, refresh_id_token
 from ecommerce.api.checking_out import check_out, get_payment_info  
 from django.forms.models import model_to_dict
