@@ -50,7 +50,7 @@ def add_item(request):
     else:
         item_form = ItemForm()
 
-    return render(request,'add_item.html',{"itemForm":item_form})
+    return render(request,'addItem.html',{"itemForm":item_form})
 
 
 def search_items(request):
