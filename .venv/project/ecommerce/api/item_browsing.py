@@ -184,6 +184,8 @@ def item_collection_to_dict(collection):
 
     for item_doc in collection:
         item_dict = item_doc.to_dict()
+        item_id = item_doc.id
+        item_dict['id'] = item_id
         item = Item(item_data=item_dict)
 
         all_items.append(item)
