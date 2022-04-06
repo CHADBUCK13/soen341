@@ -1,107 +1,109 @@
 from urllib.error import HTTPError
-import json
 from firebase_admin import firestore
-from google.cloud import firestore as fs
+import json
 from requests.exceptions import HTTPError
-from .item_browsing import get_item_by_id
+from ecommerce.api.item_browsing import get_item_by_ID
 from ecommerce.models.items import Item
+
 
 db = firestore.client()
 
-items_ref=db.collection('items')
+items_ref=db.collection(u'items')
 
-def add_item_to_cart(email, item_id, quantity):
+
+def add_item_to_cart(email, itemId, quantity):
     """
     adding items to cart
     """
-    #collection shopping_cart contains subcollections
+    #collection shopping_cart contains subcollections of emails that each contain a a document itemId
+    
     try:
-        cart_ref = db.collection('shopping_cart').document(email)
+        cart_ref = db.collection(u'shopping_cart').document(email)
         if cart_ref.get().exists:
-            cart_data = {'items.'+ item_id: quantity}
+            cart_data = {'items.'+ itemId: quantity}
             cart_ref.update(cart_data)
 
         else:
-            cart_data = {'items': {item_id: quantity}}
+            cart_data = {'items': {itemId: quantity}}
             cart_ref.set(cart_data)
 
         return True
+ 
 
-
-    except HTTPError as error:
-        return json.loads(error.strerror)
+    except HTTPError as e:
+            return json.loads(e.strerror)
 
 
 def get_items_from_cart(email):
     """
-    from email find items in item database with same itemID
+    from email find items in item database with same itemID, return collection of items with all information
     """
 
-    shopping_cart_ref = db.collection('shopping_cart').document(email).get()
+    shopping_cart_ref = db.collection(u'shopping_cart').document(email).get()
     try:
+        
         return shopping_cart_to_dict(shopping_cart_ref)
 
-    except HTTPError as error:
-        return json.loads(error.strerror)
+    except HTTPError as e:
+            return json.loads(e.strerror)
 
 
 def shopping_cart_to_dict(cart_document):
-    """
-    save shopping cart collection as a dictionnary
-    """
-    all_items = []
-
+    allItems = []
+  
     cart=cart_document.to_dict()['items']
 
 
-    for item_id in cart:
-        item = get_item_by_id(item_id)
-        quantity = cart[item_id]
-        all_items.append([item,quantity])
+    for itemID in cart:
+        item = get_item_by_ID(itemID)
+        quantity = cart[itemID]
+        allItems.append([item,quantity])
 
-    return all_items
+    return allItems
 
 
-def delete_items_from_cart(email, item_id):
+    
+def delete_items_from_cart(email, itemId):
     """
-    delete item from cart
+    delete item 
     """
     try:
-        shopping_cart_ref = db.collection('shopping_cart').document(email)
+        shopping_cart_ref = db.collection(u'shopping_cart').document(email)
         shopping_cart_ref.get()
-        shopping_cart_ref.update({'items.'+item_id: fs.DELETE_FIELD})
+        shopping_cart_ref.update({'items.'+itemId: firestore.DELETE_FIELD})
+        
         return True
-    except HTTPError as error:
-        return json.loads(error.strerror)
+ 
+    except HTTPError as e:
+            return json.loads(e.strerror)
 
 
 
-def update_item_quantity(email, item_id, quantity):
-    """
-    update the quantity of an item
-    """
-    if quantity<0:
-        return False
+def update_item_quantity(email, itemId, quantity):
+
+    #if quantity<0:
+    #    return False
+
     try:
-        item_ref = db.collection('shopping_cart').document(email)
-        item_ref.update({'items.'+item_id: quantity})
+        item_ref = db.collection(u'shopping_cart').document(email)
+        item_ref.update({'items.'+itemId: quantity})
 
-    except HTTPError as error:
-        return json.loads(error.strerror)
+    except HTTPError as e:
+            return json.loads(e.strerror)
 
 
 def create_cart(email):
-    """
-    create a new shopping cart
-    """
 
     try:
-        cart_ref = db.collection('shopping_cart').document(email)
+        cart_ref = db.collection(u'shopping_cart').document(email)
         if cart_ref.get().exists:
             return False
 
-        cart_ref.set({'items':{}})
+        else:
+            cart_ref.set({'items':{}})
 
         return True
-    except HTTPError as error:
-        return json.loads(error.strerror)
+ 
+
+    except HTTPError as e:
+        return json.loads(e.strerror)
