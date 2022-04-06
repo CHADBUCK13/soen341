@@ -1,7 +1,9 @@
-from urllib.error import HTTPError
+"""
+item_browsing
+"""
+
 import json
 from firebase_admin import firestore
-from django.forms.models import model_to_dict
 from requests.exceptions import HTTPError
 from ..models.items import Item
 
