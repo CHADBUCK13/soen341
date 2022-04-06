@@ -9,11 +9,11 @@
 <link rel="stylesheet" href="{% static 'css/itemDescription.css' %}">
 
 {% endblock %}
-    
+
 {% block content %}
 <main>
     <div class="container">
-        <div class="itemPic"> <img src={{item.photo}}>  </div>
+        <div class="itemPic"> <img src={{item.photo}}> </div>
         <div class="content">
             <div class="nav">
                 <span class="logo">{{item.name}}</span>
@@ -28,12 +28,12 @@
                     <p> Description of the item : {{item.description}} </p>
                     <p> The weight of this item is : {{item.weight}} </p>
                     <p> This item has an overall score of : {{item.score}}/5 </p>
-                            <div class="prix">
-                            <span><b>Price = ${{item.price}}</b></span>
-                        </div>
+                    <div class="prix">
+                        <span><b>Price = ${{item.price}}</b></span>
+                    </div>
                 </div>
             </div>
-            
+
         </div>
     </div>
 </main>
