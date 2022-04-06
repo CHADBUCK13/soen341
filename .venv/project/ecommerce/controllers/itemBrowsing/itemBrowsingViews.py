@@ -7,7 +7,7 @@ from ..forms.itemForm import ItemForm
 from ecommerce.models.items import Item
 from ...views import home
 
-def addItems(request):
+def addItem(request):
     """
     Add an Item to Sell as a Seller.
     """
