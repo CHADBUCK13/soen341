@@ -1,7 +1,7 @@
 from django.shortcuts import redirect, render
 from ecommerce.api.bankingInfo import hasPaymentInfo
 from ecommerce.api.storage import store_image
-from ecommerce.api.item_browsing import get_items_by_search, add_items, get_item_by_ID
+from ecommerce.api.item_browsing import get_items_by_search, add_items, get_item_by_id
 from ecommerce.api.account_context import get_account_from_refresh_token, get_account_info, refresh_id_token
 from ..forms.itemForm import ItemForm
 from ecommerce.models.items import Item
@@ -81,7 +81,7 @@ def getItemDescription(request):
         itemID = request.POST['itemID']
 
         # Get items that match that keyword
-        item = get_item_by_ID(itemID=itemID)
+        item = get_item_by_id(itemID=itemID)
 
         return render(request,'itemDescription.html',{'item':item})
     else:
