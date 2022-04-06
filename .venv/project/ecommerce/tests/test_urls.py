@@ -1,59 +1,39 @@
-"""
-This contains all url tests
-"""
 
 from django.test import TestCase
 from django.urls import reverse, resolve
 from ..views import home
 from ..controllers.itemBrowsing.item_browsing_views import add_item, search_items
-from ..controllers.account.accountViews import login, logout, signupBuyer, signupSeller
+from ..controllers.account.account_views import login, logout, signup_buyer, signup_seller
+
 
 
 
 class TestUrls(TestCase):
-    """
-tests for various urls
-    """
-
     def test_home_url_is_resolved(self):
-        """
-        test to see if home url resolves to home.
-        """
         url = reverse("home")
         self.assertEqual(resolve(url).func, home)
+        
 
     def test_login_url_is_resolved(self):
-        """
-        test to see if login url resolves to login.
-        """
         url = reverse("login")
         self.assertEqual(resolve(url).func, login)
-
+        
+        
     def test_logout_url_is_resolved(self):
-        """
-        test to see if logout url resolves to logout.
-        """
         url = reverse("logout")
         self.assertEqual(resolve(url).func, logout)
-
-    def test_sign_buyer_url_is_resolved(self):
-        """
-        test to see if the sign in buyer request resolves to the correct page
-        """
+    
+    
+    def test_signupBuyer_url_is_resolved(self):
         url = reverse("signupBuyer")
-        self.assertEqual(resolve(url).func, signupBuyer)
-
-    def test_signup_seller_url_is_resolved(self):
-        """
-        test to see if the sign in seller request resolves to the correct page
-        """
+        self.assertEqual(resolve(url).func, signup_buyer)
+        
+        
+    def test_signupSeller_url_is_resolved(self):
         url = reverse("signupSeller")
-        self.assertEqual(resolve(url).func, signupSeller)
-
-    def test_add_item_url_is_resolved(self):
-        """
-        test to see if the add item request resolves to the correct page
-        """
+        self.assertEqual(resolve(url).func, signup_seller)
+        
+    def test_addItem_url_is_resolved(self):
         url = reverse("addItem")
         self.assertEqual(resolve(url).func, add_item)
 
@@ -63,3 +43,4 @@ tests for various urls
         """
         url = reverse("searchItems")
         self.assertEqual(resolve(url).func, search_items)
+

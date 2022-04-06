@@ -22,7 +22,7 @@ class CartItem():
             self.quantity = quantity
     
 
-class ShoppingCart():
+class shopping_cart():
 
     def __init__(self,email,cartItems=[]):
         self.email=email

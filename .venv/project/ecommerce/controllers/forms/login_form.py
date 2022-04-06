@@ -1,3 +1,7 @@
+"""
+This module contains the form required for login in
+"""
+
 from django import forms
 
 class LoginForm(forms.Form):
@@ -21,4 +25,7 @@ class LoginForm(forms.Form):
         }))
 
     class Meta:
+        """
+        Meta data for the login form
+        """
         fields=['email','password']

@@ -1,3 +1,7 @@
+"""
+This module contains the form required to reset a password
+"""
+
 from django import forms
 
 class ResetPasswordForm(forms.Form):
@@ -11,5 +15,9 @@ class ResetPasswordForm(forms.Form):
             'type':'email',
             'placeholder':'Email'
         }))
+
     class Meta:
+        """
+        Meta data for the reset password form
+        """
         fields=['email']

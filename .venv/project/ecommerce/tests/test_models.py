@@ -1,24 +1,19 @@
-"""This module includes the tests for the models
-"""
 from django.test import TestCase
-from ..models.buyer import Buyer
-from ..models.seller import Seller
+from django.urls import reverse
+from  .. import models
+from  ecommerce.models.buyer  import Buyer
+from  ecommerce.models.seller  import Seller
+from  ecommerce.models.user  import User
+from ..controllers.forms.signup_form import BuyerSignupForm, SellerSignupForm
 
 
 class TestBuyerModel(TestCase):
-    """tests for the buyer model
-    """
 
-    def test_account_type(self):
-        """test if the buyer model returns the correct account type
-        """
-        self.assertEqual(Buyer.accountType(self), "buyer")
+    def test_accountType(self):
+        self.assertEquals(Buyer.accountType(self),"buyer")
 
 
 class TestSellerModel(TestCase):
-    """tests for the seller model
-    """
-    def test_account_type(self):
-        """test if the seller model returns the correct account type
-        """
-        self.assertEqual(Seller.accountType(self), "seller")
+    
+    def test_accountType(self):
+        self.assertEquals(Seller.accountType(self),"seller")

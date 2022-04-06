@@ -1,105 +1,88 @@
-"""
-This contains tests for login, signup, logout and home views and item browsing
-"""
+
+import os
+from time import sleep
 from django.test import TestCase
 from django.urls import reverse
+from  ecommerce.models.buyer  import Buyer
+from  ecommerce.models.seller import Seller
+from ..controllers.forms.signup_form import BuyerSignupForm, SellerSignupForm
+from ..controllers.itemBrowsing.item_browsing_views import add_item,search_items
+from ..views import home
 
-
-class TestLogin(TestCase):
-    """
-    tests for the login view
-    """
+class TestLogin(TestCase):    
 
     def test_login_page_response_code(self):
-        """
-        tests if the login request returns the correct response
-        """
         url = reverse("login")
         response = self.client.get(url)
-
+        
         self.assertEqual(response.status_code, 200)
-        self.assertTemplateUsed(response, 'register.html')
+        self.assertTemplateUsed(response,'register.html')
+
+
 
 
 class TestSignup(TestCase):
-    """
-    tests for the login view
-    """
 
+    
+    
     def test_signup_buyer_page_response_code(self):
-        """Test the signup buyer request returns the correct response code
-        """
         url = reverse("signupBuyer")
         response = self.client.get(url)
-
+        
         self.assertEqual(response.status_code, 200)
-        self.assertTemplateUsed(response, 'signup.html')
-
+        self.assertTemplateUsed(response,'signup.html')
+    
     def test_signup_seller_page_response_code(self):
-        """_summary_
-        """
         url = reverse("signupSeller")
         response = self.client.get(url)
-        self.assertTemplateUsed(response, 'signup.html')
+        self.assertTemplateUsed(response,'signup.html')
         self.assertEqual(response.status_code, 200)
-
 
 class TestLogout(TestCase):
-    """Test the logout view functions
-    """
 
     def test_logout_response_code(self):
-        """Test the logout request returns the correct response code
-        """
         url = reverse("logout")
         response = self.client.get(url)
-
+        
         self.assertEqual(response.status_code, 302)
-
-
+        
+        
 class Testhome(TestCase):
-    """Test the home view functions
-    """
-
     def setUp(self):
         self.session = self.client.session
-        self.session['is_logged_in'] = False
-        self.category_search = "Games"
-
+        self.session['is_logged_in']=False
+        self.categorySearch="Games"
+       
     def test_home_response_code(self):
-        """test the home request returns the correct response code
-        """
         url = reverse("home")
         response = self.client.get(url)
-        self.assertTemplateUsed(response, 'home.html')
+        self.assertTemplateUsed(response,'home.html')
         self.assertEqual(response.status_code, 200)
-
+    
+    
     def test_logged_in_response(self):
-        """test if the logged in response returns the expected results
-        """
-        self.assertFalse(self.session['is_logged_in'])
-
-
-class TestItemBrowsingViews(TestCase):
-    """test the functions in itembrowsing views
-    """
-
+        self.assertFalse( self.session['is_logged_in'])
+        
+        
+class Testitem_browsingViews(TestCase):
     def setUp(self):
         self.session = self.client.session
-        self.session['is_logged_in'] = False
-        self.category_search = "Games"
-
-    def test_add_item_response_code(self):
-        """test if the add item request returns the correct response
-        """
+        self.session['is_logged_in']=False
+        self.categorySearch="Games"
+    
+    def test_addItem_response_code(self):
         url = reverse("addItem")
         response = self.client.get(url)
-
-        self.assertTemplateUsed(response, 'addItem.html')
+        
+        self.assertTemplateUsed(response,'addItem.html')
         self.assertEqual(response.status_code, 200)
-    def test_search_item_response_code(self):
-        """test that the serach item request returns the correct response code
-        """
+        
+        
+        self.assertTemplateUsed(response,'addItem.html')
+        self.assertEqual(response.status_code, 200)
+    
+    def test_searchItem_response_code(self):
         url = reverse("searchItems")
         response = self.client.get(url)
         self.assertEqual(response.status_code, 200)
+    

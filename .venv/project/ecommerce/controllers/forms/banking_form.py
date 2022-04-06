@@ -1,4 +1,7 @@
-from cProfile import label
+"""
+This module contains all the logic required seller and buyer banking forms
+"""
+
 from django import forms
 
 class BankingBuyerForm(forms.Form):
@@ -14,7 +17,7 @@ class BankingBuyerForm(forms.Form):
             'type':'text',
             'placeholder':'First Name'
         }))
-    
+
     lastname = forms.CharField(
         label="Cardholder Last Name",
         required=True,
@@ -45,7 +48,7 @@ class BankingBuyerForm(forms.Form):
             'type':'number',
             'placeholder':'MMYY'
         }))
-    
+  
     cvv = forms.CharField(
         label="Card CVV",
         min_length=3,
@@ -59,11 +62,14 @@ class BankingBuyerForm(forms.Form):
 
 
     class Meta:
+        """
+        Banking Buyer Form MetaData
+        """
         fields=['firstname','lastname','number','expirationDate','cvv']
 
 class BankingSellerForm(forms.Form):
     """
-    
+    Forms that allows a Seller to enter his banking information.
     """
 
     transit = forms.CharField(
@@ -76,7 +82,7 @@ class BankingSellerForm(forms.Form):
             'type':'number',
             'placeholder':'#####'
         }))
-    
+
     institution = forms.CharField(
         label="Institution Number",
         required=True,
@@ -100,4 +106,7 @@ class BankingSellerForm(forms.Form):
         }))
 
     class Meta:
+        """
+        Banking Seller Form MetaData
+        """
         fields=['transit','institution','account']

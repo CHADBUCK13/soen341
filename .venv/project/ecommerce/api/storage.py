@@ -1,23 +1,33 @@
-from firebase_admin import credentials, initialize_app, storage
+"""
+This module contains all the logic required for storing images
+"""
 
-def store_image(file,fileName) -> str:
+from firebase_admin import storage
 
-    tempFileName = fileName+'.jpg'
-    bucketURL = 'ecommerce-68ba8.appspot.com'
+def store_image(file,file_name) -> str:
+    """
+    Stores an image file with a given file name.
+    """
 
-    with open(tempFileName, 'wb+') as destination:
+    temp_file_name = file_name+'.jpg'
+    bucket_url = 'ecommerce-68ba8.appspot.com'
+
+    with open(temp_file_name, 'wb+') as destination:
         for chunk in file.chunks():
             destination.write(chunk)
             
-    storageBucket = storage.bucket(bucketURL)
-    blob = storageBucket.blob(tempFileName)
-    blob.upload_from_filename(tempFileName) 
+    storage_bucket = storage.bucket(bucket_url)
+    blob = storage_bucket.blob(temp_file_name)
+    blob.upload_from_filename(temp_file_name)
     blob.make_public()
 
     return blob.public_url
 
-def get_image_url(fileName):
-    tempFileName = fileName+'.jpg'
-    bucketURL = 'ecommerce-68ba8.appspot.com'
+def get_image_url(file_name):
+    """
+    Gets an image file that is sotred with the given file name.
+    """
+    temp_file_name = file_name+'.jpg'
+    bucket_url = 'ecommerce-68ba8.appspot.com'
 
-    storage.bucket(bucketURL).get_blob(tempFileName)
+    storage.bucket(bucket_url).get_blob(temp_file_name)

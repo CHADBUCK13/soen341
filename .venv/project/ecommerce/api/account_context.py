@@ -235,7 +235,7 @@ def reset_password(email):
 
 def show_error_message(error):
     """
-    Functino to show error message
+    Function to show error message
     """
     if error["error"]["message"] == "EMAIL_EXISTS":
         return "This Email Address is already used by another Account."

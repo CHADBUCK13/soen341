@@ -1,12 +1,19 @@
+"""
+This module contains all the logic required for adding item with a form
+"""
+
 from django import forms
 from ecommerce.api.item_browsing import get_categories
 
-def categoryList():
-    cat = get_categories()
-    categoryList = []
-    for c in cat:
-        categoryList.append((c,c))
-    return categoryList
+def category_list():
+    """
+    Gets a list of all possible categories
+    """
+    categories = get_categories()
+    categories_list = []
+    for category in categories:
+        categories_list.append((category,category))
+    return categories_list
 
 class ItemForm(forms.Form):
     """
@@ -21,7 +28,7 @@ class ItemForm(forms.Form):
             'type':'text',
             'placeholder':'Item Name'
         }))
-    
+
     price = forms.DecimalField(
         label="Item Price (CAD)",
         min_value=0,
@@ -59,7 +66,7 @@ class ItemForm(forms.Form):
             'type':'text',
             'placeholder':'Others'
         },
-        choices=categoryList()
+        choices=category_list()
         ))
 
     relatedCategories = forms.CharField(
@@ -70,7 +77,7 @@ class ItemForm(forms.Form):
             'type':'text',
             'placeholder':'Others'
         },
-        choices=categoryList()
+        choices=category_list()
         ))
 
     image = forms.ImageField(
@@ -80,6 +87,9 @@ class ItemForm(forms.Form):
             'type':'file',
             'name':'image'
         }))
-    
-class Meta:
-    fields=['name','price','description','weight','category','relatedCategories','image']
+
+    class Meta:
+        """
+        Item form MetaData
+        """
+        fields=['name','price','description','weight','category','relatedCategories','image']

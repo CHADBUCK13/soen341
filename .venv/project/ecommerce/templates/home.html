@@ -38,12 +38,13 @@
 
 
                 {% for item in items %}
-                <div class="product-container" onclick="document.getElementById('itemDescription{{item.id}}').submit()">
+                <div class="product-container">
                     <div class="card">
-                        <div class="card-image"><img src="{{item.photo}}"
-                                style=" width: 100%; height: 100%; object-fit: cover; "></div>
-                        <h2>{{item.name}}</h2>
-                        <p>
+                        <div class="card-image" onclick="document.getElementById('itemDescription{{item.id}}').submit()" >
+                            <img src="{{item.photo}}"style=" width: 100%; height: 100%; object-fit: cover; ">
+                        </div>
+                        <h2 onclick="document.getElementById('itemDescription{{item.id}}').submit()">{{item.name}}</h2>
+                        <p onclick="document.getElementById('itemDescription{{item.id}}').submit()">
                             ${{item.price}}
                         </p>
                         <form id="addCart{{item.id}}" method="post" action="{% url 'addToCart' %}">
