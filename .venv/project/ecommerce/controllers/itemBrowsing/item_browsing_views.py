@@ -5,7 +5,7 @@ This module contains all the logic required the item browsing views
 from django.shortcuts import redirect, render
 from ecommerce.api.banking_info import has_payment_info
 from ecommerce.api.storage import store_image
-from ecommerce.api.item_browsing import get_items_by_search, add_items
+from ecommerce.api.item_browsing import get_items_by_search, add_items, get_item_by_id
 from ecommerce.api.account_context import get_account_from_refresh_token, get_account_info, refresh_id_token
 from ..forms.item_form import ItemForm
 from ecommerce.models.items import Item
@@ -68,7 +68,7 @@ def search_items(request):
             return home(request)
 
         # Get items that match that keyword
-        items = get_items_by_search(searchText=search_text)
+        items = get_items_by_search(search_text=search_text)
 
         # Inform user that no items were found
         if len(items) == 0:
@@ -79,3 +79,20 @@ def search_items(request):
         return render(request,'home.html',{'items':items,'category':search_text})
     else:
         return home(request)
+
+def get_item_description(request):
+    """
+    Returns item based on posted id from html
+    """
+
+    if request.method == "POST":
+
+        # Get the itemID
+        item_id = request.POST["itemID"]
+
+        # Get items that match that keyword
+        item = get_item_by_id(item_id=item_id)
+
+        return render(request, "itemDescription.html", {"item": item})
+    
+    return home(request)
