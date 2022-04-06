@@ -15,15 +15,15 @@ def add_items(item:Item):
     """
     items_data = {
         'name':item.name,
-        'sellerID':item.sellerID,
+        'seller_id':item.seller_id,
         'photo':item.photo,
         'price':item.price,
         'description':item.description,
         'weight':item.weight,
         'sales':item.sales,
         'rating': {
-            'score':item.score,
-            'numberofreviews':0
+            'score':item.score,   
+            'numberofreviews':0        
         },
         'category': {
             'category_name' : item.category.category_name,
@@ -33,13 +33,15 @@ def add_items(item:Item):
 
     items_ref.add(items_data)
 
-def order_by_price(min_price=0, max_price=0):
+def order_by_price(min_price=0, max_price=0): 
     """
     search for items based on price range
     """
-    try:
+    try: 
+
         price_ref=items_ref.where('price','>',min_price).where('price','<',max_price)
         ordered_price_ref = price_ref.order_by('price').stream()
+        
         return item_collection_to_dict(ordered_price_ref)
 
     except HTTPError as error:
@@ -51,6 +53,7 @@ def better_than_score(score):
     get items with a given score
     """
     try:
+
         itemsreviewed=items_ref.where('score', '<=', score).stream()
 
         return item_collection_to_dict(itemsreviewed)
@@ -63,8 +66,8 @@ def worse_than_score(score):
     """
     get descending order for items
     """
-
     try:
+
         itemsreviewed=items_ref.where('score', '>', score).stream()
 
         return item_collection_to_dict(itemsreviewed)
@@ -73,6 +76,7 @@ def worse_than_score(score):
         return json.loads(error.strerror)
 
 
+       
 def get_categories():
     """
     get all categories
@@ -86,7 +90,7 @@ def get_categories():
         return json.loads(error.strerror)
 
 
-def get_all_items():
+def get_all_items(number_of_items = 0):
     """
     getting all items
     """
@@ -94,12 +98,12 @@ def get_all_items():
         all_items_ref = items_ref.stream()
         all_items:list = item_collection_to_dict(all_items_ref)
         return all_items
-
+    
     except HTTPError as error:
         return json.loads(error.strerror)
 
 
-def get_all_items_dict():
+def get_all_items_dict(number_of_items = 0):
     """
     get items as a dictionnay
     """
@@ -113,7 +117,7 @@ def get_all_items_dict():
             all_items.append(item_dict)
 
         return all_items
-
+    
     except HTTPError as error:
         return json.loads(error.strerror)
 
@@ -151,6 +155,7 @@ def get_item_by_id(item_id):
     item_id_ref = items_ref.document(item_id).get()
     item_dict = item_id_ref.to_dict()
     return Item(item_data= item_dict)
+
 
 def get_items_by_search(search_text=""):
     """
