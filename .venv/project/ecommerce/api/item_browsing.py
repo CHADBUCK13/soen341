@@ -1,8 +1,10 @@
+"""
+This module contains all the logic required for Item Browsing
+"""
+
 from urllib.error import HTTPError
 import json
 from firebase_admin import firestore
-from django.forms.models import model_to_dict
-from requests.exceptions import HTTPError
 from ..models.items import Item
 
 db = firestore.client()

@@ -1,6 +1,6 @@
 from django.shortcuts import redirect, render
 from datetime import datetime
-from ecommerce.controllers.forms.bankingForm import BankingBuyerForm
+from ecommerce.controllers.forms.banking_form import BankingBuyerForm
 
 from ecommerce.models.order import Order
 

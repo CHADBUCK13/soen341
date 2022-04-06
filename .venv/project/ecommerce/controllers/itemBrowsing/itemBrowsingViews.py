@@ -1,13 +1,13 @@
 from django.shortcuts import redirect, render
-from ecommerce.api.bankingInfo import hasPaymentInfo
+from ecommerce.api.banking_info import has_payment_info
 from ecommerce.api.storage import store_image
 from ecommerce.api.item_browsing import get_items_by_search, add_items
 from ecommerce.api.account_context import get_account_from_refresh_token, get_account_info, refresh_id_token
-from ..forms.itemForm import ItemForm
+from ..forms.item_form import ItemForm
 from ecommerce.models.items import Item
 from ...views import home
 
-def addItem(request):
+def add_item(request):
     """
     Add an Item to Sell as a Seller.
     """
@@ -45,7 +45,7 @@ def addItem(request):
     else:
         item_form = ItemForm()
 
-    return render(request,'addItem.html',{"itemForm":item_form})
+    return render(request,'add_item.html',{"itemForm":item_form})
 
 
 def searchItems(request):

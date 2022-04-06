@@ -1,3 +1,7 @@
+"""
+This module contains all the logic required the Account views
+"""
+
 from django.shortcuts import redirect, render
 from ecommerce.api.account_context import show_error_message
 from ecommerce.models.seller import Seller
@@ -7,7 +11,7 @@ from ...controllers.forms.signupForm import BuyerSignupForm, SellerSignupForm
 from ...controllers.forms.loginForm import LoginForm
 from ...controllers.forms.resetPasswordForm import ResetPasswordForm
 
-def login(request, resetMsg=""):
+def login(request, reset_msg=""):
     """
     Logins a user.
     """
@@ -44,24 +48,27 @@ def login(request, resetMsg=""):
                 request.session.modified = True
 
                 # Go back to the Home Page
-                redirectPage = redirect('home')
+                redirect_page = redirect('home')
 
-                # Set the IdToken and the refreshToken as Cookies
-                redirectPage.set_cookie('idToken', user['idToken'], max_age = 1800)
-                redirectPage.set_cookie('refreshToken',user['refreshToken'],max_age=3600)
+                # Set the Id_token and the refresh_token as Cookies
+                redirect_page.set_cookie('idToken', user['idToken'], max_age = 1800)
+                redirect_page.set_cookie('refreshToken',user['refreshToken'],max_age=3600)
 
                 # Go to home page
-                return redirectPage
+                return redirect_page
     # Not a POST Request
     else:
         # Create the Login Form
         login_form = LoginForm()
     
     # Show the login page with the login form
-    return render(request,'register.html',{"loginForm":login_form,"resetMsg":resetMsg})
+    return render(request,'register.html',{"loginForm":login_form,"reset_msg":reset_msg})
 
 
-def resetPassword(request):
+def reset_password(request):
+    """
+    Sends a reset password link by email.
+    """
 
     if request.method == "POST":
         
@@ -73,13 +80,12 @@ def resetPassword(request):
 
             if User.is_buyer(email) or User.is_seller(email):
                 User.reset_password(email)
-                return login(request, resetMsg="Password Reset Link has been Sent!")
-            else:
-                reset_form.add_error(None,"No Account Exists with the given Email.")
+                return login(request, reset_msg="Password Reset Link has been Sent!")
+            reset_form.add_error(None,"No Account Exists with the given Email.")
     else:
         reset_form = ResetPasswordForm()
 
-    return render(request,'resetPassword.html',{'reset_form':reset_form})
+    return render(request,'reset_password.html',{'reset_form':reset_form})
 
 
 def logout(request):
@@ -87,29 +93,29 @@ def logout(request):
     Logouts the user that is currently logged in.
     """
 
-    # Get both the idToken and the refreshToken
-    idToken = request.COOKIES.get('idToken',None)
-    refreshToken = request.COOKIES.get('refreshToken',None)
+    # Get both the id_token and the refresh_token
+    id_token = request.COOKIES.get('idToken',None)
+    refresh_token = request.COOKIES.get('refreshToken',None)
 
     # Save the login status to the session
     request.session['is_logged_in']=False
     request.session.modified = True
 
     # Go back to the Home Page
-    redirectPage = redirect('home')
+    redirect_page = redirect('home')
 
-    # Delete the idToken if it exists
-    if idToken is not None:
-        redirectPage.delete_cookie('idToken')
+    # Delete the id_token if it exists
+    if id_token is not None:
+        redirect_page.delete_cookie('idToken')
 
-    # Delete the refreshToken if it exists
-    if refreshToken is not None:
-        redirectPage.delete_cookie('refreshToken')
+    # Delete the refresh_token if it exists
+    if refresh_token is not None:
+        redirect_page.delete_cookie('refreshToken')
 
     # Go to home page
-    return redirectPage
+    return redirect_page
 
-def signupBuyer(request):
+def signup_buyer(request):
     """
     Signup a new Buyer Account.
     """
@@ -123,11 +129,11 @@ def signupBuyer(request):
         if signup_form.is_valid():
 
             # Signup the buyer in the DB.
-            buyerInfo = Buyer(buyer_signup_data=signup_form.data).signup()
+            buyer_info = Buyer(buyer_signup_data=signup_form.data).signup()
 
             # If the DB returns an error, show it in the form
-            if 'error' in buyerInfo:
-                signup_form.add_error(None,show_error_message(buyerInfo))
+            if 'error' in buyer_info:
+                signup_form.add_error(None,show_error_message(buyer_info))
 
             # Otherwise, login the user.
             else:
@@ -137,15 +143,15 @@ def signupBuyer(request):
                 request.session.modified = True
 
                 # Go back to the Home Page
-                redirectPage = redirect('home')
+                redirect_page = redirect('home')
 
-                # Set the IdToken and the refreshToken as Cookies
-                redirectPage.set_cookie('idToken', buyerInfo['idToken'], max_age = 1800)
-                redirectPage.set_cookie('refreshToken',buyerInfo['refreshToken'],max_age=3600)
+                # Set the Id_token and the refresh_token as Cookies
+                redirect_page.set_cookie('idToken', buyer_info['idToken'], max_age = 1800)
+                redirect_page.set_cookie('refreshToken',buyer_info['refreshToken'],max_age=3600)
 
                 # Go to home page
-                return redirectPage
-    # Buyer Signup Form is being accessed            
+                return redirect_page
+    # Buyer Signup Form is being accessed
     else:
         # Get the Buyer Signup Form
         signup_form = BuyerSignupForm()
@@ -153,7 +159,7 @@ def signupBuyer(request):
     # Show the Signup Page with the Buyer Signup Form
     return render(request, 'signup.html',{"signupForm":signup_form})
 
-def signupSeller(request):
+def signup_seller(request):
     """
     Signup a new Seller Account.
     """
@@ -167,11 +173,11 @@ def signupSeller(request):
         if signup_form.is_valid():
 
             # Signup the seller in the DB.
-            sellerInfo = Seller(seller_signup_data=signup_form.data).signup()
+            seller_info = Seller(seller_signup_data=signup_form.data).signup()
 
             # If the DB returns an error, show it in the form
-            if 'error' in sellerInfo:
-                signup_form.add_error(None,show_error_message(sellerInfo))
+            if 'error' in seller_info:
+                signup_form.add_error(None,show_error_message(seller_info))
 
             # Otherwise, login the user.
             else:
@@ -181,15 +187,15 @@ def signupSeller(request):
                 request.session.modified = True
 
                 # Go back to the Home Page
-                redirectPage = redirect('home')
+                redirect_page = redirect('home')
 
-                # Set the IdToken and the refreshToken as Cookies
-                redirectPage.set_cookie('idToken', sellerInfo['idToken'], max_age = 1800)
-                redirectPage.set_cookie('refreshToken',sellerInfo['refreshToken'],max_age=3600)
+                # Set the Id_token and the refresh_token as Cookies
+                redirect_page.set_cookie('idToken', seller_info['idToken'], max_age = 1800)
+                redirect_page.set_cookie('refreshToken',seller_info['refreshToken'],max_age=3600)
 
                 # Go to home page
-                return redirectPage
-    # Seller Signup Form is being accessed            
+                return redirect_page
+    # Seller Signup Form is being accessed    
     else:
         # Get the Seller Signup Form
         signup_form = SellerSignupForm()

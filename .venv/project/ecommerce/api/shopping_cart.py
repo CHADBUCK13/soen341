@@ -1,10 +1,12 @@
+"""
+This module contains all the logic required for the shopping cart
+"""
+
 from urllib.error import HTTPError
 import json
 from firebase_admin import firestore
 from google.cloud import firestore as fs
-from requests.exceptions import HTTPError
 from .item_browsing import get_item_by_id
-from ecommerce.models.items import Item
 
 db = firestore.client()
 

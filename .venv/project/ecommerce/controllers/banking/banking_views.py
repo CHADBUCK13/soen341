@@ -1,28 +1,30 @@
-from django.shortcuts import redirect,render
+"""
+"""
 
-from ecommerce.api.bankingInfo import addPaymentInfoBuyer
+from django.shortcuts import redirect,render
+from ecommerce.api.banking_info import add_payment_info_buyer
 from ecommerce.models.paymentInfo import PaymentInfo
-from ..forms.bankingForm import BankingBuyerForm, BankingSellerForm
+from ..forms.banking_form import BankingBuyerForm, BankingSellerForm
 from ecommerce.api.account_context import get_account_from_refresh_token, get_account_info, refresh_id_token
 
-def addBankingInfo(request):
+def add_banking_info(request):
     """
     Add Banking info for the currently logged in Seller or Buyer
     """
     
     if request.session['is_seller']:
-        return addBankingInfoSeller(request)
+        return add_banking_info_seller(request)
     else:
-        return addBankingInfoBuyer(request)
+        return add_banking_info_buyer(request)
 
-def addBankingInfoBuyer(request):
+def add_banking_info_buyer(request):
     """
     
     """
 
     if request.method == "POST":
         
-        payment_form = BankingBuyerForm(request.POST)
+        payment_form = banking_buyer_form(request.POST)
 
         if payment_form.is_valid():
             
@@ -44,11 +46,11 @@ def addBankingInfoBuyer(request):
             return redirect('home')
 
     else:
-        payment_form = BankingBuyerForm()
-    return render(request,'addBankingInfo.html',{"paymentForm":payment_form})
+        payment_form = banking_buyer_form()
+    return render(request,'add_banking_info.html',{"paymentForm":payment_form})
 
 
-def addBankingInfoSeller(request):
+def add_banking_info_seller(request):
     """
     
     """
@@ -77,6 +79,4 @@ def addBankingInfoSeller(request):
 
     else:
         payment_form = BankingSellerForm()
-    return render(request,'addBankingInfo.html',{"paymentForm":payment_form})
-    
-
+    return render(request,'add_banking_info.html',{"paymentForm":payment_form})
