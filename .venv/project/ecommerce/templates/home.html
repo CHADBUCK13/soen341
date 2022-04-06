@@ -3,128 +3,138 @@
 {% block content %}
 
 <main>
-    
-<div id ="hero">
 
-    <!-- Slideshow container -->
-    <div class = "slideshow">
-        <div class ="mySlides">
-            <div style="width: 100%; height: 100%; object-fit: cover; background-image: linear-gradient(to top, rgb(242, 242, 250, 0.9), rgb(242, 242, 250,0)), url('https://storage.googleapis.com/ecommerce-68ba8.appspot.com/2ad.jpg');"></div>
-        </div>
+    <div id="hero">
 
-        <div class="mySlides">
-            <div style="width: 100%; height: 100%; object-fit: cover; background-image: linear-gradient(to top, rgb(242, 242, 250, 0.9), rgb(242, 242, 250,0)), url('https://storage.googleapis.com/ecommerce-68ba8.appspot.com/4ad.jpg');"></div>
-        </div>
-
-        <!-- Previous and next buttons -->
-        <a class = "previous" onclick="plusSlides(-1)">&#10094; </a>
-        <a class = "next" onclick="plusSlides(1)">&#10095; </a>
-    </div>
-
-    <!-- Item box -->
-
-
-    <!-- Items -->
-
-
-    <div style="width: 1300px; top: -400px; margin: auto; position: relative">
-        <h1 style="display: flex; justify-content: center; flex-wrap: wrap;">{{category}}</h1>
-        <h1 style="display: flex; justify-content: center; flex-wrap: wrap;">{{searchText}}</h1>
-        <div class ="row" style = "display: flex; justify-content: center; flex-wrap: wrap;">
-
-            
-            {% for item in items %}
-            <div class="product-container">
-                <div class = "card">
-                    <div class = "card-image"><img src="{{item.photo}}" style=" width: 100%; height: 100%; object-fit: cover; "></div>
-                    <h2>{{item.name}}</h2>
-                    <p>
-                    ${{item.price}}
-                    </p>
-                    <form id="addCart{{item.id}}" method="post" action="{% url 'addToCart' %}">
-                        {% csrf_token %}
-                        <input type="hidden" name="item" value="{{item.id}}">  
-                        <a href="#" onclick="document.getElementById('addCart{{item.id}}').submit()">
-                            ADD TO CART
-                        </a>
-                    </form>
-                    
-                </div>          
+        <!-- Slideshow container -->
+        <div class="slideshow">
+            <div class="mySlides">
+                <div
+                    style="width: 100%; height: 100%; object-fit: cover; background-image: linear-gradient(to top, rgb(242, 242, 250, 0.9), rgb(242, 242, 250,0)), url('https://storage.googleapis.com/ecommerce-68ba8.appspot.com/2ad.jpg');">
+                </div>
             </div>
-            {% endfor %}
+
+            <div class="mySlides">
+                <div
+                    style="width: 100%; height: 100%; object-fit: cover; background-image: linear-gradient(to top, rgb(242, 242, 250, 0.9), rgb(242, 242, 250,0)), url('https://storage.googleapis.com/ecommerce-68ba8.appspot.com/4ad.jpg');">
+                </div>
+            </div>
+
+            <!-- Previous and next buttons -->
+            <a class="previous" onclick="plusSlides(-1)">&#10094; </a>
+            <a class="next" onclick="plusSlides(1)">&#10095; </a>
+        </div>
+
+        <!-- Item box -->
+
+
+        <!-- Items -->
+
+
+        <div style="width: 1300px; top: -400px; margin: auto; position: relative">
+            <h1 style="display: flex; justify-content: center; flex-wrap: wrap;">{{category}}</h1>
+            <h1 style="display: flex; justify-content: center; flex-wrap: wrap;">{{searchText}}</h1>
+            <div class="row" style="display: flex; justify-content: center; flex-wrap: wrap;">
+
+
+                {% for item in items %}
+                <div class="product-container" onclick="document.getElementById('itemDescription{{item.id}}').submit()">
+                    <div class="card">
+                        <div class="card-image"><img src="{{item.photo}}"
+                                style=" width: 100%; height: 100%; object-fit: cover; "></div>
+                        <h2>{{item.name}}</h2>
+                        <p>
+                            ${{item.price}}
+                        </p>
+                        <form id="addCart{{item.id}}" method="post" action="{% url 'addToCart' %}">
+                            {% csrf_token %}
+                            <input type="hidden" name="item" value="{{item.id}}">
+                            <a href="#" onclick="document.getElementById('addCart{{item.id}}').submit()">
+                                ADD TO CART
+                            </a>
+                        </form>
+
+                        <form id="itemDescription{{item.id}}" method="post" action="{% url 'getItemDescription' %}">
+                            {% csrf_token %}
+                            <input type="hidden" name="itemID" value="{{item.id}}">
+                        </form>
+
+                    </div>
+                </div>
+                {% endfor %}
+            </div>
         </div>
     </div>
-</div>
-<script >
-    //SLideshow 
+    <script>
+        //SLideshow 
 
-var slideIndex = 0;
-showSlides(slideIndex);
+        var slideIndex = 0;
+        showSlides(slideIndex);
 
-//Next/previous controls
-function plusSlides(n) {
-    if(n==-1 && slideIndex == 0){
-        slideIndex=2
-    }
-    showSlides(slideIndex += n);
-}
-//Image control
-function currentSlide(n) {
-showSlides(slideIndex = n );
-}
+        //Next/previous controls
+        function plusSlides(n) {
+            if (n == -1 && slideIndex == 0) {
+                slideIndex = 2
+            }
+            showSlides(slideIndex += n);
+        }
+        //Image control
+        function currentSlide(n) {
+            showSlides(slideIndex = n);
+        }
 
-function showSlides(n) {
-var slides = document.getElementsByClassName("mySlides");
-var dots = document.getElementsByClassName("dot");
-if( n > slides.length - 1 ) { slideIndex = 0}
-if ( n < 0 ) { slideIndex = slides.length }
-for (var i = 0; i < slides.length; i++) {
-    slides[i].style.display = "none";
-}
- for (var i = 0; i < dots.length; i++) {
-     dots[i].className = dots[i].className.replace("active", "");
- }
- slides[slideIndex].style.display = "block";
- //dots[slideIndex].className += "active";
-}
+        function showSlides(n) {
+            var slides = document.getElementsByClassName("mySlides");
+            var dots = document.getElementsByClassName("dot");
+            if (n > slides.length - 1) { slideIndex = 0 }
+            if (n < 0) { slideIndex = slides.length }
+            for (var i = 0; i < slides.length; i++) {
+                slides[i].style.display = "none";
+            }
+            for (var i = 0; i < dots.length; i++) {
+                dots[i].className = dots[i].className.replace("active", "");
+            }
+            slides[slideIndex].style.display = "block";
+            //dots[slideIndex].className += "active";
+        }
 
-//Filtering items
+        //Filtering items
 
-filterCategories("All")
-function filterCategories(c) {
- var x;
- x = document.getElementsByClassName("column");
- if(c == "All") c = "";
+        filterCategories("All")
+        function filterCategories(c) {
+            var x;
+            x = document.getElementsByClassName("column");
+            if (c == "All") c = "";
 
- for(var i =0; i < x.length; i++) {
-     removeClass(x[i], "show");
-     if(x[i].className.indexOf(c) > -1) addclass(x[i], "show");
- }
-}
+            for (var i = 0; i < x.length; i++) {
+                removeClass(x[i], "show");
+                if (x[i].className.indexOf(c) > -1) addclass(x[i], "show");
+            }
+        }
 
-function addclass(element, name) {
- var el, nam;
- el = element.className.split(" ");
- nam = name.split(" ");
- for(var i = 0; i < nam.length; i++) {
-     if(el.indexOf(nam[i]) == -1) {
-         element.className += " " + nam[i];
-     }
- }
-}
+        function addclass(element, name) {
+            var el, nam;
+            el = element.className.split(" ");
+            nam = name.split(" ");
+            for (var i = 0; i < nam.length; i++) {
+                if (el.indexOf(nam[i]) == -1) {
+                    element.className += " " + nam[i];
+                }
+            }
+        }
 
-function removeClass(element, name) {
- var el, nam;
- el = element.className.split(" ");
- nam = name.split(" ");
- for(var i = 0; i < nam.length; i++) {
-     while (el.indexOf(nam[i]) > -1) {
-         el.splice(el.indexOf(nam[i]), 1)
-     }
- }
- element.className = el.join(" ");
-}
+        function removeClass(element, name) {
+            var el, nam;
+            el = element.className.split(" ");
+            nam = name.split(" ");
+            for (var i = 0; i < nam.length; i++) {
+                while (el.indexOf(nam[i]) > -1) {
+                    el.splice(el.indexOf(nam[i]), 1)
+                }
+            }
+            element.className = el.join(" ");
+        }
 
-</script>
+    </script>
 </main>
 {% endblock %}
