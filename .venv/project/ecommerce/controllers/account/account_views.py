@@ -34,8 +34,8 @@ def login(request, reset_msg=""):
                 "No Account exists for the given Email Address. Please go to the Signup Page.")
 
             # An error occured, so show an error message to the user
-            if 'error' in user:
-                login_form.add_error(None, show_error_message(user))
+            elif 'error' in user:
+                login_form.add_error(None, "Incorrect email/password")
 
             else:
 

@@ -4,15 +4,14 @@ This module contains all the logic required the shopping cart views
 
 from django.shortcuts import redirect, render
 from datetime import datetime
-from ecommerce.controllers.forms.banking_form import BankingBuyerForm
 from ecommerce.models.order import Order
+from ecommerce.models.address import Address
 from ecommerce.api.item_browsing import *
-from ...views import home
 from ecommerce.api.shopping_cart import add_item_to_cart, delete_items_from_cart, get_items_from_cart, update_item_quantity
 from ecommerce.api.account_context import get_account_from_refresh_token, get_account_info, get_buyer, get_seller, refresh_id_token
-from ecommerce.api.checking_out import check_out, get_payment_info  
+from ecommerce.api.checking_out import check_out, get_payment_info
 from django.forms.models import model_to_dict
-from ecommerce.models.address import Address
+from ...views import home
 
 def shop_cart(request):
     """
@@ -64,10 +63,10 @@ def add_to_cart(request):
     """
 
     if request.method == "POST":
-        
+
         item_id = json.load(request)['itemID']
 
-        
+
         redir=redirect('home')
         status = refresh_id_token(request,redir)
 
@@ -121,7 +120,7 @@ def remove_from_cart(request):
 
         if status is False:
             return redirect('logout')
-        elif status is redir:
+        if status is redir:
             token = request.COOKIES.get('refreshToken',None)
             current_user = get_account_from_refresh_token(token)
         else:
@@ -188,33 +187,3 @@ def checkout(request):
         check_out(current_user['users'][0]['email'],order)
 
     return home(request)
-
-
-# def get_coupon(request, code):
-#     try:
-#         coupon = Coupon.objects.get(code=code)
-#         return coupon
-#     except:
-#        print("This coupon does not exist")
-
-# class CouponView():
-#     def post(self, *args, **kwargs):
-#         form = CouponForm(self.request.POST or None)
-#         if form.is_valid():
-#             try:
-#                 code = form.cleaned_data.get('code')
-#                 order = Order.objects.get(
-#                     user=self.request.user, ordered=False)
-#                 order.coupon = get_coupon(self.request, code)
-#                 order.save()
-#                 messages.success(self.request, "Successfully added coupon")
-#                 return redirect("core:checkout")
-#             except ObjectDoesNotExist:
-#                 messages.info(self.request, "You do not have an active order")
-#                 return redirect("core:checkout")
-
-
-
-#Add checkout view
-#Add remove add item view(add/remove form cart)
-
