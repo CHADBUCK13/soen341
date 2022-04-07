@@ -65,7 +65,7 @@ def add_to_cart(request):
 
     if request.method == "POST":
         
-        item_id = request.POST.get("item")
+        item_id = json.load(request)['itemID']
 
         
         redir=redirect('home')
