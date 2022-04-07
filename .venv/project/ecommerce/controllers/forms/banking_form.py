@@ -4,6 +4,7 @@ This module contains all the logic required seller and buyer banking forms
 
 from django import forms
 
+
 class BankingBuyerForm(forms.Form):
     """
     Forms that allows a Buyer to enter his banking information.
@@ -13,18 +14,18 @@ class BankingBuyerForm(forms.Form):
         label="Cardholder First Name",
         required=True,
         widget=forms.TextInput(attrs={
-            'class':'reg',
-            'type':'text',
-            'placeholder':'First Name'
+            'class': 'reg',
+            'type': 'text',
+            'placeholder': 'First Name'
         }))
 
     lastname = forms.CharField(
         label="Cardholder Last Name",
         required=True,
         widget=forms.TextInput(attrs={
-            'class':'reg',
-            'type':'text',
-            'placeholder':'Last Name'
+            'class': 'reg',
+            'type': 'text',
+            'placeholder': 'Last Name'
         }))
 
     number = forms.CharField(
@@ -33,9 +34,9 @@ class BankingBuyerForm(forms.Form):
         max_length=16,
         required=True,
         widget=forms.NumberInput(attrs={
-            'class':'reg',
-            'type':'number',
-            'placeholder':'#### #### #### ####'
+            'class': 'reg',
+            'type': 'number',
+            'placeholder': '#### #### #### ####'
         }))
 
     expirationDate = forms.CharField(
@@ -44,28 +45,27 @@ class BankingBuyerForm(forms.Form):
         min_length=4,
         max_length=4,
         widget=forms.NumberInput(attrs={
-            'class':'reg',
-            'type':'number',
-            'placeholder':'MMYY'
+            'class': 'reg',
+            'type': 'number',
+            'placeholder': 'MMYY'
         }))
-  
     cvv = forms.CharField(
         label="Card CVV",
         min_length=3,
         max_length=3,
         required=True,
         widget=forms.NumberInput(attrs={
-            'class':'reg',
-            'type':'number',
-            'placeholder':'###'
+            'class': 'reg',
+            'type': 'number',
+            'placeholder': '###'
         }))
-
 
     class Meta:
         """
         Banking Buyer Form MetaData
         """
-        fields=['firstname','lastname','number','expirationDate','cvv']
+        fields = ['firstname', 'lastname', 'number', 'expirationDate', 'cvv']
+
 
 class BankingSellerForm(forms.Form):
     """
@@ -78,9 +78,9 @@ class BankingSellerForm(forms.Form):
         min_length=5,
         max_length=5,
         widget=forms.NumberInput(attrs={
-            'class':'reg',
-            'type':'number',
-            'placeholder':'#####'
+            'class': 'reg',
+            'type': 'number',
+            'placeholder': '#####'
         }))
 
     institution = forms.CharField(
@@ -89,9 +89,9 @@ class BankingSellerForm(forms.Form):
         min_length=3,
         max_length=3,
         widget=forms.TextInput(attrs={
-            'class':'reg',
-            'type':'number',
-            'placeholder':'###'
+            'class': 'reg',
+            'type': 'number',
+            'placeholder': '###'
         }))
 
     account = forms.CharField(
@@ -100,13 +100,13 @@ class BankingSellerForm(forms.Form):
         min_length=7,
         max_length=7,
         widget=forms.TextInput(attrs={
-            'class':'reg',
-            'type':'number',
-            'placeholder':'#######'
+            'class': 'reg',
+            'type': 'number',
+            'placeholder': '#######'
         }))
 
     class Meta:
         """
         Banking Seller Form MetaData
         """
-        fields=['transit','institution','account']
+        fields = ['transit', 'institution', 'account']

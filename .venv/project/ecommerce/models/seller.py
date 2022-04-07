@@ -52,7 +52,7 @@ class Seller():
             service_number=self.service_number
         )
 
-    def accountType(self):
+    def account_type(self):
         """
         Returns: 'seller'
         """

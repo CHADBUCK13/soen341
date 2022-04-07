@@ -27,7 +27,7 @@ class Address:
 
     def from_dict(self, dictionary: dict):
         """
-        Takes dictionary describing address and returns address object 
+        Takes dictionary describing address and returns address object
         """
         return Address(
             dictionary["country"],

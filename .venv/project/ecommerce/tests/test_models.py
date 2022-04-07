@@ -10,10 +10,10 @@ from ..controllers.forms.signup_form import BuyerSignupForm, SellerSignupForm
 class TestBuyerModel(TestCase):
 
     def test_accountType(self):
-        self.assertEquals(Buyer.accountType(self),"buyer")
+        self.assertEqual(Buyer.account_type(self),"buyer")
 
 
 class TestSellerModel(TestCase):
     
     def test_accountType(self):
-        self.assertEquals(Seller.accountType(self),"seller")
+        self.assertEqual(Seller.account_type(self),"seller")
