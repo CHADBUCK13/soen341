@@ -65,7 +65,8 @@ def add_to_cart(request):
 
     if request.method == "POST":
         
-        item_id = request.POST.get("item")
+        item_id = json.load(request)['itemID']
+
         
         redir=redirect('home')
         status = refresh_id_token(request,redir)
@@ -188,6 +189,7 @@ def checkout(request):
 
     return home(request)
 
+
 # def get_coupon(request, code):
 #     try:
 #         coupon = Coupon.objects.get(code=code)
@@ -215,4 +217,4 @@ def checkout(request):
 
 #Add checkout view
 #Add remove add item view(add/remove form cart)
-       
+

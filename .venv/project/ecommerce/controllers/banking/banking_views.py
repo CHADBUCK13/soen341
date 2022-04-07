@@ -52,7 +52,7 @@ def add_banking_info_buyer(request):
 
     else:
         payment_form = BankingBuyerForm()
-    return render(request,'add_banking_info.html',{"paymentForm":payment_form})
+    return render(request,'addBankingInfo.html',{"paymentForm":payment_form})
 
 
 def add_banking_info_seller(request):
