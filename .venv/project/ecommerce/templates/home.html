@@ -86,15 +86,14 @@
                             onclick="document.getElementById('itemDescription{{item.id}}').submit()">
                             <img src="{{item.photo}}" style=" width: 100%; height: 100%; object-fit: cover; ">
                         </div>
-                        <h2 onclick="document.getElementById('itemDescription{{item.id}}').submit()">{{item.name}}</h2>
+                        <h2 onclick="document.getElementById('itemDescription{{item.id}}').submit()"><span>{{item.name}}</span></h2>
                         <p onclick="document.getElementById('itemDescription{{item.id}}').submit()">
                             ${{item.price}}
                         </p>
-                        <form id="addCart{{item.id}}" method="post" action="{% url 'addToCart' %}">
-                            {% csrf_token %}
-                            <input type="hidden" name="item" value="{{item.id}}">
-                            <a href="#" onclick="document.getElementById('addCart{{item.id}}').submit()">
-                                ADD TO CART
+                        <form method="post" action="{% url 'addToCart' %}">                        
+                            <input type="hidden" name="item" value="{{item.id}}" id="addCart{{item.id}}">  
+                            <a  id="addButton{{item.id}}">
+                                Add To Cart
                             </a>
                         </form>
 

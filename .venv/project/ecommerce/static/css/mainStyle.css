@@ -10,12 +10,10 @@ h1 {
     font-size: 50px;
     word-break: break-all;
 }
-
 h4 {
     color: white;
 }
-
-* {
+*{
     box-sizing: border-box;
     padding: 0;
     margin: 0;
@@ -35,8 +33,7 @@ h4 {
     justify-content: center;
     flex-wrap: wrap;
 }
-
-.card {
+.card{
     background: white;
     width: 220px;
     /*height: 400px;*/
@@ -44,13 +41,14 @@ h4 {
     border-radius: 8px;
 }
 
-.card-image {
+.card-image{
     background-color: rgba(255, 255, 255, 0);
     height: 230px;
     margin-bottom: 15px;
     background-size: cover;
     border-radius: 15px 15px 0 0;
 }
+
 
 .card h2 {
     padding: 2px;
@@ -89,7 +87,7 @@ h4 {
 .card a:hover {
     background-color: #64846c;
     cursor: pointer;
-    transform: scale(1.05);
+    transform: scale(1.05); 
     transition: all 1s ease;
 }
 
@@ -106,8 +104,8 @@ h4 {
 
 /*Top navigation bar*/
 
-@media (min-width:971px) {
-    .grid-container {
+@media (min-width:971px){
+    .grid-container{
         display: grid;
         grid-template-columns: 1fr 1fr 150px 130px 60px;
         grid-row: auto;
@@ -115,41 +113,38 @@ h4 {
         align-items: center;
     }
 
-    .grid-item-1 {
+    .grid-item-1{
         justify-self: left;
     }
-
-    .grid-item-2 {
-        justify-self: stretch;
+    
+    .grid-item-2{
+        justify-self:stretch;
     }
-
-    .grid-item-3 {
+    
+    .grid-item-3{
         justify-self: right;
     }
-
-    .grid-item-4 {
+    
+    .grid-item-4{
         justify-self: right;
     }
-
-    .grid-item-5 {
+    
+    .grid-item-5{
         justify-self: right;
     }
-
-    .grid-login {
+    .grid-login{
         grid-column: span 3;
         justify-self: right;
     }
 }
-
-@media (max-width:970px) {
-    .grid-container {
+@media (max-width:970px){
+    .grid-container{
         display: grid;
         grid-template-columns: 1fr;
         grid-template-rows: auto;
         grid-row-gap: 1px;
     }
-
-    .grid-item {
+    .grid-item{
         justify-self: center;
     }
 
@@ -237,7 +232,7 @@ h4 {
     cursor: pointer;
   }
 
-.searchBar {
+.searchBar{
     float: none;
     position: absolute;
     top: 50%;
@@ -269,16 +264,15 @@ h4 {
     border-radius: 6px;
     color : black;
 }
+
 .dropdown {
     float: left;
     overflow: hidden;
 }
-
 .dropdown-account {
     float: right;
     overflow: hidden;
 }
-
 .dropdown .dropbutn {
     font-size: 16px;
     border: none;
@@ -289,7 +283,6 @@ h4 {
     font-family: inherit;
     margin: 0;
 }
-
 .dropdown-account .dropbutn {
     font-size: 16px;
     border: none;
@@ -300,8 +293,7 @@ h4 {
     font-family: inherit;
     margin: 0;
 }
-
-.dropdown-content {
+.dropdown-content{
     display: none;
     position: absolute;
     background-color: rgb(255, 255, 255);
@@ -332,8 +324,7 @@ h4 {
     background-color: rgb(194, 196, 194);
 }
 
-.dropdown:hover .dropdown-content,
-.dropdown-account:hover .dropdown-content {
+.dropdown:hover .dropdown-content, .dropdown-account:hover .dropdown-content {
     display: block;
 }
 
@@ -355,31 +346,25 @@ h4 {
 }
 
 /* Slideshow styling */
-* {
-    box-sizing: border-box
-}
+*{box-sizing:border-box}
 
 .slideshow {
     max-width: 1480px;
     position: relative;
     margin: auto;
 }
-
 .mySlides {
     display: none;
     width: 100%;
     height: 700px;
 }
-
-.mySlides img {
+.mySlides img{
     width: 100%;
     height: 100%;
     object-fit: cover;
 }
-
 /* Next & previous buttons */
-.previous,
-.next {
+.previous, .next {
     cursor: pointer;
     position: absolute;
     top: 50%;
@@ -390,32 +375,27 @@ h4 {
     font-weight: bold;
     font-size: 18px;
     transition: 0.6s ease;
-    border-radius: 0 3px 3px 0;
+    border-radius : 0 3px 3px 0;
     user-select: none;
 }
-
 /* To the right */
 .next {
     right: 0;
     border-radius: 3px 0 0 3px;
 }
-
-.previous:hover,
-.next:hover {
-    background-color: rgba(0, 0, 0, 0.8);
+.previous:hover, .next:hover {
+    background-color: rgba(0,0,0,0.8);
 }
-
 /* Caption text */
 .text {
-    color: skyblue;
+    color:skyblue;
     font-size: 15px;
     padding: 8px 12px;
     position: absolute;
     bottom: 8px;
     width: 100%;
-    text-align: center;
+    text-align:center;
 }
-
 /* Number */
 .number {
     color: skyblue;
@@ -424,19 +404,17 @@ h4 {
     position: absolute;
     top: 0;
 }
-
 /* Dots */
 .dot {
-    cursor: pointer;
+    cursor:pointer;
     height: 15px;
     width: 15px;
     margin: 0 2px;
-    background-color: grey;
+    background-color:grey;
     border-radius: 50%;
     display: inline-block;
     transition: background-color 0.6s ease;
 }
-
 /* Dot hover  */
 .dot:hover {
     background-color:royalblue;
@@ -449,27 +427,14 @@ h4 {
     animation-name: fade;
     animation-duration: 1.5s;
 }
-
 @-webkit-keyframes fade {
-    from {
-        opacity: 0.4
-    }
-
-    to {
-        opacity: 1
-    }
+    from {opacity: 0.4}
+    to {opacity: 1}
 }
-
 @keyframes fade {
-    from {
-        opacity: .4
-    }
-
-    to {
-        opacity: 1
-    }
+    from {opacity: .4}
+    to {opacity: 1}
 }
-
 /* Items */
 /* Buttons */
 .btn {
@@ -480,29 +445,26 @@ h4 {
     cursor: pointer;
 }
 
+
 /* Grid */
 * {
     box-sizing: border-box;
 }
-
 .column {
     float: left;
     width: 33.33%;
     display: none;
 }
-
 .show {
     display: block;
 }
-
 /* Items box styling */
 .itemBox {
     position: relative;
     width: 100%;
-    background-color: rgb(5, 129, 129);
+    background-color:rgb(5, 129, 129);
     padding: 10px;
 }
-
 .image {
     opacity: 1;
     display: block;
@@ -511,7 +473,6 @@ h4 {
     transition: .5s ease;
     backface-visibility: hidden;
 }
-
 .bCaption {
     transition: .5s ease;
     opacity: 0;
@@ -522,15 +483,12 @@ h4 {
     -ms-transform: translate(-50%, -50%);
     text-align: center;
 }
-
 .itemBox:hover .image {
     opacity: 0.3;
 }
-
 .itemBox:hover .bCaption {
     opacity: 1;
 }
-
 .bText {
     background-color: white;
     color: skyblue;
