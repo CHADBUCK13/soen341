@@ -55,7 +55,7 @@ def get_payment_info(email: str):
 
 def check_out(email: str, order: Order):
     """
-    Takes the Order, selected PaymentInformation and email of the user checking out. 
+    Takes the Order, selected PaymentInformation and email of the user checking out.
     Returns True if the checkout was successful, False otherwise
     """
     order_data = order.to_dict()
