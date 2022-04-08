@@ -11,6 +11,7 @@ class Order:
     """
     Describes database order and contains related functions
     """
+
     def __init__(
         self,
         subtotal: float,
@@ -61,11 +62,14 @@ class Order:
         Converts firebase order document reference to Order object and returns it
         """
         order_dict = order_doc.to_dict()
-        date = datetime.datetime.strptime(order_dict["date"], "%y/%m/%d").date()
-        time = datetime.datetime.strptime(order_dict["time"], "%H:%M:%S").time()
-        shipping_address = Address.from_dict(self, order_dict["shippingAddress"])
+        date = datetime.datetime.strptime(
+            order_dict["date"], "%y/%m/%d").date()
+        time = datetime.datetime.strptime(
+            order_dict["time"], "%H:%M:%S").time()
+        shipping_address = Address.from_dict(
+            self, order_dict["shippingAddress"])
         billing_address = Address.from_dict(self, order_dict["billingAddress"])
-        
+
         return Order(
             order_dict["subtotal"],
             order_dict["total"],

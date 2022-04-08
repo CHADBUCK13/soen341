@@ -54,7 +54,9 @@ class TestAccountContext(TestCase):
 
     def setUp(self):
         self.email_seller = "seller@gmail.com"
+        self.wrong_email_seller = "Wrongseller@gmail.com"
         self.email_buyer = "test@gmail.com"
+        self.wrong_email_buyer = "Wrongtest@gmail.com"
         self.password = "Django1234"
         self.firebae_config = json.load(
             open("pyrebaseConfig.json", encoding="utf-8"))
@@ -75,12 +77,27 @@ class TestAccountContext(TestCase):
             "sellers").document(self.email_seller).get().exists)
         self.assertTrue(self.seller)
 
+    def test_login_as_seller_invalid_data(self):
+        """Test if the user can login as seller using a invalid email and passwrord
+        """
+        database = firestore.client()
+        self.assertFalse(database.collection(
+            "sellers").document(self.wrong_email_seller).get().exists)
+
     def test_login_as_buyer_valid_data(self):
         """Test if the user can login as buyer using a valid email and passwrord, test is_buyer
         """
         database = firestore.client()
         self.assertTrue(database.collection(
             "buyers").document(self.email_buyer).get().exists)
+        self.assertTrue(self.buyer)
+
+    def test_login_as_buyer_invalid_data(self):
+        """Test if the user can login as buyer using a invalid email
+        """
+        database = firestore.client()
+        self.assertFalse(database.collection(
+            "buyers").document(self.wrong_email_buyer).get().exists)
         self.assertTrue(self.buyer)
 
     def test_reset_password_valid_email(self):

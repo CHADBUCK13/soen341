@@ -6,10 +6,11 @@ from django.shortcuts import redirect, render
 from ecommerce.api.banking_info import has_payment_info
 from ecommerce.api.storage import store_image
 from ecommerce.api.item_browsing import get_items_by_search, add_items, get_item_by_id
-from ecommerce.api.account_context import get_account_from_refresh_token, get_account_info, refresh_id_token
-from ..forms.item_form import ItemForm
+from ecommerce.api.account_context import get_account_from_refresh_token, get_account_info
+from ecommerce.api.account_context import refresh_id_token
 from ecommerce.models.items import Item
-from ...views import home
+from ecommerce.controllers.forms.item_form import ItemForm
+from ecommerce.views import home
 
 def add_item(request):
     """
@@ -46,7 +47,9 @@ def add_item(request):
 
                 return redirect('home')
 
-            item_form.add_error("Please Update your Payment Information before Adding Items for Sale.")
+            item_form.add_error("Please Update your Payment Information before \
+                                Adding Items for Sale.")
+
     else:
         item_form = ItemForm()
 
@@ -94,5 +97,5 @@ def get_item_description(request):
         item = get_item_by_id(item_id=item_id)
 
         return render(request, "itemDescription.html", {"item": item})
-    
+
     return home(request)

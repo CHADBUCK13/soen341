@@ -3,7 +3,8 @@ This module contains all the logic required the order views
 """
 
 from django.shortcuts import redirect, render
-from ecommerce.api.account_context import get_account_from_refresh_token, get_account_info, refresh_id_token
+from ecommerce.api.account_context import get_account_from_refresh_token, get_account_info,\
+    refresh_id_token
 from ecommerce.api.checking_out import cancel_order, get_orders
 
 

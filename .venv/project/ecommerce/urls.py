@@ -1,15 +1,18 @@
-import imp
-from unicodedata import name
+"""Contains the URLs for the webiste functionalities
+"""
 from django.urls import path
 from django.contrib.staticfiles.urls import staticfiles_urlpatterns
 
 
 from .controllers.shoppingCart.order_views import cancel_an_order, orders
 from .controllers.banking.banking_views import add_banking_info
-from .controllers.itemBrowsing.item_browsing_views import add_item, get_item_description, search_items
+from .controllers.itemBrowsing.item_browsing_views import add_item,\
+    get_item_description, search_items
 from .views import home
-from .controllers.account.account_views import signup_buyer,signup_seller,login,logout,reset_password
-from .controllers.shoppingCart.shopping_cart_views import shop_cart, add_to_cart, change_amount, checkout, remove_from_cart
+from .controllers.account.account_views import signup_buyer,signup_seller,login,\
+    logout,reset_password
+from .controllers.shoppingCart.shopping_cart_views import shop_cart, add_to_cart,\
+    change_amount, checkout, remove_from_cart
 
 
 urlpatterns = [

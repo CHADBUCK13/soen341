@@ -196,7 +196,7 @@ def signup_seller(request):
 
                 # Go to home page
                 return redirect_page
-    # Seller Signup Form is being accessed    
+    # Seller Signup Form is being accessed
     else:
         # Get the Seller Signup Form
         signup_form = SellerSignupForm()
