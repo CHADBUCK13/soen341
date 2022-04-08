@@ -1,6 +1,10 @@
-from ecommerce.api.account_context import get_account_info, get_buyer, get_seller, is_buyer, is_seller, login_as_buyer, login_as_seller, reset_password
+"""Contains user class only
+"""
+from ecommerce.api.account_context import get_account_info, get_buyer, get_seller, is_buyer,\
+    is_seller, login_as_buyer, login_as_seller, reset_password
 from .buyer import Buyer
 from .seller import Seller
+
 
 class User():
     """
@@ -12,7 +16,7 @@ class User():
         Returns TRUE if User is a Buyer.
         """
         return is_buyer(email)
-    
+
     def is_seller(email):
         """
         Returns TRUE if User is a Seller.
@@ -25,22 +29,20 @@ class User():
         """
         reset_password(email)
 
-
-    def getUser(idToken):
+    def get_user(id_token):
         """
         Get the User linked to the idToken from the DB.
         """
 
         # Get the email for the account represented by the token
-        email=get_account_info(idToken)['users'][0]['email']
-        
+        email = get_account_info(id_token)['users'][0]['email']
+
         # If the email belongs to a buyer, then return the buyer
         if is_buyer(email):
-            return Buyer(email=email,buyer_data=get_buyer(email))
+            return Buyer(email=email, buyer_data=get_buyer(email))
         # Otherwise, return the seller
         else:
-            return Seller(email=email,seller_data=get_seller(email))
-
+            return Seller(email=email, seller_data=get_seller(email))
 
     def login(login_data):
         """
@@ -61,4 +63,4 @@ class User():
         return login_as_seller(
             email=login_data['email'],
             password=login_data['password']
-        )       
+        )

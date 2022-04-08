@@ -52,7 +52,7 @@ def shop_cart(request):
         method_dict['last'] = method.last
         method_dict['number'] = number[len(number) - 4: len(number)]
         method_dict['experiationDate'] = method.expiration_date
-        method_dict['CVV'] = method.CVV
+        method_dict['cvv'] = method.cvv
         method_dict['type'] = number[0]
         methods.append(method_dict)
 

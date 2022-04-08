@@ -1,19 +1,25 @@
+"""Contains the tests for the user models
+"""
 from django.test import TestCase
-from django.urls import reverse
-from  .. import models
-from  ecommerce.models.buyer  import Buyer
-from  ecommerce.models.seller  import Seller
-from  ecommerce.models.user  import User
-from ..controllers.forms.signup_form import BuyerSignupForm, SellerSignupForm
+from ecommerce.models.buyer import Buyer
+from ecommerce.models.seller import Seller
 
 
 class TestBuyerModel(TestCase):
+    """contains the tests for the buyer model
+    """
 
-    def test_accountType(self):
-        self.assertEqual(Buyer.account_type(self),"buyer")
+    def test_account_type(self):
+        """test that the buyer account is associated with the correct type
+        """
+        self.assertEqual(Buyer.account_type(self), "buyer")
 
 
 class TestSellerModel(TestCase):
-    
-    def test_accountType(self):
-        self.assertEqual(Seller.account_type(self),"seller")
+    """contains the tests for the seller model
+    """
+
+    def test_account_type(self):
+        """Test that the seller account is associated with the correct type
+        """
+        self.assertEqual(Seller.account_type(self), "seller")

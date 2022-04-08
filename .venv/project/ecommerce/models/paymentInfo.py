@@ -1,8 +1,13 @@
-from ecommerce.api.banking_info import *
+"""
+Module contains information for user payment information
+"""
 import hashlib
+from ecommerce.api.banking_info import *
+
 
 class PaymentInfo():
     """
+    Saves payment information of either buyers or sellers
     """
 
     def __init__(self,email,buyer_payment_data=None,seller_payment_data=None):
@@ -15,28 +20,30 @@ class PaymentInfo():
             self.firstname = buyer_payment_data['firstname']
             self.lastname = buyer_payment_data['lastname']
             self.number = hashlib.md5(buyer_payment_data['number'].encode()).hexdigest()
-            self.expirationDate=buyer_payment_data['expirationDate']
+            self.expiration_date=buyer_payment_data['expirationDate']
             self.cvv = hashlib.md5(buyer_payment_data['cvv'].encode()).hexdigest()
-            self.isBuyer=True
+            self.is_buyer=True
 
         if seller_payment_data is not None:
-            self.isBuyer=False
+            self.is_buyer=False
             self.transit = hashlib.md5(seller_payment_data['transit'].encode()).hexdigest()
             self.institution = hashlib.md5(seller_payment_data['institution'].encode()).hexdigest()
             self.account = hashlib.md5(seller_payment_data['account'].encode()).hexdigest()
 
     def save(self):
-        if self.isBuyer:
-            addPaymentInfoBuyer(
+        """save the payment information for buyers and sellers
+        """
+        if self.is_buyer:
+            add_payment_info_buyer(
                 email=self.email,
-                firstName=self.firstname,
-                lastName=self.lastname,
+                first_name=self.firstname,
+                last_name=self.lastname,
                 number=self.number,
-                expirationDate=self.expirationDate,
+                expiration_date=self.expiration_date,
                 cvv=self.cvv
             )
         else:
-            addPaymentInfoSeller(
+            add_payment_info_seller(
                 email=self.email,
                 transit=self.transit,
                 institution=self.institution,
