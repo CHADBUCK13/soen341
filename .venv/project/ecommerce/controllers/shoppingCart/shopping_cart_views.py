@@ -157,6 +157,7 @@ def checkout(request):
             user = get_seller(current_user['users'][0]['email'])
 
         subtotal = 0.0
+        n_of_items = 0
         payment_info = request.POST.get('number')
         shopping_cart_items = get_items_from_cart(
             current_user['users'][0]['email'])
@@ -165,6 +166,7 @@ def checkout(request):
             price = float(item[0].price)
             quantity = item[1]
             subtotal += price*float(quantity)
+            n_of_items += 1
             item_dict = item[0].to_dict()
             item_dict['quantity'] = quantity
             order_items.append(item_dict)
@@ -172,6 +174,7 @@ def checkout(request):
         order = Order(
             subtotal=subtotal,
             total=subtotal*1.15,
+            n_of_items=1,
             cancelled=False,
             payment_info=payment_info,
             items=order_items,
